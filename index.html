@@ -9,12 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- 语言切换栏 -->
+    <!-- 语言切换栏（已废弃，实际由导航栏下拉框替代） -->
     <div class="language-bar">
         <div class="container">
-            <div class="language-selector" id="languageSelector">
-                <!-- 语言按钮会通过JS动态生成 -->
-            </div>
+            <div class="language-selector" id="languageSelector"></div>
         </div>
     </div>
 
@@ -33,14 +31,12 @@
                 <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
             </ul>
             <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Banner 区域 - 参考 wjplayingcard.com 风格 -->
+    <!-- Hero Banner 区域 -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
@@ -56,7 +52,33 @@
         <div class="container">
             <h2 class="section-title" data-i18n="products_title">Our <span>Products</span></h2>
             <div class="product-grid" id="productGrid">
-                <!-- 产品卡片会通过JS动态生成，支持多语言 -->
+                <!-- 产品卡片会通过JS动态生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 优势/特色图标区 -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="features_title">Why Choose Us</h2>
+            <div class="feature-grid">
+                <div class="feature-item"><i class="fas fa-tachometer-alt"></i><h3 data-i18n="feature_fast">Fast Sampling</h3><p data-i18n="feature_fast_desc">3-5 days sample available</p></div>
+                <div class="feature-item"><i class="fas fa-globe"></i><h3 data-i18n="feature_global">Global Shipping</h3><p data-i18n="feature_global_desc">Delivered to 50+ countries</p></div>
+                <div class="feature-item"><i class="fas fa-certificate"></i><h3 data-i18n="feature_certified">Certified Quality</h3><p data-i18n="feature_certified_desc">ISO9002, FSC, SEDEX</p></div>
+                <div class="feature-item"><i class="fas fa-headset"></i><h3 data-i18n="feature_support">24/7 Support</h3><p data-i18n="feature_support_desc">Dedicated customer service</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 客户案例/作品展示区（占位图片） -->
+    <section class="cases-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="cases_title">Our Work</h2>
+            <div class="cases-grid">
+                <div class="case-item"><img src="https://via.placeholder.com/300x200?text=Custom+Poker" alt="Case 1"><p>Custom Poker Cards</p></div>
+                <div class="case-item"><img src="https://via.placeholder.com/300x200?text=Holographic" alt="Case 2"><p>Holographic Cards</p></div>
+                <div class="case-item"><img src="https://via.placeholder.com/300x200?text=Board+Game" alt="Case 3"><p>Board Game Cards</p></div>
+                <div class="case-item"><img src="https://via.placeholder.com/300x200?text=Tarot" alt="Case 4"><p>Tarot Cards</p></div>
             </div>
         </div>
     </section>
@@ -67,6 +89,25 @@
             <h2 data-i18n="cta_title">Ready to Start Your Custom Cards Project?</h2>
             <p data-i18n="cta_subtitle">Get a quote within 24 hours. No minimum order quantity for samples.</p>
             <a href="contact.html" class="btn btn-primary" data-i18n="cta_btn">Request a Quote →</a>
+        </div>
+    </section>
+
+    <!-- 常见问题 FAQ 区（从数据库动态加载） -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="faq_title">Frequently Asked Questions</h2>
+            <div id="faqList" class="faq-list">
+                <div class="loading">加载 FAQ 中...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系简短区（跳转到 contact.html） -->
+    <section class="contact-short">
+        <div class="container">
+            <h2 class="section-title" data-i18n="contact_short_title">Get In Touch</h2>
+            <p data-i18n="contact_short_desc">Have a project in mind? Let's talk!</p>
+            <a href="contact.html" class="btn btn-primary" data-i18n="contact_short_btn">Contact Us →</a>
         </div>
     </section>
 
@@ -87,7 +128,6 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <!-- 占位图，后续可替换 -->
                     <div style="background: #1a2a4f; border-radius: 12px; padding: 60px; text-align: center; color: white;">
                         <i class="fas fa-print" style="font-size: 4rem;"></i>
                         <p style="margin-top: 15px;">Professional Printing Facility</p>
@@ -97,7 +137,7 @@
         </div>
     </section>
 
-    <!-- 页脚 19点37分测试开始 19点42分更新-->
+    <!-- 页脚 -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
