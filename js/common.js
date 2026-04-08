@@ -158,3 +158,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadLanguage(initLang);
     addLanguageSelectorToNavbar();
 });
+// ===== 加载 FAQ 到首页 =====
+async function loadFaqsToHome() {
+    const container = document.getElementById('faqList');
+    if (!container) return;
+    
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('faq')
+            .select('*')
+            .order('sort_order', { ascending: true });
+        
+        if (error) throw error;
+        
+        if (!data || data.length === 0) {
+            container.innerHTML = '<p>No FAQs yet.</p>';
+            return;
+        }
+        
+        let html = '';
+        data.forEach((faq, idx) => {
+            html += `
+                <div class="faq-item">
+                    <div class="faq-question" data-idx="${idx}">${escapeHtml(faq.question)}</div>
+                    <div class="faq-answer" id="faq-answer-${idx}">${escapeHtml(faq.answer)}</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        
+        document.querySelectorAll('.faq-question').forEach(header => {
+            header.addEventListener('click', () => {
+                const answer = header.nextElementSibling;
+                answer.classList.toggle('show');
+                header.classList.toggle('active');
+            });
+        });
+    } catch (err) {
+        container.innerHTML = '<p>Failed to load FAQs.</p>';
+    }
+}
+
+// 在 DOMContentLoaded 中添加调用
+// 找到现有的 document.addEventListener('DOMContentLoaded', ...) 函数，在最后添加：
+// loadFaqsToHome();
