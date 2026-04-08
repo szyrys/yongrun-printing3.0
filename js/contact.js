@@ -1,3 +1,4 @@
+const supabase = window.supabaseClient;
 // 留言表单提交功能
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('messageForm');
