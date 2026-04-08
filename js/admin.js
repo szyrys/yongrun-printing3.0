@@ -1,3 +1,4 @@
+const supabase = window.supabaseClient;
 // 管理后台脚本 - 登录和留言管理
 
 let currentUser = null;
