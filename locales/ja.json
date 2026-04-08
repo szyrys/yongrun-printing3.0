@@ -1,0 +1,50 @@
+{
+  "nav_home": "ホーム",
+  "nav_products": "製品",
+  "nav_process": "カスタムプロセス",
+  "nav_craft": "加工オプション",
+  "nav_about": "会社概要",
+  "nav_contact": "お問い合わせ",
+
+  "hero_title": "プレミアムカスタム印刷<br>カード＆ゲーム",
+  "hero_subtitle": "20年以上の経験 | ISO9002 | FSC認証 | 世界配送",
+  "hero_btn": "無料見積もり →",
+
+  "products_title": "製品ラインアップ",
+
+  "product_laser_title": "ホログラムカード",
+  "product_laser_desc": "ホログラム、箔押し、UV効果。プレミアムギフトやコレクションに最適。",
+  "product_flashcards_title": "学習カード・フラッシュカード",
+  "product_flashcards_desc": "丸みのある角、ラミネート加工、子供にも安全。教育や語学学習に最適。",
+  "product_playingcards_title": "トランプ",
+  "product_playingcards_desc": "カスタムポーカーカード、宣伝用デッキ。複数の仕上げと包装オプション。",
+  "product_boardgames_title": "ボードゲームカード",
+  "product_boardgames_desc": "カスタムサイズ、ルール、アートワーク。家族ゲームや戦略カードに最適。",
+  "product_tarot_title": "タロットカード",
+  "product_tarot_desc": "プレミアム印刷、なめらかな仕上がり。カスタムボックスとガイドブック付き。",
+  "product_advertising_title": "宣伝用カード",
+  "product_advertising_desc": "プロモーションデッキ、ポイントカード。低ロット対応、迅速な納品可能。",
+  "product_kids_title": "子供用教育セット",
+  "product_kids_desc": "エコインク、安全な素材。パズル、フラッシュカード、インタラクティブゲーム。",
+
+  "cta_title": "カスタムカードプロジェクトを始めますか？",
+  "cta_subtitle": "24時間以内に見積もりを取得。サンプルに最小注文数量はありません。",
+  "cta_btn": "見積もり依頼 →",
+
+  "about_title": "深セン永潤印刷有限公司",
+  "about_text1": "2003年設立、20年以上の専門的な印刷経験があります。開発、試作、デザイン、印刷、加工、包装を一体化した総合サービスプロバイダーです。",
+  "about_text2": "子供の知育、知能開発、ゲーム、カスタムカードセットを専門としています。年間生産能力は数百万セットを超えます。",
+
+  "footer_rights": "全著作権所有",
+
+  "contact_title": "見積もり依頼",
+  "contact_desc": "プロジェクトについてご連絡ください。24時間以内に返信いたします",
+  "form_name": "お名前 *",
+  "form_email": "メールアドレス *",
+  "form_message": "メッセージ（カードタイプ、数量、特別な要件）*",
+  "form_submit": "送信",
+  "form_success": "メッセージを送信しました！すぐにご連絡いたします。",
+  "form_error_empty": "必須項目をすべて入力してください",
+  "form_error_email": "有効なメールアドレスを入力してください",
+  "form_error_submit": "送信に失敗しました。後でもう一度お試しください"
+}

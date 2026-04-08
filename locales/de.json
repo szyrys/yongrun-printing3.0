@@ -1,0 +1,50 @@
+{
+  "nav_home": "Startseite",
+  "nav_products": "Produkte",
+  "nav_process": "Produktionsablauf",
+  "nav_craft": "Veredelungsoptionen",
+  "nav_about": "Über uns",
+  "nav_contact": "Kontakt",
+
+  "hero_title": "Premium Custom Druck<br>Für Karten & Spiele",
+  "hero_subtitle": "20+ Jahre Erfahrung | ISO9002 | FSC-zertifiziert | Weltweiter Versand",
+  "hero_btn": "Kostenloses Angebot →",
+
+  "products_title": "Unsere Produkte",
+
+  "product_laser_title": "Holografische Karten",
+  "product_laser_desc": "Holografisch, Folienprägung, UV-Effekte. Ideal für hochwertige Geschenke & Sammlerstücke.",
+  "product_flashcards_title": "Lernkarten & Flashcards",
+  "product_flashcards_desc": "Abgerundete Ecken, laminiert, sicher für Kinder. Ideal für Bildung & Sprachenlernen.",
+  "product_playingcards_title": "Spielkarten",
+  "product_playingcards_desc": "Benutzerdefinierte Pokerkarten, Werbedecks. Mehrere Oberflächen & Verpackungsoptionen.",
+  "product_boardgames_title": "Brettspielkarten",
+  "product_boardgames_desc": "Benutzerdefinierte Größen, Regeln, Kunstwerke. Perfekt für Familienspiele & Strategiespiele.",
+  "product_tarot_title": "Tarotkarten",
+  "product_tarot_desc": "Hochwertiger Druck, glattes Finish. Komplett mit benutzerdefinierten Schachteln & Anleitungen.",
+  "product_advertising_title": "Werbekarten",
+  "product_advertising_desc": "Promo-Decks, Treuekarten. Niedrige Mindestabnahme, schnelle Lieferung möglich.",
+  "product_kids_title": "Pädagogische Kinder-Sets",
+  "product_kids_desc": "Umweltfreundliche Farben, sichere Materialien. Puzzles, Flashcards & interaktive Spiele.",
+
+  "cta_title": "Bereit, Ihr individuelles Kartenprojekt zu starten?",
+  "cta_subtitle": "Angebot innerhalb von 24 Stunden. Keine Mindestbestellmenge für Muster.",
+  "cta_btn": "Angebot anfordern →",
+
+  "about_title": "Shenzhen Yongrun Printing Co., Ltd.",
+  "about_text1": "Gegründet 2003, verfügen wir über mehr als 20 Jahre professionelle Druckerfahrung. Wir sind ein umfassender Dienstleister, der Entwicklung, Prototyping, Design, Druck, Verarbeitung und Verpackung integriert.",
+  "about_text2": "Spezialisiert auf Kinderförderung, Intelligenzentwicklung, Spiele und individuelle Kartensets. Jährliche Produktionskapazität übersteigt Millionen von Sets.",
+
+  "footer_rights": "Alle Rechte vorbehalten",
+
+  "contact_title": "Angebot einholen",
+  "contact_desc": "Teilen Sie uns Ihr Projekt mit, wir antworten innerhalb von 24 Stunden",
+  "form_name": "Ihr Name *",
+  "form_email": "E-Mail-Adresse *",
+  "form_message": "Nachricht (Kartentyp, Menge, besondere Anforderungen) *",
+  "form_submit": "Nachricht senden",
+  "form_success": "Nachricht gesendet! Wir werden Sie bald kontaktieren.",
+  "form_error_empty": "Bitte füllen Sie alle Pflichtfelder aus",
+  "form_error_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+  "form_error_submit": "Übermittlung fehlgeschlagen, bitte versuchen Sie es später erneut"
+}

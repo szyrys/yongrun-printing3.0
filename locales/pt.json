@@ -1,0 +1,50 @@
+{
+  "nav_home": "Início",
+  "nav_products": "Produtos",
+  "nav_process": "Processo Personalizado",
+  "nav_craft": "Opções de Acabamento",
+  "nav_about": "Sobre Nós",
+  "nav_contact": "Contato",
+
+  "hero_title": "Impressão Personalizada Premium<br>Para Cartas e Jogos",
+  "hero_subtitle": "+20 Anos de Experiência | ISO9002 | Certificado FSC | Envio Global",
+  "hero_btn": "Obter Orçamento Grátis →",
+
+  "products_title": "Nossos Produtos",
+
+  "product_laser_title": "Cartões Holográficos",
+  "product_laser_desc": "Holográfico, estampagem em foil, efeitos UV. Perfeito para presentes premium e colecionáveis.",
+  "product_flashcards_title": "Cartões de Aprendizagem e Flashcards",
+  "product_flashcards_desc": "Cantos arredondados, laminados, seguros para crianças. Ideal para educação e aprendizagem de idiomas.",
+  "product_playingcards_title": "Cartas de Baralho",
+  "product_playingcards_desc": "Cartas de pôquer personalizadas, baralhos publicitários. Múltiplos acabamentos e opções de embalagem.",
+  "product_boardgames_title": "Cartas para Jogos de Tabuleiro",
+  "product_boardgames_desc": "Tamanhos personalizados, regras, ilustrações. Perfeito para jogos de família e cartas estratégicas.",
+  "product_tarot_title": "Cartas de Tarot",
+  "product_tarot_desc": "Impressão premium, acabamento suave. Completo com caixas personalizadas e guias.",
+  "product_advertising_title": "Cartas Publicitárias",
+  "product_advertising_desc": "Baralhos promocionais, cartões de fidelidade. Quantidade mínima baixa, entrega rápida disponível.",
+  "product_kids_title": "Kits Educativos para Crianças",
+  "product_kids_desc": "Tintas ecológicas, materiais seguros. Quebra-cabeças, flashcards e jogos interativos.",
+
+  "cta_title": "Pronto para começar seu projeto de cartas personalizadas?",
+  "cta_subtitle": "Obtenha um orçamento em 24 horas. Sem quantidade mínima de pedido para amostras.",
+  "cta_btn": "Solicitar Orçamento →",
+
+  "about_title": "Shenzhen Yongrun Printing Co., Ltd.",
+  "about_text1": "Fundada em 2003, temos mais de 20 anos de experiência profissional em impressão. Somos um fornecedor de serviços abrangente que integra desenvolvimento, prototipagem, design, impressão, processamento e embalagem.",
+  "about_text2": "Especializados em desenvolvimento infantil, jogos e conjuntos de cartas personalizadas. A capacidade de produção anual ultrapassa milhões de conjuntos.",
+
+  "footer_rights": "Todos os direitos reservados",
+
+  "contact_title": "Obter Orçamento",
+  "contact_desc": "Conte-nos sobre o seu projeto, responderemos em 24 horas",
+  "form_name": "Seu Nome *",
+  "form_email": "Endereço de Email *",
+  "form_message": "Mensagem (tipo de cartão, quantidade, requisitos especiais) *",
+  "form_submit": "Enviar Mensagem",
+  "form_success": "Mensagem enviada! Entraremos em contato em breve.",
+  "form_error_empty": "Por favor, preencha todos os campos obrigatórios",
+  "form_error_email": "Por favor, insira um endereço de email válido",
+  "form_error_submit": "Falha no envio, por favor tente novamente mais tarde"
+}

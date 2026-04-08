@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Yongrun Printing</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 语言切换栏 -->
+    <div class="language-bar">
+        <div class="container">
+            <div class="language-selector" id="languageSelector"></div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">YONGRUN<span> Printing</span></a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+                <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
+                <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="contact_title">Get a Quote</h1>
+        </div>
+    </section>
+
+    <!-- 联系表单和公司信息 -->
+    <section class="contact-page">
+        <div class="container">
+            <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
+                <!-- 表单区域 -->
+                <div>
+                    <p class="contact-desc" data-i18n="contact_desc" style="margin-bottom: 30px;">Tell us about your project, we'll reply within 24 hours</p>
+                    
+                    <form id="messageForm" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" data-i18n-placeholder="form_name" placeholder="Your Name *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" data-i18n-placeholder="form_email" placeholder="Email Address *" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" rows="6" data-i18n-placeholder="form_message" placeholder="Message (card type, quantity, special requirements) *" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" data-i18n="form_submit">Submit Message</button>
+                        <div id="formStatus" class="form-status" style="margin-top: 20px;"></div>
+                    </form>
+                </div>
+
+                <!-- 公司联系信息 -->
+                <div>
+                    <h3 style="color: #1a2a4f; margin-bottom: 20px;">Shenzhen Yongrun Printing Co., Ltd.</h3>
+                    <div style="margin-bottom: 30px;">
+                        <p><i class="fas fa-map-marker-alt" style="color: #c9a03d; width: 30px;"></i> <strong>Address:</strong> Shenzhen, China</p>
+                        <p><i class="fas fa-phone" style="color: #c9a03d; width: 30px;"></i> <strong>Phone:</strong> +86 185 6569 8935</p>
+                        <p><i class="fas fa-envelope" style="color: #c9a03d; width: 30px;"></i> <strong>Email:</strong> cnyrys@163.com</p>
+                        <p><i class="fab fa-weixin" style="color: #c9a03d; width: 30px;"></i> <strong>WeChat:</strong> Yranzz</p>
+                    </div>
+                    
+                    <div style="background: #f5f5f5; padding: 20px; border-radius: 12px;">
+                        <h4 style="color: #1a2a4f; margin-bottom: 10px;">Business Hours</h4>
+                        <p>Monday - Friday: 9:00 AM - 6:00 PM (GMT+8)</p>
+                        <p>Saturday: 9:00 AM - 12:00 PM</p>
+                        <p style="margin-top: 15px; font-size: 14px; color: #666;">We respond to all inquiries within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
+        </div>
+    </footer>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 网站脚本 -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/contact.js"></script>
+</body>
+</html>

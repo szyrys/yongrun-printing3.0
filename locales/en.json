@@ -1,0 +1,50 @@
+{
+  "nav_home": "Home",
+  "nav_products": "Products",
+  "nav_process": "Custom Process",
+  "nav_craft": "Craft Options",
+  "nav_about": "About Us",
+  "nav_contact": "Contact",
+
+  "hero_title": "Premium Custom Printing<br>For Cards & Games",
+  "hero_subtitle": "20+ Years Experience | ISO9002 | FSC Certified | Global Shipping",
+  "hero_btn": "Get Free Quote →",
+
+  "products_title": "Our Products",
+
+  "product_laser_title": "Holographic Cards",
+  "product_laser_desc": "Holographic, foil stamping, UV effects. Perfect for premium gifts & collectibles.",
+  "product_flashcards_title": "Flashcards & Learning Cards",
+  "product_flashcards_desc": "Round corners, laminated, safe for kids. Ideal for education & language learning.",
+  "product_playingcards_title": "Playing Cards",
+  "product_playingcards_desc": "Custom poker cards, advertising decks. Multiple finishes & packaging options.",
+  "product_boardgames_title": "Board Game Cards",
+  "product_boardgames_desc": "Custom sizes, rules, artwork. Perfect for family games & strategy cards.",
+  "product_tarot_title": "Tarot Cards",
+  "product_tarot_desc": "Premium printing, smooth finish. Complete with custom boxes & guidebooks.",
+  "product_advertising_title": "Advertising Cards",
+  "product_advertising_desc": "Promotional decks, loyalty cards. Low MOQ, fast turnaround available.",
+  "product_kids_title": "Kids Educational Sets",
+  "product_kids_desc": "Eco-friendly inks, safe materials. Puzzles, flashcards & interactive games.",
+
+  "cta_title": "Ready to Start Your Custom Cards Project?",
+  "cta_subtitle": "Get a quote within 24 hours. No minimum order quantity for samples.",
+  "cta_btn": "Request a Quote →",
+
+  "about_title": "Shenzhen Yongrun Printing Co., Ltd.",
+  "about_text1": "Founded in 2003, we have over 20 years of professional printing experience. We are a comprehensive service provider integrating development, prototyping, design, printing, processing, and packaging.",
+  "about_text2": "Specialized in children's enlightenment, intelligence development, games, and custom card sets. Annual production capacity exceeds millions of sets.",
+
+  "footer_rights": "All Rights Reserved",
+
+  "contact_title": "Get a Quote",
+  "contact_desc": "Tell us about your project, we'll reply within 24 hours",
+  "form_name": "Your Name *",
+  "form_email": "Email Address *",
+  "form_message": "Message (card type, quantity, special requirements) *",
+  "form_submit": "Submit Message",
+  "form_success": "Message sent! We will contact you soon.",
+  "form_error_empty": "Please fill in all required fields",
+  "form_error_email": "Please enter a valid email address",
+  "form_error_submit": "Submission failed, please try again later"
+}

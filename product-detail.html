@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Yongrun Printing</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 产品明细页面专用样式 */
+        .detail-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .product-info {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .product-info h1 {
+            color: #1a2a4f;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .product-info p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* 轮播图容器 */
+        .carousel-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f5f5f5;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        /* 主图区域 */
+        .main-image {
+            position: relative;
+            height: 500px;
+            background: #1a2a4f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .main-image-placeholder {
+            text-align: center;
+            color: white;
+        }
+        
+        .main-image-placeholder i {
+            font-size: 5rem;
+            margin-bottom: 15px;
+        }
+        
+        /* 导航箭头 */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+        
+        .nav-arrow:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .prev-arrow {
+            left: 15px;
+        }
+        
+        .next-arrow {
+            right: 15px;
+        }
+        
+        /* 缩略图区域 */
+        .thumbnail-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            background: white;
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+        
+        .thumbnail:hover {
+            border-color: #c9a03d;
+            transform: scale(1.05);
+        }
+        
+        .thumbnail.active {
+            border-color: #c9a03d;
+            box-shadow: 0 0 0 2px rgba(201,160,61,0.3);
+        }
+        
+        .thumbnail i {
+            font-size: 2rem;
+            color: #1a2a4f;
+        }
+        
+        /* 返回按钮 */
+        .back-btn {
+            display: inline-block;
+            margin: 30px auto 0;
+            text-align: center;
+        }
+        
+        .back-btn a {
+            color: #c9a03d;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-btn a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .main-image {
+                height: 300px;
+            }
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+            .product-info h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 语言切换栏 -->
+    <div class="language-bar">
+        <div class="container">
+            <div class="language-selector" id="languageSelector"></div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">YONGRUN<span> Printing</span></a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+                <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
+                <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 产品明细内容 -->
+    <div class="detail-container">
+        <div class="product-info">
+            <h1 id="detailTitle">产品名称</h1>
+            <p id="detailDesc">产品详细介绍</p>
+        </div>
+        
+        <!-- 轮播图区域 -->
+        <div class="carousel-container">
+            <button class="nav-arrow prev-arrow" id="prevBtn">❮</button>
+            <div class="main-image" id="mainImage">
+                <div class="main-image-placeholder">
+                    <i class="fas fa-image"></i>
+                    <p>样品图片</p>
+                </div>
+            </div>
+            <button class="nav-arrow next-arrow" id="nextBtn">❯</button>
+        </div>
+        
+        <!-- 缩略图导航 -->
+        <div class="thumbnail-container" id="thumbnailContainer">
+            <!-- 缩略图会通过JS动态生成 -->
+        </div>
+        
+        <div class="back-btn">
+            <a href="javascript:history.back()">← 返回产品页</a>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
+        </div>
+    </footer>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 网站脚本 -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/product-detail-page.js"></script>
+</body>
+</html>

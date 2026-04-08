@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yongrun Printing - 专业卡牌印刷定制专家</title>
+    <meta name="description" content="专注印刷20余年，提供镭射卡、扑克牌、桌游卡牌、塔罗牌等定制印刷服务。全球配送，品质保证。">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 语言切换栏 -->
+    <div class="language-bar">
+        <div class="container">
+            <div class="language-selector" id="languageSelector">
+                <!-- 语言按钮会通过JS动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">YONGRUN<span> Printing</span></a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+                <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
+                <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner 区域 - 参考 wjplayingcard.com 风格 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-i18n="hero_title">Premium Custom Printing<br>For Cards & Games</h1>
+                <p data-i18n="hero_subtitle">20+ Years Experience | ISO9002 | FSC Certified | Global Shipping</p>
+                <a href="contact.html" class="btn btn-primary" data-i18n="hero_btn">Get Free Quote →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品展示区域 -->
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="products_title">Our <span>Products</span></h2>
+            <div class="product-grid" id="productGrid">
+                <!-- 产品卡片会通过JS动态生成，支持多语言 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 引导询盘区域 -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 data-i18n="cta_title">Ready to Start Your Custom Cards Project?</h2>
+            <p data-i18n="cta_subtitle">Get a quote within 24 hours. No minimum order quantity for samples.</p>
+            <a href="contact.html" class="btn btn-primary" data-i18n="cta_btn">Request a Quote →</a>
+        </div>
+    </section>
+
+    <!-- 公司简介区域 -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3 data-i18n="about_title">Shenzhen Yongrun Printing Co., Ltd.</h3>
+                    <p data-i18n="about_text1">Founded in 2003, we have over 20 years of professional printing experience. We are a comprehensive service provider integrating development, prototyping, design, printing, processing, and packaging.</p>
+                    <p data-i18n="about_text2">Specialized in children's enlightenment, intelligence development, games, and custom card sets. Annual production capacity exceeds millions of sets.</p>
+                    <div class="features-list">
+                        <span>ISO9002</span>
+                        <span>FSC Certified</span>
+                        <span>SEDEX</span>
+                        <span>20+ Years Experience</span>
+                        <span>Global Shipping</span>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <!-- 占位图，后续可替换 -->
+                    <div style="background: #1a2a4f; border-radius: 12px; padding: 60px; text-align: center; color: white;">
+                        <i class="fas fa-print" style="font-size: 4rem;"></i>
+                        <p style="margin-top: 15px;">Professional Printing Facility</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
+        </div>
+    </footer>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 网站脚本 -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Yongrun Printing</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 管理后台专用样式 */
+        .admin-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        
+        /* 登录表单 */
+        .login-card {
+            max-width: 400px;
+            margin: 80px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .login-card h2 {
+            text-align: center;
+            color: #1a2a4f;
+            margin-bottom: 25px;
+        }
+        
+        .login-card input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .login-card button {
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        /* 管理面板 */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .admin-header h1 {
+            color: #1a2a4f;
+            font-size: 1.8rem;
+        }
+        
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        
+        /* 留言表格 */
+        .message-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .message-table th,
+        .message-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .message-table th {
+            background: #1a2a4f;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .message-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #999;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .error-msg {
+            background: #fee;
+            color: #e74c3c;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .message-table {
+                font-size: 12px;
+            }
+            .message-table th,
+            .message-table td {
+                padding: 8px 10px;
+            }
+            .admin-header h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录面板（初始显示） -->
+    <div id="loginPanel" class="admin-container">
+        <div class="login-card">
+            <h2><i class="fas fa-lock"></i> 管理员登录</h2>
+            <input type="email" id="adminEmail" placeholder="邮箱地址" autocomplete="email">
+            <input type="password" id="adminPassword" placeholder="密码" autocomplete="current-password">
+            <button id="loginBtn" class="btn btn-primary">登录</button>
+            <div id="loginError" class="error-msg" style="display: none;"></div>
+            <p style="margin-top: 20px; font-size: 12px; color: #999; text-align: center;">
+                提示：请在 Supabase Authentication 中创建管理员账户
+            </p>
+        </div>
+    </div>
+
+    <!-- 管理面板（登录后显示） -->
+    <div id="adminPanel" class="admin-container" style="display: none;">
+        <div class="admin-header">
+            <h1><i class="fas fa-comments"></i> 客户留言管理</h1>
+            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> 登出</button>
+        </div>
+        <div id="messagesContainer">
+            <div class="loading"><i class="fas fa-spinner fa-spin"></i> 加载留言中...</div>
+        </div>
+    </div>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 网站脚本 -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

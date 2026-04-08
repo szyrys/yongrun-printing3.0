@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Yongrun Printing</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 关于我们页面专用样式 */
+        .about-hero {
+            background: linear-gradient(135deg, #1a2a4f 0%, #2a3a5f 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .about-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .about-section {
+            padding: 60px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .about-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            color: #1a2a4f;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 30px 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #c9a03d;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .cert-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .cert-icon {
+            font-size: 3rem;
+            color: #c9a03d;
+            margin-bottom: 15px;
+        }
+        
+        .value-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .value-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .value-icon {
+            font-size: 2rem;
+            color: #c9a03d;
+            margin-bottom: 15px;
+        }
+        
+        .value-item h4 {
+            color: #1a2a4f;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 语言切换栏 -->
+    <div class="language-bar">
+        <div class="container">
+            <div class="language-selector" id="languageSelector"></div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">YONGRUN<span> Printing</span></a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+                <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
+                <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <section class="about-hero">
+        <div class="container">
+            <h1 data-i18n="about_hero_title">Shenzhen Yongrun Printing Co., Ltd.</h1>
+            <p data-i18n="about_hero_subtitle">专注印刷 · 用心服务 · 共创辉煌</p>
+        </div>
+    </section>
+
+    <!-- 公司简介 -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3 data-i18n="about_company_title" style="color: #1a2a4f; margin-bottom: 20px;">About Yongrun Printing</h3>
+                    <p data-i18n="about_company_text1">Founded in 2003, we have over 20 years of professional printing experience. We are a comprehensive service provider integrating development, prototyping, design, printing, processing, and packaging.</p>
+                    <p data-i18n="about_company_text2">Specialized in children's enlightenment, intelligence development, games, and custom card sets. Our representative products include holographic cards, learning flashcards, playing cards, board game cards, tarot cards, and more.</p>
+                    <p data-i18n="about_company_text3">With multiple advanced card production lines, our annual production capacity exceeds millions of sets. We are committed to providing high-quality, personalized one-stop printing solutions for our global clients.</p>
+                </div>
+                <div class="about-image">
+                    <div style="background: #1a2a4f; border-radius: 12px; padding: 60px; text-align: center; color: white;">
+                        <i class="fas fa-building" style="font-size: 4rem;"></i>
+                        <p style="margin-top: 15px;">Yongrun Printing Facility</p>
+                        <p style="font-size: 12px; margin-top: 10px;">(Image placeholder - add your factory photo)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 统计数据 -->
+    <section class="about-section" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="stats_title">Yongrun by the Numbers</h2>
+                <p data-i18n="stats_subtitle">20+ years of excellence in printing</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">20+</div>
+                    <div class="stat-label" data-i18n="stat1">Years Experience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label" data-i18n="stat2">Countries Served</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label" data-i18n="stat3">Sets Annual Capacity</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label" data-i18n="stat4">Product Series</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 资质认证 -->
+    <section class="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="cert_title">Certifications & Quality</h2>
+                <p data-i18n="cert_subtitle">International standards for quality assurance</p>
+            </div>
+            <div class="cert-grid">
+                <div class="cert-item">
+                    <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                    <h4>ISO9002</h4>
+                    <p style="font-size: 12px; color: #666;">Quality Management</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon"><i class="fas fa-tree"></i></div>
+                    <h4>FSC Certified</h4>
+                    <p style="font-size: 12px; color: #666;">Forest Stewardship Council</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon"><i class="fas fa-handshake"></i></div>
+                    <h4>SEDEX</h4>
+                    <p style="font-size: 12px; color: #666;">Social Compliance</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Digital Color Management</h4>
+                    <p style="font-size: 12px; color: #666;">Consistent Color Accuracy</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 企业理念 -->
+    <section class="about-section" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="values_title">Our Core Values</h2>
+                <p data-i18n="values_subtitle">客户至上 · 品质为本 · 诚信共赢</p>
+            </div>
+            <div class="value-list">
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-smile"></i></div>
+                    <h4 data-i18n="value1_title">Customer First</h4>
+                    <p data-i18n="value1_desc">We put customer needs at the center of everything we do.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-medal"></i></div>
+                    <h4 data-i18n="value2_title">Quality Focus</h4>
+                    <p data-i18n="value2_desc">Commitment to premium quality in every product.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h4 data-i18n="value3_title">Integrity & Win-Win</h4>
+                    <p data-i18n="value3_desc">Build long-term trust and mutual success.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-rocket"></i></div>
+                    <h4 data-i18n="value4_title">Continuous Improvement</h4>
+                    <p data-i18n="value4_desc">精益求精，持续优化工艺和服务。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 设备与技术 -->
+    <section class="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="equipment_title">Equipment & Technology</h2>
+                <p data-i18n="equipment_subtitle">State-of-the-art production facilities</p>
+            </div>
+            <div class="about-grid">
+                <div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color: #c9a03d; margin-right: 10px;"></i> Multiple automated card production lines</li>
+                        <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color: #c9a03d; margin-right: 10px;"></i> Digital color management system</li>
+                        <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color: #c9a03d; margin-right: 10px;"></i> High-speed printing presses</li>
+                        <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color: #c9a03d; margin-right: 10px;"></i> Foil stamping & embossing equipment</li>
+                        <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color: #c9a03d; margin-right: 10px;"></i> Efficient prototyping and fast delivery system</li>
+                    </ul>
+                </div>
+                <div>
+                    <div style="background: #1a2a4f; border-radius: 12px; padding: 50px; text-align: center; color: white;">
+                        <i class="fas fa-microchip" style="font-size: 3rem;"></i>
+                        <p style="margin-top: 15px;">Advanced Manufacturing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 区域 -->
+    <section class="cta-section" style="background: #c9a03d; color: #1a2a4f;">
+        <div class="container">
+            <h2 data-i18n="about_cta_title">Partner with Yongrun Printing</h2>
+            <p data-i18n="about_cta_subtitle">Let's bring your custom card projects to life</p>
+            <a href="contact.html" class="btn btn-primary" style="background: #1a2a4f; color: white;">Contact Us Today →</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
+        </div>
+    </footer>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 网站脚本 -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/common.js"></script>
+</body>
+</html>

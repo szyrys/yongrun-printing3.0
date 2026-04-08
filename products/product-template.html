@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - Yongrun Printing</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 产品详情页专用样式 */
+        .sample-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+        .sample-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .sample-card:hover {
+            transform: translateY(-5px);
+        }
+        .sample-img {
+            height: 200px;
+            background: #1a2a4f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        .sample-info {
+            padding: 15px;
+        }
+        .sample-info h4 {
+            color: #1a2a4f;
+            margin-bottom: 8px;
+        }
+        .sample-info p {
+            color: #666;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .sample-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .sample-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 语言切换栏 -->
+    <div class="language-bar">
+        <div class="container">
+            <div class="language-selector" id="languageSelector"></div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">YONGRUN<span> Printing</span></a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="../products.html" data-i18n="nav_products">Products</a></li>
+                <li><a href="../custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                <li><a href="../craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
+                <li><a href="../about.html" data-i18n="nav_about">About Us</a></li>
+                <li><a href="../contact.html" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 id="productTitle">Product Name</h1>
+        </div>
+    </section>
+
+    <!-- 产品介绍 -->
+    <section style="padding: 40px 0 0 0;">
+        <div class="container">
+            <div class="product-description" style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p id="productDescription" style="font-size: 1.1rem; color: #555;">Product description goes here.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 样品9宫格区域 -->
+    <section style="padding: 40px 0 60px 0;">
+        <div class="container">
+            <h2 style="text-align: center; color: #1a2a4f; margin-bottom: 30px;" data-i18n="sample_gallery">Sample Gallery</h2>
+            <div class="sample-grid" id="sampleGrid">
+                <!-- 9个样品卡片会通过JS动态生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
+        </div>
+    </footer>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 网站脚本 -->
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/product-detail.js"></script>
+</body>
+</html>

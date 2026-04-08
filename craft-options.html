@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Craft Options - Yongrun Printing</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 工艺选项页面专用样式 */
+        .craft-section {
+            padding: 60px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .craft-section:last-child {
+            border-bottom: none;
+        }
+        
+        .craft-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .craft-title h2 {
+            color: #1a2a4f;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .craft-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .craft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .craft-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .craft-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .craft-icon {
+            font-size: 3rem;
+            color: #c9a03d;
+            margin-bottom: 20px;
+        }
+        
+        .craft-card h3 {
+            color: #1a2a4f;
+            margin-bottom: 15px;
+        }
+        
+        .craft-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .badge {
+            background: #f5f5f5;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #1a2a4f;
+        }
+        
+        @media (max-width: 768px) {
+            .craft-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 语言切换栏 -->
+    <div class="language-bar">
+        <div class="container">
+            <div class="language-selector" id="languageSelector"></div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">YONGRUN<span> Printing</span></a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+                <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
+                <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="craft_title">Craft Options</h1>
+            <p data-i18n="craft_subtitle">Premium materials and finishes for your custom cards</p>
+        </div>
+    </section>
+
+    <!-- 材质选项 -->
+    <section class="craft-section">
+        <div class="container">
+            <div class="craft-title">
+                <h2 data-i18n="material_title">Paper & Materials</h2>
+                <p data-i18n="material_desc">Choose from a variety of high-quality paper stocks</p>
+            </div>
+            <div class="craft-grid">
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3 data-i18n="material1_title">Standard Playing Card Paper</h3>
+                    <p data-i18n="material1_desc">310gsm-330gsm, black core or blue core, excellent snap and durability.</p>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-gem"></i></div>
+                    <h3 data-i18n="material2_title">Premium Art Paper</h3>
+                    <p data-i18n="material2_desc">300gsm-350gsm, coated or uncoated, ideal for tarot and collectible cards.</p>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-water"></i></div>
+                    <h3 data-i18n="material3_title">Plastic Cards (PVC)</h3>
+                    <p data-i18n="material3_desc">Waterproof, tear-resistant, available in various thicknesses (0.3mm-0.8mm).</p>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-leaf"></i></div>
+                    <h3 data-i18n="material4_title">Eco-Friendly Paper</h3>
+                    <p data-i18n="material4_desc">FSC certified, recycled paper options for environmentally conscious brands.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 表面处理 -->
+    <section class="craft-section" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="craft-title">
+                <h2 data-i18n="finish_title">Surface Finishes</h2>
+                <p data-i18n="finish_desc">Protective coatings and textures for the perfect feel</p>
+            </div>
+            <div class="craft-grid">
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-sun"></i></div>
+                    <h3 data-i18n="finish1_title">Gloss Lamination</h3>
+                    <p data-i18n="finish1_desc">High shine, vibrant colors, scratch resistant.</p>
+                    <div class="badge-list"><span class="badge">Recommended for playing cards</span></div>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-moon"></i></div>
+                    <h3 data-i18n="finish2_title">Matte Lamination</h3>
+                    <p data-i18n="finish2_desc">Non-glare, elegant look, smooth to touch.</p>
+                    <div class="badge-list"><span class="badge">Recommended for tarot cards</span></div>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-hand-paper"></i></div>
+                    <h3 data-i18n="finish3_title">Aqueous Coating</h3>
+                    <p data-i18n="finish3_desc">Quick-drying, eco-friendly, good protection.</p>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-palette"></i></div>
+                    <h3 data-i18n="finish4_title">UV Coating</h3>
+                    <p data-i18n="finish4_desc">High gloss, ultra durable, spot UV available.</p>
+                    <div class="badge-list"><span class="badge">Spot UV effect</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 印刷工艺 -->
+    <section class="craft-section">
+        <div class="container">
+            <div class="craft-title">
+                <h2 data-i18n="process_title">Printing Processes</h2>
+                <p data-i18n="process_desc">Advanced printing technologies for stunning results</p>
+            </div>
+            <div class="craft-grid">
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-print"></i></div>
+                    <h3 data-i18n="process1_title">Offset Printing</h3>
+                    <p data-i18n="process1_desc">High quality, cost-effective for large quantities, Pantone color matching.</p>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-desktop"></i></div>
+                    <h3 data-i18n="process2_title">Digital Printing</h3>
+                    <p data-i18n="process2_desc">Fast turnaround, no minimum order, perfect for prototypes and small batches.</p>
+                    <div class="badge-list"><span class="badge">No MOQ</span><span class="badge">Fast sample</span></div>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-star"></i></div>
+                    <h3 data-i18n="process3_title">Foil Stamping</h3>
+                    <p data-i18n="process3_desc">Gold, silver, holographic, and custom color foils.</p>
+                    <div class="badge-list"><span class="badge">Gold</span><span class="badge">Silver</span><span class="badge">Holographic</span></div>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-magic"></i></div>
+                    <h3 data-i18n="process4_title">Embossing & Debossing</h3>
+                    <p data-i18n="process4_desc">Raised or indented textures for premium tactile experience.</p>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-cut"></i></div>
+                    <h3 data-i18n="process5_title">Die Cutting</h3>
+                    <p data-i18n="process5_desc">Custom shapes and sizes, round corners, perforations.</p>
+                </div>
+                <div class="craft-card">
+                    <div class="craft-icon"><i class="fas fa-qrcode"></i></div>
+                    <h3 data-i18n="process6_title">Variable Data Printing</h3>
+                    <p data-i18n="process6_desc">Unique codes, QR codes, or text on each card.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 区域 -->
+    <section class="cta-section" style="background: #c9a03d; color: #1a2a4f;">
+        <div class="container">
+            <h2 data-i18n="craft_cta_title">Need Help Choosing the Right Options?</h2>
+            <p data-i18n="craft_cta_subtitle">Our experts are here to guide you through the selection process.</p>
+            <a href="contact.html" class="btn btn-primary" style="background: #1a2a4f; color: white;">Contact Our Team →</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
+        </div>
+    </footer>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 网站脚本 -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "nav_home": "首頁",
+  "nav_products": "產品中心",
+  "nav_process": "定制流程",
+  "nav_craft": "工藝選項",
+  "nav_about": "關於我們",
+  "nav_contact": "聯繫我們",
+
+  "hero_title": "專業定制印刷<br>卡牌與遊戲",
+  "hero_subtitle": "20年經驗 | ISO9002 | FSC認證 | 全球配送",
+  "hero_btn": "免費獲取報價 →",
+
+  "products_title": "我們的產品",
+
+  "product_laser_title": "鐳射卡系列",
+  "product_laser_desc": "全息鐳射、燙金、UV效果。適用於高端禮品及收藏卡牌。",
+  "product_flashcards_title": "學習卡片與閃卡",
+  "product_flashcards_desc": "圓角設計、覆膜防水，安全環保。適用於早教及語言學習。",
+  "product_playingcards_title": "撲克牌系列",
+  "product_playingcards_desc": "定制撲克、廣告撲克。多種表面處理工藝與包裝選擇。",
+  "product_boardgames_title": "桌遊牌與遊戲卡片",
+  "product_boardgames_desc": "自定義尺寸、規則與卡面設計。適用於家庭遊戲及策略卡牌。",
+  "product_tarot_title": "塔羅牌",
+  "product_tarot_desc": "高端印刷、手感舒適。配套定制包裝盒及說明書。",
+  "product_advertising_title": "廣告定制撲克牌",
+  "product_advertising_desc": "企業宣傳、活動禮品。支持小批量定制，快速打樣。",
+  "product_kids_title": "兒童啟蒙套裝",
+  "product_kids_desc": "環保油墨、安全材質。拼圖卡、認知卡、互動遊戲套裝。",
+
+  "cta_title": "準備好開始您的定制卡牌項目了嗎？",
+  "cta_subtitle": "24小時內獲取報價。樣品無起訂量要求。",
+  "cta_btn": "立即詢價 →",
+
+  "about_title": "深圳市永潤印刷有限公司",
+  "about_text1": "成立於2003年，擁有20餘年的專業印刷製造經驗。是一家集開發、打樣、設計、印刷、加工、包裝於一體的綜合服務商。",
+  "about_text2": "專注兒童啟蒙、智力開發、遊戲娛樂及親子遊戲卡套裝等領域。年產能達數百萬套，服務全球客戶。",
+
+  "footer_rights": "版權所有",
+
+  "contact_title": "獲取報價",
+  "contact_desc": "告訴我們您的需求，我們將在24小時內回覆您",
+  "form_name": "您的姓名 *",
+  "form_email": "電子郵箱 *",
+  "form_message": "留言內容（卡牌類型、數量、特殊要求等）*",
+  "form_submit": "提交留言",
+  "form_success": "留言已發送，我們會盡快聯繫您！",
+  "form_error_empty": "請填寫所有必填項",
+  "form_error_email": "請輸入有效的郵箱地址",
+  "form_error_submit": "提交失敗，請稍後重試"
+}
