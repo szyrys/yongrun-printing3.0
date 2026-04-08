@@ -44,6 +44,7 @@ async function loadLanguage(langCode) {
         updatePlaceholders();
         updateProductGrid();
         
+        // 同步导航栏语言下拉框的值
         const navSelect = document.getElementById('navLanguageSelect');
         if (navSelect) navSelect.value = langCode;
         
@@ -143,25 +144,12 @@ function addLanguageSelectorToNavbar() {
     contactItem.insertAdjacentElement('afterend', newLi);
 }
 
-function t(key) {
-    return translations[key] || key;
-}
-
-document.addEventListener('DOMContentLoaded', async () => {
-    renderLanguageButtons();
-    initMobileMenu();
-    const savedLang = localStorage.getItem('preferredLanguage');
-    const browserLang = navigator.language.split('-')[0];
-    let initLang = 'en';
-    if (savedLang && languages.some(l => l.code === savedLang)) initLang = savedLang;
-    else if (languages.some(l => l.code === browserLang)) initLang = browserLang;
-    await loadLanguage(initLang);
-    addLanguageSelectorToNavbar();
-});
-// ===== 加载 FAQ 到首页 =====
-async function loadFaqsToHome() {
+// ===== 加载 FAQ（从 Supabase）=====
+async function loadFaqs() {
     const container = document.getElementById('faqList');
     if (!container) return;
+    
+    container.innerHTML = '<div class="loading">加载 FAQ 中...</div>';
     
     try {
         const { data, error } = await window.supabaseClient
@@ -172,33 +160,72 @@ async function loadFaqsToHome() {
         if (error) throw error;
         
         if (!data || data.length === 0) {
-            container.innerHTML = '<p>No FAQs yet.</p>';
+            container.innerHTML = '<p class="empty-state">暂无 FAQ，请稍后再来。</p>';
             return;
         }
         
         let html = '';
-        data.forEach((faq, idx) => {
+        data.forEach((faq, index) => {
             html += `
                 <div class="faq-item">
-                    <div class="faq-question" data-idx="${idx}">${escapeHtml(faq.question)}</div>
-                    <div class="faq-answer" id="faq-answer-${idx}">${escapeHtml(faq.answer)}</div>
+                    <div class="faq-question" data-idx="${index}">
+                        ${escapeHtml(faq.question)}
+                    </div>
+                    <div class="faq-answer" id="faq-answer-${index}">
+                        ${escapeHtml(faq.answer)}
+                    </div>
                 </div>
             `;
         });
         container.innerHTML = html;
         
+        // 绑定点击事件实现折叠/展开
         document.querySelectorAll('.faq-question').forEach(header => {
-            header.addEventListener('click', () => {
-                const answer = header.nextElementSibling;
+            header.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
                 answer.classList.toggle('show');
-                header.classList.toggle('active');
+                this.classList.toggle('active');
             });
         });
     } catch (err) {
-        container.innerHTML = '<p>Failed to load FAQs.</p>';
+        console.error('加载 FAQ 失败:', err);
+        container.innerHTML = '<p class="empty-state">加载 FAQ 失败，请刷新页面重试。</p>';
     }
 }
 
-// 在 DOMContentLoaded 中添加调用
-// 找到现有的 document.addEventListener('DOMContentLoaded', ...) 函数，在最后添加：
-// loadFaqsToHome();
+// 简单的防XSS函数
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+function t(key) {
+    return translations[key] || key;
+}
+
+// ===== 初始化 =====
+document.addEventListener('DOMContentLoaded', async () => {
+    renderLanguageButtons();
+    initMobileMenu();
+    
+    const savedLang = localStorage.getItem('preferredLanguage');
+    const browserLang = navigator.language.split('-')[0];
+    
+    let initLang = 'en';
+    if (savedLang && languages.some(l => l.code === savedLang)) {
+        initLang = savedLang;
+    } else if (languages.some(l => l.code === browserLang)) {
+        initLang = browserLang;
+    }
+    
+    await loadLanguage(initLang);
+    addLanguageSelectorToNavbar();
+    
+    // 加载 FAQ（首页需要）
+    loadFaqs();
+});
