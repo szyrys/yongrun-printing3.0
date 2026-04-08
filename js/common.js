@@ -43,10 +43,10 @@ async function loadLanguage(langCode) {
         updatePlaceholders();
         updateProductGrid();
         
-        // 同步页脚语言下拉框
-        const footerSelect = document.getElementById('footerLanguageSelect');
-        if (footerSelect) {
-            footerSelect.value = langCode;
+        // 同步导航栏语言下拉框的值
+        const navSelect = document.getElementById('navLanguageSelect');
+        if (navSelect) {
+            navSelect.value = langCode;
         }
         
         localStorage.setItem('preferredLanguage', langCode);
@@ -102,9 +102,9 @@ function updateProductGrid() {
     });
 }
 
-// ===== 渲染语言切换按钮（已禁用，改用页脚下拉框）=====
+// ===== 渲染语言切换按钮（已禁用，改用导航栏下拉框）=====
 function renderLanguageButtons() {
-    // 不再使用顶部按钮，已移至页脚
+    // 不再使用顶部按钮，已移至导航栏
     const container = document.getElementById('languageSelector');
     if (container) {
         container.innerHTML = '';
@@ -123,34 +123,45 @@ function initMobileMenu() {
     }
 }
 
-// ===== 在页脚动态添加语言选择下拉框 =====
-function addFooterLanguageSelector() {
-    const footer = document.querySelector('.footer .container');
-    if (footer && !document.getElementById('footerLanguageSelect')) {
-        const div = document.createElement('div');
-        div.style.marginTop = '20px';
-        div.innerHTML = `
-            <label style="margin-right: 10px;">🌐 Language / 语言 :</label>
-            <select id="footerLanguageSelect" style="padding: 6px 12px; border-radius: 6px; background: white; color: #1a2a4f; border: 1px solid #c9a03d; cursor: pointer; font-size: 14px;">
-                <option value="en">English</option>
-                <option value="zh-CN">简体中文</option>
-                <option value="zh-TW">繁體中文</option>
-                <option value="de">Deutsch</option>
-                <option value="es">Español</option>
-                <option value="pt">Português</option>
-                <option value="ar">العربية</option>
-                <option value="ja">日本語</option>
-                <option value="ko">한국어</option>
-            </select>
-        `;
-        footer.appendChild(div);
-        
-        const select = document.getElementById('footerLanguageSelect');
-        select.addEventListener('change', (e) => {
-            loadLanguage(e.target.value);
-        });
-        select.value = currentLang;
-    }
+// ===== 在导航栏 Contact 后面添加语言下拉框 =====
+function addLanguageSelectorToNavbar() {
+    const navMenu = document.getElementById('navMenu');
+    if (!navMenu) return;
+    
+    // 找到 Contact 对应的 li 元素
+    const contactItem = Array.from(navMenu.children).find(li => {
+        const link = li.querySelector('a');
+        return link && link.getAttribute('data-i18n') === 'nav_contact';
+    });
+    
+    if (!contactItem) return;
+    
+    // 防止重复添加
+    if (document.getElementById('navLanguageSelect')) return;
+    
+    const newLi = document.createElement('li');
+    newLi.style.marginLeft = '10px';
+    
+    const select = document.createElement('select');
+    select.id = 'navLanguageSelect';
+    select.style.cssText = 'padding: 6px 12px; border-radius: 6px; background: #1a2a4f; color: white; border: 1px solid #c9a03d; cursor: pointer; font-size: 14px;';
+    
+    languages.forEach(lang => {
+        const option = document.createElement('option');
+        option.value = lang.code;
+        option.textContent = lang.name;
+        if (lang.code === currentLang) {
+            option.selected = true;
+        }
+        select.appendChild(option);
+    });
+    
+    select.onchange = (e) => {
+        loadLanguage(e.target.value);
+    };
+    
+    newLi.appendChild(select);
+    contactItem.insertAdjacentElement('afterend', newLi);
 }
 
 // ===== 辅助函数 =====
@@ -175,6 +186,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     await loadLanguage(initLang);
     
-    // 添加页脚语言下拉框
-    addFooterLanguageSelector();
+    // 添加导航栏语言下拉框
+    addLanguageSelectorToNavbar();
 });
