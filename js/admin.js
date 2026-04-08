@@ -248,3 +248,96 @@ if (adminEmail) {
 document.addEventListener('DOMContentLoaded', () => {
     checkSession();
 });
+// ===== FAQ 管理 =====
+let currentFaqId = null;
+
+async function loadFaqs() {
+    const container = document.getElementById('faqContainer');
+    if (!container) return;
+    container.innerHTML = '<div class="loading">加载 FAQ 中...</div>';
+    
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('faq')
+            .select('*')
+            .order('sort_order', { ascending: true });
+        
+        if (error) throw error;
+        
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="empty-state">暂无 FAQ，点击“添加 FAQ”创建。</div>';
+            return;
+        }
+        
+        let html = `<table class="message-table"><thead><tr><th>序号</th><th>问题</th><th>回答</th><th>操作</th></tr></thead><tbody>`;
+        data.forEach((faq, idx) => {
+            html += `<tr data-id="${faq.id}">
+                        <td>${idx+1}</td>
+                        <td>${escapeHtml(faq.question)}</td>
+                        <td>${escapeHtml(faq.answer.substring(0, 80))}${faq.answer.length>80 ? '...' : ''}</td>
+                        <td><button class="edit-faq-btn" data-id="${faq.id}">编辑</button> <button class="delete-faq-btn" data-id="${faq.id}">删除</button></td>
+                    </tr>`;
+        });
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+        
+        document.querySelectorAll('.edit-faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => editFaq(btn.getAttribute('data-id')));
+        });
+        document.querySelectorAll('.delete-faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteFaq(btn.getAttribute('data-id')));
+        });
+    } catch (err) {
+        container.innerHTML = '<div class="empty-state">加载失败，请重试</div>';
+    }
+}
+
+async function editFaq(id) {
+    const { data, error } = await window.supabaseClient.from('faq').select('*').eq('id', id).single();
+    if (error) return alert('加载失败');
+    document.getElementById('faqQuestion').value = data.question;
+    document.getElementById('faqAnswer').value = data.answer;
+    document.getElementById('faqId').value = data.id;
+    document.getElementById('modalTitle').innerText = '编辑 FAQ';
+    document.getElementById('faqModal').style.display = 'block';
+    currentFaqId = id;
+}
+
+async function deleteFaq(id) {
+    if (!confirm('确定删除这条 FAQ 吗？')) return;
+    const { error } = await window.supabaseClient.from('faq').delete().eq('id', id);
+    if (error) alert('删除失败');
+    else loadFaqs();
+}
+
+document.getElementById('addFaqBtn')?.addEventListener('click', () => {
+    document.getElementById('faqQuestion').value = '';
+    document.getElementById('faqAnswer').value = '';
+    document.getElementById('faqId').value = '';
+    document.getElementById('modalTitle').innerText = '添加 FAQ';
+    document.getElementById('faqModal').style.display = 'block';
+    currentFaqId = null;
+});
+
+document.getElementById('saveFaqBtn')?.addEventListener('click', async () => {
+    const question = document.getElementById('faqQuestion').value.trim();
+    const answer = document.getElementById('faqAnswer').value.trim();
+    if (!question || !answer) return alert('请填写问题和回答');
+    
+    if (currentFaqId) {
+        const { error } = await window.supabaseClient.from('faq').update({ question, answer }).eq('id', currentFaqId);
+        if (error) alert('更新失败');
+    } else {
+        const { error } = await window.supabaseClient.from('faq').insert([{ question, answer, sort_order: 0 }]);
+        if (error) alert('添加失败');
+    }
+    document.getElementById('faqModal').style.display = 'none';
+    loadFaqs();
+});
+
+document.getElementById('cancelFaqBtn')?.addEventListener('click', () => {
+    document.getElementById('faqModal').style.display = 'none';
+});
+
+// 在显示后台面板时加载 FAQ（修改原有函数）
+// 找到 showAdminPanel 函数，在其中添加 loadFaqs();
