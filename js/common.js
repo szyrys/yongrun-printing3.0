@@ -1,4 +1,3 @@
-const supabase = window.supabaseClient;
 // ===== 多语言配置 =====
 const languages = [
     { code: 'en', name: 'English', dir: 'ltr' },
