@@ -230,46 +230,101 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 加载 FAQ（首页需要）
     loadFaqs();
-        // ===== 五图画廊交互 =====
-    const mainImg = document.getElementById('mainGalleryImage');
-    const thumbsContainer = document.getElementById('galleryThumbnails');
-    if (mainImg && thumbsContainer) {
-        let currentThumbs = Array.from(thumbsContainer.querySelectorAll('.thumb'));
+        // ===== 七图画廊交互（含自动轮播）=====
+    const sevenMain = document.getElementById('sevenMainImage');
+    const sevenContainer = document.getElementById('sevenThumbnails');
+    if (sevenMain && sevenContainer) {
+        let thumbs = Array.from(sevenContainer.querySelectorAll('.thumb'));
+        const middleIndex = 3; // 中间索引 (0-6)
+        let autoTimer = null;
+        let isPaused = false;
         
-        // 初始化主图为中间图（索引2）
-        if (currentThumbs[2]) {
-            mainImg.src = currentThumbs[2].getAttribute('data-full');
+        // 设置默认主图为中间图
+        if (thumbs[middleIndex]) {
+            sevenMain.src = thumbs[middleIndex].getAttribute('data-full');
         }
         
-        function updateGallery(clickedThumb) {
-            // 更新主图
-            const fullUrl = clickedThumb.getAttribute('data-full');
-            if (fullUrl) mainImg.src = fullUrl;
+        // 重新排序缩略图，使指定图移到中间
+        function reorderThumbs(clickedThumb) {
+            const clickedIdx = thumbs.indexOf(clickedThumb);
+            if (clickedIdx === middleIndex) return;
             
-            // 重新排序缩略图：将点击的图移动到中间（索引2）
-            const clickedIdx = currentThumbs.indexOf(clickedThumb);
-            const middle = Math.floor(currentThumbs.length / 2); // 2
-            if (clickedIdx !== middle) {
-                const newOrder = [...currentThumbs];
-                const [moved] = newOrder.splice(clickedIdx, 1);
-                newOrder.splice(middle, 0, moved);
-                currentThumbs = newOrder;
-                // 重新渲染缩略图（保持事件绑定）
-                thumbsContainer.innerHTML = '';
-                currentThumbs.forEach(thumb => {
-                    thumbsContainer.appendChild(thumb.cloneNode(true));
-                });
-                // 重新绑定事件
-                currentThumbs = Array.from(thumbsContainer.querySelectorAll('.thumb'));
-                currentThumbs.forEach(thumb => {
-                    thumb.addEventListener('click', () => updateGallery(thumb));
-                });
+            const newThumbs = [...thumbs];
+            const [moved] = newThumbs.splice(clickedIdx, 1);
+            newThumbs.splice(middleIndex, 0, moved);
+            thumbs = newThumbs;
+            
+            // 重新渲染缩略图
+            sevenContainer.innerHTML = '';
+            thumbs.forEach(thumb => {
+                sevenContainer.appendChild(thumb.cloneNode(true));
+            });
+            // 重新绑定事件
+            thumbs = Array.from(sevenContainer.querySelectorAll('.thumb'));
+            bindThumbEvents();
+        }
+        
+        // 切换到下一张（向右轮转）
+        function nextSlide() {
+            if (thumbs.length === 0) return;
+            // 当前中间图的下一个索引（循环）
+            const nextIndex = (middleIndex + 1) % thumbs.length;
+            const nextThumb = thumbs[nextIndex];
+            // 切换主图
+            sevenMain.src = nextThumb.getAttribute('data-full');
+            // 重新排序，使下一张移到中间
+            reorderThumbs(nextThumb);
+        }
+        
+        // 启动自动轮播
+        function startAutoPlay() {
+            if (autoTimer) clearInterval(autoTimer);
+            autoTimer = setInterval(() => {
+                if (!isPaused) {
+                    nextSlide();
+                }
+            }, 3000); // 3秒切换
+        }
+        
+        // 停止自动轮播
+        function stopAutoPlay() {
+            if (autoTimer) {
+                clearInterval(autoTimer);
+                autoTimer = null;
             }
         }
         
-        // 绑定点击事件
-        currentThumbs.forEach(thumb => {
-            thumb.addEventListener('click', () => updateGallery(thumb));
-        });
+        // 绑定缩略图点击事件
+        function bindThumbEvents() {
+            thumbs.forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    // 点击时暂停自动轮播并重置计时器
+                    stopAutoPlay();
+                    isPaused = true;
+                    sevenMain.src = thumb.getAttribute('data-full');
+                    reorderThumbs(thumb);
+                    // 3秒后恢复自动轮播
+                    setTimeout(() => {
+                        isPaused = false;
+                        startAutoPlay();
+                    }, 5000); // 点击后暂停5秒再恢复
+                });
+            });
+        }
+        
+        // 鼠标悬停时暂停，移出时恢复
+        const galleryContainer = document.querySelector('.seven-gallery');
+        if (galleryContainer) {
+            galleryContainer.addEventListener('mouseenter', () => {
+                isPaused = true;
+            });
+            galleryContainer.addEventListener('mouseleave', () => {
+                isPaused = false;
+            });
+        }
+        
+        // 初始化
+        bindThumbEvents();
+        startAutoPlay();
     }
 });
