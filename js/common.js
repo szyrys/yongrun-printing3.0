@@ -215,7 +215,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const savedLang = localStorage.getItem('preferredLanguage');
     const browserLang = navigator.language.split('-')[0];
-    
+      
+
+
     let initLang = 'en';
     if (savedLang && languages.some(l => l.code === savedLang)) {
         initLang = savedLang;
@@ -228,4 +230,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 加载 FAQ（首页需要）
     loadFaqs();
+        // ===== 五图画廊交互 =====
+    const mainImg = document.getElementById('mainGalleryImage');
+    const thumbsContainer = document.getElementById('galleryThumbnails');
+    if (mainImg && thumbsContainer) {
+        let currentThumbs = Array.from(thumbsContainer.querySelectorAll('.thumb'));
+        
+        // 初始化主图为中间图（索引2）
+        if (currentThumbs[2]) {
+            mainImg.src = currentThumbs[2].getAttribute('data-full');
+        }
+        
+        function updateGallery(clickedThumb) {
+            // 更新主图
+            const fullUrl = clickedThumb.getAttribute('data-full');
+            if (fullUrl) mainImg.src = fullUrl;
+            
+            // 重新排序缩略图：将点击的图移动到中间（索引2）
+            const clickedIdx = currentThumbs.indexOf(clickedThumb);
+            const middle = Math.floor(currentThumbs.length / 2); // 2
+            if (clickedIdx !== middle) {
+                const newOrder = [...currentThumbs];
+                const [moved] = newOrder.splice(clickedIdx, 1);
+                newOrder.splice(middle, 0, moved);
+                currentThumbs = newOrder;
+                // 重新渲染缩略图（保持事件绑定）
+                thumbsContainer.innerHTML = '';
+                currentThumbs.forEach(thumb => {
+                    thumbsContainer.appendChild(thumb.cloneNode(true));
+                });
+                // 重新绑定事件
+                currentThumbs = Array.from(thumbsContainer.querySelectorAll('.thumb'));
+                currentThumbs.forEach(thumb => {
+                    thumb.addEventListener('click', () => updateGallery(thumb));
+                });
+            }
+        }
+        
+        // 绑定点击事件
+        currentThumbs.forEach(thumb => {
+            thumb.addEventListener('click', () => updateGallery(thumb));
+        });
+    }
 });
