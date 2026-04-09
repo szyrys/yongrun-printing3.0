@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     addLanguageSelectorToNavbar();
     loadFaqs();
     
-    // ===== 七图画廊：点击切换 + 自动轮播 =====
+       // ===== 七图画廊：点击切换 + 自动轮播 =====
     const gallery = document.getElementById('sevenGallery');
     if (gallery) {
         let imgs = Array.from(gallery.querySelectorAll('.gallery-img'));
@@ -218,35 +218,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         let isPaused = false;
         
         function updateSizes() {
-            imgs.forEach((img, idx) => {
-                img.style.width = '';
-                img.style.height = '';
-                if (idx === middleIndex) {
-                    img.style.zIndex = '10';
-                } else {
-                    img.style.zIndex = '1';
-                }
-            });
+            // 不需要额外操作，CSS的nth-child会根据顺序自动应用样式
         }
         
+        // 重新排序：将 clickedImg 移动到中间，其余图片按原顺序循环移位
         function reorderToMiddle(clickedImg) {
             const currentIdx = imgs.indexOf(clickedImg);
             if (currentIdx === middleIndex) return;
+            
+            let shift = middleIndex - currentIdx;
             const newImgs = [...imgs];
-            const [moved] = newImgs.splice(currentIdx, 1);
-            newImgs.splice(middleIndex, 0, moved);
+            if (shift > 0) {
+                for (let i = 0; i < shift; i++) {
+                    const first = newImgs.shift();
+                    newImgs.push(first);
+                }
+            } else if (shift < 0) {
+                for (let i = 0; i < -shift; i++) {
+                    const last = newImgs.pop();
+                    newImgs.unshift(last);
+                }
+            }
             imgs = newImgs;
+            
             gallery.innerHTML = '';
             imgs.forEach(img => {
                 gallery.appendChild(img.cloneNode(true));
             });
             imgs = Array.from(gallery.querySelectorAll('.gallery-img'));
             bindClickEvents();
-            updateSizes();
         }
         
         function nextSlide() {
             if (isPaused) return;
+            // 自动轮播：将当前中间图片的右边一张移动到中间（向右旋转）
             const nextIndex = (middleIndex + 1) % total;
             const nextImg = imgs[nextIndex];
             if (nextImg) reorderToMiddle(nextImg);
