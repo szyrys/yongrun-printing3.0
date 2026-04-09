@@ -401,3 +401,60 @@ html[dir="rtl"] .language-selector button {
         height: 45px;
     }
 }
+/* 七图画廊样式 */
+.seven-gallery {
+    text-align: center;
+}
+.gallery-main img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+.seven-thumbs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+.seven-thumbs .thumb {
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+    object-fit: cover;
+    filter: brightness(0.9);
+}
+.seven-thumbs .thumb:hover {
+    transform: scale(1.05);
+    filter: brightness(1);
+}
+/* 七张图尺寸：中间最大，向两边逐渐缩小 */
+.seven-thumbs .thumb:nth-child(4) {  /* 中间第4个 */
+    width: 110px;
+    height: 80px;
+}
+.seven-thumbs .thumb:nth-child(3),
+.seven-thumbs .thumb:nth-child(5) {
+    width: 95px;
+    height: 70px;
+}
+.seven-thumbs .thumb:nth-child(2),
+.seven-thumbs .thumb:nth-child(6) {
+    width: 80px;
+    height: 60px;
+}
+.seven-thumbs .thumb:nth-child(1),
+.seven-thumbs .thumb:nth-child(7) {
+    width: 65px;
+    height: 50px;
+}
+@media (max-width: 768px) {
+    .seven-thumbs .thumb:nth-child(4) { width: 80px; height: 60px; }
+    .seven-thumbs .thumb:nth-child(3), .seven-thumbs .thumb:nth-child(5) { width: 70px; height: 53px; }
+    .seven-thumbs .thumb:nth-child(2), .seven-thumbs .thumb:nth-child(6) { width: 60px; height: 45px; }
+    .seven-thumbs .thumb:nth-child(1), .seven-thumbs .thumb:nth-child(7) { width: 50px; height: 38px; }
+}
