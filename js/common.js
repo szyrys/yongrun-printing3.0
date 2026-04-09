@@ -44,7 +44,6 @@ async function loadLanguage(langCode) {
         updatePlaceholders();
         updateProductGrid();
         
-        // 同步导航栏语言下拉框的值
         const navSelect = document.getElementById('navLanguageSelect');
         if (navSelect) navSelect.value = langCode;
         
@@ -90,7 +89,6 @@ function updateProductGrid() {
         grid.appendChild(card);
     });
     
-    // 免费获取精美样品卡片
     const sampleCard = document.createElement('div');
     sampleCard.className = 'product-card';
     sampleCard.onclick = () => {
@@ -144,42 +142,31 @@ function addLanguageSelectorToNavbar() {
     contactItem.insertAdjacentElement('afterend', newLi);
 }
 
-// ===== 加载 FAQ（从 Supabase）=====
+// ===== 加载 FAQ =====
 async function loadFaqs() {
     const container = document.getElementById('faqList');
     if (!container) return;
-    
     container.innerHTML = '<div class="loading">加载 FAQ 中...</div>';
-    
     try {
         const { data, error } = await window.supabaseClient
             .from('faq')
             .select('*')
             .order('sort_order', { ascending: true });
-        
         if (error) throw error;
-        
         if (!data || data.length === 0) {
             container.innerHTML = '<p class="empty-state">暂无 FAQ，请稍后再来。</p>';
             return;
         }
-        
         let html = '';
         data.forEach((faq, index) => {
             html += `
                 <div class="faq-item">
-                    <div class="faq-question" data-idx="${index}">
-                        ${escapeHtml(faq.question)}
-                    </div>
-                    <div class="faq-answer" id="faq-answer-${index}">
-                        ${escapeHtml(faq.answer)}
-                    </div>
+                    <div class="faq-question" data-idx="${index}">${escapeHtml(faq.question)}</div>
+                    <div class="faq-answer" id="faq-answer-${index}">${escapeHtml(faq.answer)}</div>
                 </div>
             `;
         });
         container.innerHTML = html;
-        
-        // 绑定点击事件实现折叠/展开
         document.querySelectorAll('.faq-question').forEach(header => {
             header.addEventListener('click', function() {
                 const answer = this.nextElementSibling;
@@ -188,12 +175,10 @@ async function loadFaqs() {
             });
         });
     } catch (err) {
-        console.error('加载 FAQ 失败:', err);
         container.innerHTML = '<p class="empty-state">加载 FAQ 失败，请刷新页面重试。</p>';
     }
 }
 
-// 简单的防XSS函数
 function escapeHtml(str) {
     if (!str) return '';
     return str.replace(/[&<>]/g, function(m) {
@@ -215,116 +200,87 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const savedLang = localStorage.getItem('preferredLanguage');
     const browserLang = navigator.language.split('-')[0];
-      
-
-
     let initLang = 'en';
-    if (savedLang && languages.some(l => l.code === savedLang)) {
-        initLang = savedLang;
-    } else if (languages.some(l => l.code === browserLang)) {
-        initLang = browserLang;
-    }
+    if (savedLang && languages.some(l => l.code === savedLang)) initLang = savedLang;
+    else if (languages.some(l => l.code === browserLang)) initLang = browserLang;
     
     await loadLanguage(initLang);
     addLanguageSelectorToNavbar();
-    
-    // 加载 FAQ（首页需要）
     loadFaqs();
-        // ===== 七图画廊交互（含自动轮播）=====
-    const sevenMain = document.getElementById('sevenMainImage');
-    const sevenContainer = document.getElementById('sevenThumbnails');
-    if (sevenMain && sevenContainer) {
-        let thumbs = Array.from(sevenContainer.querySelectorAll('.thumb'));
-        const middleIndex = 3; // 中间索引 (0-6)
+    
+    // ===== 七图画廊：点击切换 + 自动轮播 =====
+    const gallery = document.getElementById('sevenGallery');
+    if (gallery) {
+        let imgs = Array.from(gallery.querySelectorAll('.gallery-img'));
+        const total = imgs.length;
+        const middleIndex = Math.floor(total / 2);
         let autoTimer = null;
         let isPaused = false;
         
-        // 设置默认主图为中间图
-        if (thumbs[middleIndex]) {
-            sevenMain.src = thumbs[middleIndex].getAttribute('data-full');
-        }
-        
-        // 重新排序缩略图，使指定图移到中间
-        function reorderThumbs(clickedThumb) {
-            const clickedIdx = thumbs.indexOf(clickedThumb);
-            if (clickedIdx === middleIndex) return;
-            
-            const newThumbs = [...thumbs];
-            const [moved] = newThumbs.splice(clickedIdx, 1);
-            newThumbs.splice(middleIndex, 0, moved);
-            thumbs = newThumbs;
-            
-            // 重新渲染缩略图
-            sevenContainer.innerHTML = '';
-            thumbs.forEach(thumb => {
-                sevenContainer.appendChild(thumb.cloneNode(true));
-            });
-            // 重新绑定事件
-            thumbs = Array.from(sevenContainer.querySelectorAll('.thumb'));
-            bindThumbEvents();
-        }
-        
-        // 切换到下一张（向右轮转）
-        function nextSlide() {
-            if (thumbs.length === 0) return;
-            // 当前中间图的下一个索引（循环）
-            const nextIndex = (middleIndex + 1) % thumbs.length;
-            const nextThumb = thumbs[nextIndex];
-            // 切换主图
-            sevenMain.src = nextThumb.getAttribute('data-full');
-            // 重新排序，使下一张移到中间
-            reorderThumbs(nextThumb);
-        }
-        
-        // 启动自动轮播
-        function startAutoPlay() {
-            if (autoTimer) clearInterval(autoTimer);
-            autoTimer = setInterval(() => {
-                if (!isPaused) {
-                    nextSlide();
+        function updateSizes() {
+            imgs.forEach((img, idx) => {
+                img.style.width = '';
+                img.style.height = '';
+                if (idx === middleIndex) {
+                    img.style.zIndex = '10';
+                } else {
+                    img.style.zIndex = '1';
                 }
-            }, 3000); // 3秒切换
+            });
         }
         
-        // 停止自动轮播
-        function stopAutoPlay() {
-            if (autoTimer) {
-                clearInterval(autoTimer);
-                autoTimer = null;
-            }
+        function reorderToMiddle(clickedImg) {
+            const currentIdx = imgs.indexOf(clickedImg);
+            if (currentIdx === middleIndex) return;
+            const newImgs = [...imgs];
+            const [moved] = newImgs.splice(currentIdx, 1);
+            newImgs.splice(middleIndex, 0, moved);
+            imgs = newImgs;
+            gallery.innerHTML = '';
+            imgs.forEach(img => {
+                gallery.appendChild(img.cloneNode(true));
+            });
+            imgs = Array.from(gallery.querySelectorAll('.gallery-img'));
+            bindClickEvents();
+            updateSizes();
         }
         
-        // 绑定缩略图点击事件
-        function bindThumbEvents() {
-            thumbs.forEach(thumb => {
-                thumb.addEventListener('click', () => {
-                    // 点击时暂停自动轮播并重置计时器
-                    stopAutoPlay();
+        function nextSlide() {
+            if (isPaused) return;
+            const nextIndex = (middleIndex + 1) % total;
+            const nextImg = imgs[nextIndex];
+            if (nextImg) reorderToMiddle(nextImg);
+        }
+        
+        function bindClickEvents() {
+            imgs.forEach(img => {
+                img.addEventListener('click', () => {
+                    if (autoTimer) {
+                        clearInterval(autoTimer);
+                        autoTimer = null;
+                    }
                     isPaused = true;
-                    sevenMain.src = thumb.getAttribute('data-full');
-                    reorderThumbs(thumb);
-                    // 3秒后恢复自动轮播
+                    reorderToMiddle(img);
                     setTimeout(() => {
                         isPaused = false;
                         startAutoPlay();
-                    }, 5000); // 点击后暂停5秒再恢复
+                    }, 5000);
                 });
             });
         }
         
-        // 鼠标悬停时暂停，移出时恢复
-        const galleryContainer = document.querySelector('.seven-gallery');
-        if (galleryContainer) {
-            galleryContainer.addEventListener('mouseenter', () => {
-                isPaused = true;
-            });
-            galleryContainer.addEventListener('mouseleave', () => {
-                isPaused = false;
-            });
+        function startAutoPlay() {
+            if (autoTimer) clearInterval(autoTimer);
+            autoTimer = setInterval(() => {
+                if (!isPaused) nextSlide();
+            }, 3000);
         }
         
-        // 初始化
-        bindThumbEvents();
+        gallery.addEventListener('mouseenter', () => { isPaused = true; });
+        gallery.addEventListener('mouseleave', () => { isPaused = false; });
+        
+        bindClickEvents();
+        updateSizes();
         startAutoPlay();
     }
 });
