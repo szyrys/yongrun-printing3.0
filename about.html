@@ -59,6 +59,86 @@
             margin-bottom: 20px;
         }
         
+        /* 16:9 图片容器 */
+        .about-image {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* 轮播图容器 16:9 */
+        .equipment-slider {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+        }
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .slider-prev, .slider-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 50%;
+            z-index: 10;
+        }
+        .slider-prev { left: 10px; }
+        .slider-next { right: 10px; }
+        .slider-prev:hover, .slider-next:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .dot.active {
+            background: white;
+        }
+        
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -130,6 +210,11 @@
             margin-bottom: 10px;
         }
         
+        .value-item p {
+            color: #666;
+            font-size: 14px;
+        }
+        
         @media (max-width: 768px) {
             .about-grid {
                 grid-template-columns: 1fr;
@@ -156,7 +241,15 @@
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-                <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="cards.html">Cards</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="board-games.html">Board Games</a></li>
+                        <li><a href="puzzles.html">Puzzles</a></li>
+                    </ul>
+                </li>
                 <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
                 <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
                 <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
@@ -187,11 +280,7 @@
                     <p data-i18n="about_company_text3">With multiple advanced card production lines, our annual production capacity exceeds millions of sets. We are committed to providing high-quality, personalized one-stop printing solutions for our global clients.</p>
                 </div>
                 <div class="about-image">
-                    <div style="background: #1a2a4f; border-radius: 12px; padding: 60px; text-align: center; color: white;">
-                        <i class="fas fa-building" style="font-size: 4rem;"></i>
-                        <p style="margin-top: 15px;">Yongrun Printing Facility</p>
-                        <p style="font-size: 12px; margin-top: 10px;">(Image placeholder - add your factory photo)</p>
-                    </div>
+                    <img src="https://picsum.photos/id/20/800/450" alt="Yongrun Printing Facility" style="width:100%; border-radius:12px;">
                 </div>
             </div>
         </div>
@@ -214,12 +303,12 @@
                     <div class="stat-label" data-i18n="stat2">Countries Served</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">1M+</div>
+                    <div class="stat-number">3M+</div>
                     <div class="stat-label" data-i18n="stat3">Sets Annual Capacity</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">7</div>
-                    <div class="stat-label" data-i18n="stat4">Product Series</div>
+                    <div class="stat-number">999+</div>
+                    <div class="stat-label">Happy Clients</div>
                 </div>
             </div>
         </div>
@@ -262,7 +351,7 @@
         <div class="container">
             <div class="section-title">
                 <h2 data-i18n="values_title">Our Core Values</h2>
-                <p data-i18n="values_subtitle">客户至上 · 品质为本 · 诚信共赢</p>
+                <p data-i18n="values_subtitle">客户至上 · 品质为本 · 诚信共赢 · 创新成长</p>
             </div>
             <div class="value-list">
                 <div class="value-item">
@@ -277,19 +366,19 @@
                 </div>
                 <div class="value-item">
                     <div class="value-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                    <h4 data-i18n="value3_title">Integrity & Win-Win</h4>
+                    <h4 data-i18n="value3_title">Integrity & Trust</h4>
                     <p data-i18n="value3_desc">Build long-term trust and mutual success.</p>
                 </div>
                 <div class="value-item">
                     <div class="value-icon"><i class="fas fa-rocket"></i></div>
-                    <h4 data-i18n="value4_title">Continuous Improvement</h4>
-                    <p data-i18n="value4_desc">精益求精，持续优化工艺和服务。</p>
+                    <h4 data-i18n="value4_title">Innovation & Growth</h4>
+                    <p data-i18n="value4_desc">Continuous improvement and creative solutions.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 设备与技术 -->
+    <!-- 设备与技术（16:9 自动轮播） -->
     <section class="about-section">
         <div class="container">
             <div class="section-title">
@@ -307,9 +396,21 @@
                     </ul>
                 </div>
                 <div>
-                    <div style="background: #1a2a4f; border-radius: 12px; padding: 50px; text-align: center; color: white;">
-                        <i class="fas fa-microchip" style="font-size: 3rem;"></i>
-                        <p style="margin-top: 15px;">Advanced Manufacturing</p>
+                    <div class="equipment-slider">
+                        <div class="slider-container" id="equipmentSlider">
+                            <div class="slide active">
+                                <img src="https://picsum.photos/id/20/800/450" alt="Factory">
+                            </div>
+                            <div class="slide">
+                                <img src="https://picsum.photos/id/40/800/450" alt="Equipment">
+                            </div>
+                            <div class="slide">
+                                <img src="https://picsum.photos/id/42/800/450" alt="Printing Press">
+                            </div>
+                        </div>
+                        <button class="slider-prev" id="sliderPrev">❮</button>
+                        <button class="slider-next" id="sliderNext">❯</button>
+                        <div class="slider-dots" id="sliderDots"></div>
                     </div>
                 </div>
             </div>
@@ -338,5 +439,53 @@
     <!-- 网站脚本 -->
     <script src="js/supabase-config.js"></script>
     <script src="js/common.js"></script>
+    <script>
+        // 设备轮播图
+        const slides = document.querySelectorAll('#equipmentSlider .slide');
+        const prevBtn = document.getElementById('sliderPrev');
+        const nextBtn = document.getElementById('sliderNext');
+        const dotsContainer = document.getElementById('sliderDots');
+        let currentSlide = 0;
+        let slideInterval;
+
+        if (slides.length > 0) {
+            slides.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+
+            function goToSlide(index) {
+                slides[currentSlide].classList.remove('active');
+                dotsContainer.children[currentSlide].classList.remove('active');
+                currentSlide = (index + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+                dotsContainer.children[currentSlide].classList.add('active');
+            }
+
+            function nextSlide() { goToSlide(currentSlide + 1); }
+            function prevSlide() { goToSlide(currentSlide - 1); }
+
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetInterval();
+            });
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                resetInterval();
+            });
+
+            function startInterval() {
+                slideInterval = setInterval(nextSlide, 4000);
+            }
+            function resetInterval() {
+                clearInterval(slideInterval);
+                startInterval();
+            }
+            startInterval();
+        }
+    </script>
 </body>
 </html>
