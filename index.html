@@ -310,5 +310,153 @@
     <script src="js/common.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="js/home-contact.js"></script>
+    <script>
+        // 分类轮播图配置
+        const categories = [
+            { id: 'cards', dbCategory: 'cards', containerId: 'carouselCards', dotsId: 'dotsCards' },
+            { id: 'books', dbCategory: 'books', containerId: 'carouselBooks', dotsId: 'dotsBooks' },
+            { id: 'boardGames', dbCategory: 'board-games', containerId: 'carouselBoardGames', dotsId: 'dotsBoardGames' },
+            { id: 'puzzles', dbCategory: 'puzzles', containerId: 'carouselPuzzles', dotsId: 'dotsPuzzles' }
+        ];
+    
+        async function loadCategoryImages() {
+            for (const cat of categories) {
+                // 从数据库查询产品图片（按 is_featured 排序）
+                const { data, error } = await window.supabaseClient
+                    .from('products')
+                    .select('image_url, is_featured')
+                    .eq('category', cat.dbCategory)
+                    .order('is_featured', { ascending: false })
+                    .limit(6);
+                
+                if (error || !data) continue;
+                
+                // 收集图片URL
+                let images = [];
+                data.forEach(product => {
+                    if (product.image_url) {
+                        const urls = product.image_url.split(',');
+                        urls.forEach(url => {
+                            if (url && images.length < 6) images.push(url.trim());
+                        });
+                    }
+                });
+                
+                // 如果不足6张，用占位图补全
+                while (images.length < 6) {
+                    images.push('https://picsum.photos/id/' + (20 + images.length) + '/600/600');
+                }
+                
+                // 生成轮播图
+                const track = document.querySelector(`#${cat.containerId} .carousel-track`);
+                const dotsContainer = document.getElementById(cat.dotsId);
+                if (!track) continue;
+                
+                track.innerHTML = '';
+                images.forEach(img => {
+                    const imgEl = document.createElement('img');
+                    imgEl.src = img;
+                    imgEl.alt = cat.id;
+                    track.appendChild(imgEl);
+                });
+                
+                // 生成圆点
+                if (dotsContainer) {
+                    dotsContainer.innerHTML = '';
+                    for (let i = 0; i < images.length; i++) {
+                        const dot = document.createElement('span');
+                        dot.classList.add('dot');
+                        if (i === 0) dot.classList.add('active');
+                        dot.addEventListener('click', () => goToSlide(cat.containerId, i));
+                        dotsContainer.appendChild(dot);
+                    }
+                }
+                
+                // 初始化轮播索引和自动播放
+                initCarousel(cat.containerId, images.length);
+            }
+        }
+        
+        function initCarousel(containerId, totalSlides) {
+            const container = document.getElementById(containerId);
+            if (!container || totalSlides <= 1) return;
+            
+            const track = container.querySelector('.carousel-track');
+            const prevBtn = container.querySelector('.carousel-prev');
+            const nextBtn = container.querySelector('.carousel-next');
+            const dotsContainer = document.getElementById(containerId.replace('carousel', 'dots'));
+            
+            let currentIndex = 0;
+            let autoInterval;
+            
+            function updateCarousel() {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                if (dotsContainer) {
+                    const dots = dotsContainer.querySelectorAll('.dot');
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentIndex);
+                    });
+                }
+            }
+            
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateCarousel();
+            }
+            
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            }
+            
+            function startAutoPlay() {
+                if (autoInterval) clearInterval(autoInterval);
+                autoInterval = setInterval(nextSlide, 4000);
+            }
+            
+            function stopAutoPlay() {
+                if (autoInterval) clearInterval(autoInterval);
+            }
+            
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                stopAutoPlay();
+                startAutoPlay();
+            });
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                stopAutoPlay();
+                startAutoPlay();
+            });
+            
+            container.addEventListener('mouseenter', stopAutoPlay);
+            container.addEventListener('mouseleave', startAutoPlay);
+            
+            startAutoPlay();
+        }
+        
+        // 跳转到指定幻灯片
+        function goToSlide(containerId, index) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const track = container.querySelector('.carousel-track');
+            const totalSlides = track.children.length;
+            const currentIndex = index % totalSlides;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            const dotsContainer = document.getElementById(containerId.replace('carousel', 'dots'));
+            if (dotsContainer) {
+                const dots = dotsContainer.querySelectorAll('.dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+        }
+        
+        // 页面加载后执行
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCategoryImages();
+        });
+    </script>
 </body>
 </html>
