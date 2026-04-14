@@ -72,33 +72,44 @@
             background: #c0392b;
         }
         
-        /* 表格通用样式 */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-        
-        .data-table th,
-        .data-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .data-table th {
-            background: #1a2a4f;
-            color: white;
-            font-weight: 500;
-        }
-        
-        .data-table tr:hover {
-            background: #f8f9fa;
-        }
+/* 表格通用样式 - 与 FAQ 风格一致 */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+    background: #1a2a4f;
+    color: white;
+    font-weight: 500;
+}
+
+.data-table tr:hover {
+    background: #f8f9fa;
+}
+
+/* 固定表格最小宽度，防止过窄 */
+.data-table {
+    min-width: 600px;
+}
+
+/* 表格容器支持横向滚动 */
+.table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
         
         .edit-btn, .delete-btn, .add-btn {
             padding: 5px 12px;
