@@ -99,34 +99,41 @@ document.getElementById('refreshMessagesBtn')?.addEventListener('click', () => l
 async function loadMessages() {
     const container = document.getElementById('messagesContainer');
     if (!container) return;
-    container.innerHTML = '<div class="loading">加载留言中...</div>';
+    
     try {
         const { data, error } = await window.supabaseClient
             .from('messages')
             .select('*')
             .order('created_at', { ascending: false });
+        
         if (error) throw error;
-        if (!data || data.length === 0) {
-            container.innerHTML = '<div class="empty-state">暂无留言</div>';
-            return;
-        }
+        
+        // 始终显示表格结构，无论是否有数据
         let html = `<table class="data-table"><thead><tr>
             <th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th>
         </tr></thead><tbody>`;
-        data.forEach(msg => {
-            const date = new Date(msg.created_at).toLocaleString('zh-CN');
-            html += `<tr>
-                <td>${msg.id}</td>
-                <td>${escapeHtml(msg.name)}</td>
-                <td>${escapeHtml(msg.email || '-')}</td>
-                <td>${escapeHtml(msg.phone || '-')}</td>
-                <td style="white-space: normal; word-break: break-word;">${escapeHtml(msg.message || '')}</td>
-                <td>${date}</td>
-                <td><button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button></td>
-            </tr>`;
-        });
+        
+        if (!data || data.length === 0) {
+            // 无数据时显示一行提示
+            html += `<tr><td colspan="7" style="text-align: center; padding: 40px;">暂无留言</td></tr>`;
+        } else {
+            data.forEach(msg => {
+                const date = new Date(msg.created_at).toLocaleString('zh-CN');
+                html += `<tr>
+                    <td>${msg.id}</td>
+                    <td>${escapeHtml(msg.name)}</td>
+                    <td>${escapeHtml(msg.email || '-')}</td>
+                    <td>${escapeHtml(msg.phone || '-')}</td>
+                    <td style="white-space: normal; word-break: break-word;">${escapeHtml(msg.message || '')}</td>
+                    <td>${date}</td>
+                    <td><button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button></td>
+                </tr>`;
+            });
+        }
+        
         html += `</tbody></table>`;
         container.innerHTML = html;
+        
         document.querySelectorAll('.delete-btn[data-type="message"]').forEach(btn => {
             btn.addEventListener('click', async () => {
                 if (confirm('确定删除？')) {
@@ -135,6 +142,7 @@ async function loadMessages() {
                 }
             });
         });
+        
     } catch (err) {
         container.innerHTML = '<div class="empty-state">加载失败</div>';
     }
