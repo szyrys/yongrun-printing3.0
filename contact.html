@@ -100,11 +100,6 @@
             color: #1a2a4f;
             font-weight: 500;
         }
-        .required-hint {
-            font-size: 12px;
-            color: #999;
-            margin-bottom: 15px;
-        }
         @media (max-width: 768px) {
             .contact-page .form-row {
                 grid-template-columns: 1fr;
@@ -120,193 +115,178 @@
         }
     </style>
 </head>
-<body><main>
-    <!-- 语言切换栏 -->
-    <div class="language-bar">
-        <div class="container">
-            <div class="language-selector" id="languageSelector"></div>
-        </div>
-    </div>
-
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <a href="index.html">YONGRUN<span> Printing</span></a>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="cards.html">Cards</a></li>
-                        <li><a href="books.html">Books</a></li>
-                        <li><a href="board-games.html">Board Games</a></li>
-                        <li><a href="puzzles.html">Puzzles</a></li>
-                    </ul>
-                </li>
-                <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
-                <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
-                <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
-                <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
+    <main style="flex: 1;">
+        <!-- 语言切换栏 -->
+        <div class="language-bar">
+            <div class="container">
+                <div class="language-selector" id="languageSelector"></div>
             </div>
         </div>
-    </nav>
 
-    <!-- 页面标题 -->
-    <section class="page-header">
-        <div class="container">
-            <h1 data-i18n="contact_title">Contact Us</h1>
-        </div>
-    </section>
-
-    <!-- 联系表单和公司信息 -->
-    <section class="contact-page">
-        <div class="container">
-            <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
-                <!-- 表单区域 -->
-                <div>
-                    <p class="contact-desc" data-i18n="contact_desc" style="margin-bottom: 20px;">Tell us about your project, we'll reply within 24 hours</p>
-                    
-                    <form id="contactMessageForm" class="contact-form">
-                        <!-- 第一行：姓名 + 电话 -->
-                        <div class="form-row">
-                            <div class="form-group">
-                                <input type="text" id="contact_name" placeholder="Your Name *" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="tel" id="contact_phone" placeholder="Phone Number">
-                            </div>
-                        </div>
-                        
-                        <!-- 第二行：邮箱 + 产品类型 -->
-                        <div class="form-row">
-                            <div class="form-group">
-                                <input type="email" id="contact_email" placeholder="Email Address">
-                            </div>
-                            <div class="form-group">
-                                <select id="contact_product">
-                                    <option value="" disabled selected>Select Product Type</option>
-                                    <option value="playingcards">Playing Cards</option>
-                                    <option value="boardgames">Board Game Cards</option>
-                                    <option value="tarot">Tarot Cards</option>
-                                    <option value="laser">Holographic Cards</option>
-                                    <option value="flashcards">Flashcards</option>
-                                    <option value="books">Paperback/Hardcover Books</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <!-- 第三行：数量范围 + 期望交货时间 -->
-                        <div class="form-row">
-                            <div class="form-group">
-                                <select id="contact_quantity">
-                                    <option value="" disabled selected>Quantity Range</option>
-                                    <option value="500-1000">500 - 1,000 sets</option>
-                                    <option value="1000-5000">1,000 - 5,000 sets</option>
-                                    <option value="5000-10000">5,000 - 10,000 sets</option>
-                                    <option value="10000+">10,000+ sets</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="contact_deadline" placeholder="Expected Delivery Date (e.g., 30 days)">
-                            </div>
-                        </div>
-                        
-                        <!-- 第四行：留言（跨列） -->
-                        <div class="form-group full-width">
-                            <textarea id="contact_message" rows="4" placeholder="Tell us about your project (size, material, special requirements...)"></textarea>
-                        </div>
-                        
-                        <!-- 第五行：网盘链接（跨列） -->
-                        <div class="form-group full-width">
-                            <label for="contact_file_link">File Sharing Link (Google Drive / Dropbox / WeTransfer)</label>
-                            <input type="url" id="contact_file_link" placeholder="https://drive.google.com/...">
-                            <small>Upload your design files to cloud storage and paste the link here.</small>
-                        </div>
-                        
-                        <!-- 提示信息 -->
-                        <div class="form-group full-width">
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
-                                <p style="margin: 0; font-size: 13px; color: #666;">
-                                    <strong>Contact Info Required:</strong> Please provide either <strong>Phone</strong> or <strong>Email</strong> so we can reach you.
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Submit Message</button>
-                        <div id="contactFormStatus" class="form-status" style="margin-top: 15px;"></div>
-                    </form>
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">YONGRUN<span> Printing</span></a>
                 </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="cards.html">Cards</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="board-games.html">Board Games</a></li>
+                            <li><a href="puzzles.html">Puzzles</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                    <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
+                    <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                    <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </nav>
 
-                <!-- 公司联系信息 -->
-                <div>
-                    <h3 style="color: #1a2a4f; margin-bottom: 20px;">Shenzhen Yongrun Printing Co., Ltd.</h3>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <div class="contact-info-text">
-                            <strong>Address:</strong><br>
-                            Building 3, No. 24 Xinfadong Road, Xiangshan Community,<br>
-                            Xinqiao Street, Bao'an District, Shenzhen, China
+        <!-- 页面标题 -->
+        <section class="page-header">
+            <div class="container">
+                <h1 data-i18n="contact_title">Contact Us</h1>
+            </div>
+        </section>
+
+        <!-- 联系表单和公司信息 -->
+        <section class="contact-page">
+            <div class="container">
+                <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
+                    <!-- 表单区域 -->
+                    <div>
+                        <p class="contact-desc" data-i18n="contact_desc" style="margin-bottom: 20px;">Tell us about your project, we'll reply within 24 hours</p>
+                        
+                        <form id="contactMessageForm" class="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="contact_name" placeholder="Your Name *" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" id="contact_phone" placeholder="Phone Number">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="email" id="contact_email" placeholder="Email Address">
+                                </div>
+                                <div class="form-group">
+                                    <select id="contact_product">
+                                        <option value="" disabled selected>Select Product Type</option>
+                                        <option value="playingcards">Playing Cards</option>
+                                        <option value="boardgames">Board Game Cards</option>
+                                        <option value="tarot">Tarot Cards</option>
+                                        <option value="laser">Holographic Cards</option>
+                                        <option value="flashcards">Flashcards</option>
+                                        <option value="books">Paperback/Hardcover Books</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <select id="contact_quantity">
+                                        <option value="" disabled selected>Quantity Range</option>
+                                        <option value="500-1000">500 - 1,000 sets</option>
+                                        <option value="1000-5000">1,000 - 5,000 sets</option>
+                                        <option value="5000-10000">5,000 - 10,000 sets</option>
+                                        <option value="10000+">10,000+ sets</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="contact_deadline" placeholder="Expected Delivery Date (e.g., 30 days)">
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <textarea id="contact_message" rows="4" placeholder="Tell us about your project (size, material, special requirements...)"></textarea>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="contact_file_link">File Sharing Link (Google Drive / Dropbox / WeTransfer)</label>
+                                <input type="url" id="contact_file_link" placeholder="https://drive.google.com/...">
+                                <small>Upload your design files to cloud storage and paste the link here.</small>
+                            </div>
+                            <div class="form-group full-width">
+                                <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+                                    <p style="margin: 0; font-size: 13px; color: #666;">
+                                        <strong>Contact Info Required:</strong> Please provide either <strong>Phone</strong> or <strong>Email</strong> so we can reach you.
+                                    </p>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Message</button>
+                            <div id="contactFormStatus" class="form-status" style="margin-top: 15px;"></div>
+                        </form>
+                    </div>
+
+                    <!-- 公司联系信息 -->
+                    <div>
+                        <h3 style="color: #1a2a4f; margin-bottom: 20px;">Shenzhen Yongrun Printing Co., Ltd.</h3>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="contact-info-text">
+                                <strong>Address:</strong><br>
+                                Building 3, No. 24 Xinfadong Road, Xiangshan Community,<br>
+                                Xinqiao Street, Bao'an District, Shenzhen, China
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon"><i class="fas fa-phone"></i></div>
-                        <div class="contact-info-text"><strong>Phone:</strong> +86 185 6569 8935</div>
-                    </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
-                        <div class="contact-info-text"><strong>Email:</strong> cnyrys@163.com</div>
-                    </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon"><i class="fab fa-weixin"></i></div>
-                        <div class="contact-info-text"><strong>WeChat:</strong> +86 185 6569 8935</div>
-                    </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon"><i class="fab fa-whatsapp"></i></div>
-                        <div class="contact-info-text"><strong>WhatsApp:</strong> +86 185 6569 8935</div>
-                    </div>
-                    
-                    <div class="social-row">
-                        <span class="social-item"><i class="fab fa-linkedin"></i> CNyongrun-in</span>
-                        <span class="social-item"><i class="fab fa-youtube"></i> CNyongrun-yt</span>
-                        <span class="social-item"><i class="fab fa-facebook"></i> CNyongrun-fb</span>
-                        <span class="social-item"><i class="fab fa-instagram"></i> CNyongrun-ig</span>
-                        <span class="social-item"><i class="fab fa-tiktok"></i> CNyongrun-tk</span>
-                    </div>
-                    
-                    <div class="reply-badge">
-                        <i class="fas fa-clock" style="margin-right: 8px;"></i> We reply within 24 hours
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="fas fa-phone"></i></div>
+                            <div class="contact-info-text"><strong>Phone:</strong> +86 185 6569 8935</div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="contact-info-text"><strong>Email:</strong> cnyrys@163.com</div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="fab fa-weixin"></i></div>
+                            <div class="contact-info-text"><strong>WeChat:</strong> +86 185 6569 8935</div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="fab fa-whatsapp"></i></div>
+                            <div class="contact-info-text"><strong>WhatsApp:</strong> +86 185 6569 8935</div>
+                        </div>
+                        
+                        <div class="social-row">
+                            <span class="social-item"><i class="fab fa-linkedin"></i> CNyongrun-in</span>
+                            <span class="social-item"><i class="fab fa-youtube"></i> CNyongrun-yt</span>
+                            <span class="social-item"><i class="fab fa-facebook"></i> CNyongrun-fb</span>
+                            <span class="social-item"><i class="fab fa-instagram"></i> CNyongrun-ig</span>
+                            <span class="social-item"><i class="fab fa-tiktok"></i> CNyongrun-tk</span>
+                        </div>
+                        
+                        <div class="reply-badge">
+                            <i class="fas fa-clock" style="margin-right: 8px;"></i> We reply within 24 hours
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- 页脚 -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
         </div>
-    </main></footer>
+    </footer>
 
-    <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- 网站脚本 -->
     <script src="js/supabase-config.js"></script>
     <script src="js/common.js"></script>
     <script>
-        // Contact 页面表单提交
         const contactForm = document.getElementById('contactMessageForm');
         if (contactForm) {
             contactForm.addEventListener('submit', async (e) => {
@@ -338,7 +318,7 @@
                 statusDiv.innerHTML = '<span style="color: #3498db;">Submitting...</span>';
                 
                 try {
-                    let fullMessage = `Product: ${product}Quantity: ${quantity}Expected Delivery: ${deadline || 'Not specified'}File Link: ${fileLink || 'Not provided'}Details:${message || 'Not specified'}`;
+                    let fullMessage = `Product: ${product}\nQuantity: ${quantity}\nExpected Delivery: ${deadline || 'Not specified'}\nFile Link: ${fileLink || 'Not provided'}\n\nDetails:\n${message || 'Not specified'}`;
                     
                     const { error } = await window.supabaseClient
                         .from('messages')
