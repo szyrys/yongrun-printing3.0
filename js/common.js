@@ -287,4 +287,51 @@ document.addEventListener('DOMContentLoaded', async () => {
         bindClickEvents();
         startAutoPlay();
     }
+    // 公司简介轮播图
+    const slides = document.querySelectorAll('#aboutSlider .slide');
+    const prevBtn = document.getElementById('sliderPrev');
+    const nextBtn = document.getElementById('sliderNext');
+    const dotsContainer = document.getElementById('sliderDots');
+    let currentSlide = 0;
+    let slideInterval;
+
+    if (slides.length > 0) {
+        // 创建圆点指示器
+        slides.forEach((_, i) => {
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dotsContainer.children[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            dotsContainer.children[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetInterval();
+        });
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetInterval();
+        });
+
+        function startInterval() {
+            slideInterval = setInterval(nextSlide, 4000);
+        }
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startInterval();
+        }
+        startInterval();
+    }
 });
