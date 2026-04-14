@@ -807,3 +807,129 @@ html[dir="rtl"] .language-selector button {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
+/* 分类轮播样式 */
+.category-row {
+    padding: 60px 0;
+    border-bottom: 1px solid #eee;
+}
+.category-row.alt-bg {
+    background: #f8f9fa;
+}
+.category-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+.category-carousel {
+    position: relative;
+}
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #f0f0f0;
+}
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+.carousel-track img {
+    width: 100%;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+.carousel-prev, .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    z-index: 10;
+}
+.carousel-prev { left: 10px; }
+.carousel-next { right: 10px; }
+.carousel-prev:hover, .carousel-next:hover {
+    background: rgba(0,0,0,0.8);
+}
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+.dot {
+    width: 10px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.dot.active {
+    background: #c9a03d;
+}
+.category-info h3 {
+    font-size: 2rem;
+    color: #1a2a4f;
+    margin-bottom: 15px;
+}
+.category-info p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.btn-outline {
+    background: transparent;
+    border: 2px solid #c9a03d;
+    color: #1a2a4f;
+}
+.btn-outline:hover {
+    background: #c9a03d;
+    color: white;
+}
+.free-sample-card {
+    background: linear-gradient(135deg, #c9a03d, #b08a2c);
+    border-radius: 16px;
+    padding: 50px;
+    text-align: center;
+    margin-top: 40px;
+}
+.free-sample-content i {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 15px;
+}
+.free-sample-content h3 {
+    color: #1a2a4f;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+.free-sample-content p {
+    color: #1a2a4f;
+    margin-bottom: 20px;
+}
+.free-sample-content .btn-primary {
+    background: #1a2a4f;
+}
+.free-sample-content .btn-primary:hover {
+    background: #0f1a33;
+}
+@media (max-width: 768px) {
+    .category-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .category-info {
+        text-align: center;
+    }
+    .free-sample-card {
+        padding: 30px;
+    }
+}

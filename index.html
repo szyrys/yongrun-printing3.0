@@ -56,12 +56,103 @@
         </div>
     </section>
 
-    <!-- 产品展示区域 -->
-    <section class="products-section">
+       <!-- 产品展示区域 - 分类轮播 -->
+       <section class="products-section">
         <div class="container">
             <h2 class="section-title" data-i18n="products_title">Our <span>Products</span></h2>
-            <div class="product-grid" id="productGrid">
-                <!-- 产品卡片会通过JS动态生成 -->
+            
+            <!-- 分类1：Cards -->
+            <div class="category-row">
+                <div class="category-content">
+                    <div class="category-carousel">
+                        <div class="carousel-container" id="carouselCards">
+                            <div class="carousel-track">
+                                <!-- 图片会通过JS动态加载 -->
+                            </div>
+                            <button class="carousel-prev">❮</button>
+                            <button class="carousel-next">❯</button>
+                        </div>
+                        <div class="carousel-dots" id="dotsCards"></div>
+                    </div>
+                    <div class="category-info">
+                        <h3>Cards</h3>
+                        <p>Custom playing cards, tarot cards, holographic cards, flashcards and more. Premium quality with various finishes.</p>
+                        <a href="cards.html" class="btn btn-outline">View All Cards →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分类2：Books -->
+            <div class="category-row alt-bg">
+                <div class="category-content">
+                    <div class="category-carousel">
+                        <div class="carousel-container" id="carouselBooks">
+                            <div class="carousel-track">
+                                <!-- 图片会通过JS动态加载 -->
+                            </div>
+                            <button class="carousel-prev">❮</button>
+                            <button class="carousel-next">❯</button>
+                        </div>
+                        <div class="carousel-dots" id="dotsBooks"></div>
+                    </div>
+                    <div class="category-info">
+                        <h3>Books</h3>
+                        <p>Hardcover, paperback, pop-up, perfect bound books. Custom sizes and premium paper options.</p>
+                        <a href="books.html" class="btn btn-outline">View All Books →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分类3：Board Games -->
+            <div class="category-row">
+                <div class="category-content">
+                    <div class="category-carousel">
+                        <div class="carousel-container" id="carouselBoardGames">
+                            <div class="carousel-track">
+                                <!-- 图片会通过JS动态加载 -->
+                            </div>
+                            <button class="carousel-prev">❮</button>
+                            <button class="carousel-next">❯</button>
+                        </div>
+                        <div class="carousel-dots" id="dotsBoardGames"></div>
+                    </div>
+                    <div class="category-info">
+                        <h3>Board Games</h3>
+                        <p>Custom board game printing, including cards, rulebooks, and custom boxes. Perfect for crowdfunding.</p>
+                        <a href="board-games.html" class="btn btn-outline">View All Board Games →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分类4：Puzzles -->
+            <div class="category-row alt-bg">
+                <div class="category-content">
+                    <div class="category-carousel">
+                        <div class="carousel-container" id="carouselPuzzles">
+                            <div class="carousel-track">
+                                <!-- 图片会通过JS动态加载 -->
+                            </div>
+                            <button class="carousel-prev">❮</button>
+                            <button class="carousel-next">❯</button>
+                        </div>
+                        <div class="carousel-dots" id="dotsPuzzles"></div>
+                    </div>
+                    <div class="category-info">
+                        <h3>Puzzles</h3>
+                        <p>Custom puzzles for kids, wooden puzzles, 3D puzzles. Educational and entertaining.</p>
+                        <a href="puzzles.html" class="btn btn-outline">View All Puzzles →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 免费样品卡片 -->
+            <div class="free-sample-card">
+                <div class="free-sample-content">
+                    <i class="fas fa-gift"></i>
+                    <h3>Free Exquisite Sample</h3>
+                    <p>Request a free sample to see our quality →</p>
+                    <a href="#homeMessageForm" class="btn btn-primary">Request Free Sample</a>
+                </div>
             </div>
         </div>
     </section>
