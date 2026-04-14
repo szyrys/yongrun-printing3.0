@@ -608,7 +608,7 @@ html[dir="rtl"] .language-selector button {
     margin-bottom: 40px;
 }
 .home-contact-form {
-    max-width: 700px;
+    max-width: 800px;
     margin: 0 auto;
     background: white;
     padding: 30px;
@@ -619,17 +619,30 @@ html[dir="rtl"] .language-selector button {
     margin-bottom: 20px;
 }
 .home-contact-form input,
-.home-contact-form textarea {
+.home-contact-form textarea,
+.home-contact-form select {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+.home-contact-form select {
+    background: white;
+    cursor: pointer;
 }
 .home-contact-form input:focus,
-.home-contact-form textarea:focus {
+.home-contact-form textarea:focus,
+.home-contact-form select:focus {
     outline: none;
     border-color: #c9a03d;
+}
+.home-contact-form label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
 }
 .home-contact-form button {
     width: 100%;
