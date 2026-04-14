@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards - Yongrun Printing</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 语言切换栏 -->
+    <div class="language-bar">
+        <div class="container">
+            <div class="language-selector" id="languageSelector"></div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">YONGRUN<span> Printing</span></a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="cards.html">Cards</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="board-games.html">Board Games</a></li>
+                        <li><a href="puzzles.html">Puzzles</a></li>
+                    </ul>
+                </li>
+                <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
+                <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Cards</h1>
+            <p>Premium custom playing cards, tarot, holographic cards and more</p>
+        </div>
+    </section>
+
+    <!-- 产品分类展示 -->
+    <section class="products-page" style="padding: 60px 0;">
+        <div class="container">
+            <div class="product-grid" id="cardsGrid">
+                <!-- 产品卡片会通过JS动态生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
+        </div>
+    </footer>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 网站脚本 -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        // 卡牌类产品数据
+        const cardProducts = [
+            { name: "Playing Cards", desc: "Custom poker cards, advertising decks. Multiple finishes.", icon: "fas fa-dice-d6", link: "products/playingcards.html" },
+            { name: "Tarot Cards", desc: "Premium printing, smooth finish. Complete with custom boxes.", icon: "fas fa-moon", link: "products/tarot.html" },
+            { name: "Holographic Cards", desc: "Holographic, foil stamping, UV effects. Premium gifts.", icon: "fas fa-star-of-life", link: "products/laser.html" },
+            { name: "Board Game Cards", desc: "Custom sizes, rules, artwork. Perfect for strategy games.", icon: "fas fa-gamepad", link: "products/boardgames.html" },
+            { name: "Flashcards", desc: "Round corners, laminated, safe for kids. Educational.", icon: "fas fa-brain", link: "products/flashcards.html" }
+        ];
+
+        const grid = document.getElementById('cardsGrid');
+        if (grid) {
+            cardProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.onclick = () => { window.location.href = product.link; };
+                card.innerHTML = `
+                    <div class="product-img"><i class="${product.icon}"></i></div>
+                    <h3>${product.name}</h3>
+                    <p>${product.desc}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
