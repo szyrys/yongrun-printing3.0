@@ -100,6 +100,13 @@
             color: #1a2a4f;
             font-weight: 500;
         }
+        /* 修复页面标题位置 */
+        .page-header {
+            padding: 40px 0;
+        }
+        .page-header h1 {
+            margin: 0;
+        }
         @media (max-width: 768px) {
             .contact-page .form-row {
                 grid-template-columns: 1fr;
@@ -160,28 +167,28 @@
         </section>
 
         <!-- 联系表单和公司信息 -->
-        <section class="contact-page">
+        <section class="contact-page" style="padding: 60px 0 80px 0;">
             <div class="container">
                 <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
                     <!-- 表单区域 -->
                     <div>
-                        <p class="contact-desc" data-i18n="contact_desc" style="margin-bottom: 20px;">Tell us about your project, we'll reply within 24 hours</p>
+                        <p class="contact-desc" style="margin-bottom: 20px; color: #666;" data-i18n="contact_desc">Tell us about your project, we'll reply within 24 hours</p>
                         
                         <form id="contactMessageForm" class="contact-form">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <input type="text" id="contact_name" placeholder="Your Name *" required>
+                                    <input type="text" id="contact_name" data-i18n-placeholder="form_name" placeholder="Your Name *" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" id="contact_phone" placeholder="Phone Number">
+                                    <input type="tel" id="contact_phone" data-i18n-placeholder="form_phone" placeholder="Phone Number">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <input type="email" id="contact_email" placeholder="Email Address">
+                                    <input type="email" id="contact_email" data-i18n-placeholder="form_email" placeholder="Email Address">
                                 </div>
                                 <div class="form-group">
-                                    <select id="contact_product">
+                                    <select id="contact_product" data-i18n-placeholder="form_product">
                                         <option value="" disabled selected>Select Product Type</option>
                                         <option value="playingcards">Playing Cards</option>
                                         <option value="boardgames">Board Game Cards</option>
@@ -195,7 +202,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <select id="contact_quantity">
+                                    <select id="contact_quantity" data-i18n-placeholder="form_quantity">
                                         <option value="" disabled selected>Quantity Range</option>
                                         <option value="500-1000">500 - 1,000 sets</option>
                                         <option value="1000-5000">1,000 - 5,000 sets</option>
@@ -204,11 +211,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" id="contact_deadline" placeholder="Expected Delivery Date (e.g., 30 days)">
+                                    <input type="text" id="contact_deadline" data-i18n-placeholder="form_deadline" placeholder="Expected Delivery Date (e.g., 30 days)">
                                 </div>
                             </div>
                             <div class="form-group full-width">
-                                <textarea id="contact_message" rows="4" placeholder="Tell us about your project (size, material, special requirements...)"></textarea>
+                                <textarea id="contact_message" rows="4" data-i18n-placeholder="form_message" placeholder="Tell us about your project (size, material, special requirements...)"></textarea>
                             </div>
                             <div class="form-group full-width">
                                 <label for="contact_file_link">File Sharing Link (Google Drive / Dropbox / WeTransfer)</label>
@@ -222,7 +229,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit Message</button>
+                            <button type="submit" class="btn btn-primary" data-i18n="form_submit">Submit Message</button>
                             <div id="contactFormStatus" class="form-status" style="margin-top: 15px;"></div>
                         </form>
                     </div>
@@ -287,6 +294,17 @@
     <script src="js/supabase-config.js"></script>
     <script src="js/common.js"></script>
     <script>
+        // 获取翻译函数
+        function t(key) {
+            if (typeof window.t === 'function') {
+                return window.t(key);
+            }
+            const fallback = {
+                'form_error_submit': 'Submission failed, please try again later.'
+            };
+            return fallback[key] || key;
+        }
+
         const contactForm = document.getElementById('contactMessageForm');
         if (contactForm) {
             contactForm.addEventListener('submit', async (e) => {
@@ -336,7 +354,9 @@
                     setTimeout(() => statusDiv.innerHTML = '', 5000);
                 } catch (err) {
                     console.error('提交失败:', err);
-                    statusDiv.innerHTML = '<span style="color: #e74c3c;">Submission failed, please try again later.</span>';
+                    // 使用多语言翻译
+                    const errorMsg = (typeof t === 'function') ? t('form_error_submit') : 'Submission failed, please try again later.';
+                    statusDiv.innerHTML = '<span style="color: #e74c3c;">' + errorMsg + '</span>';
                 }
             });
         }
