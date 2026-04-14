@@ -14,7 +14,7 @@
             padding: 20px 0 40px 0;
             position: relative;
         }
-        /* 时间线竖线（居中偏左） */
+        /* 时间线竖线 */
         .process-timeline::before {
             content: '';
             position: absolute;
@@ -38,7 +38,6 @@
             transform: translateX(5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.12);
         }
-        /* 最后一个卡片去掉底部边距 */
         .step-card:last-child {
             margin-bottom: 0;
         }
@@ -57,20 +56,6 @@
             font-weight: bold;
             font-size: 1.2rem;
             z-index: 2;
-        }
-        /* 连接点（圆点） */
-        .step-card::before {
-            content: '';
-            position: absolute;
-            left: -23px;
-            top: 30px;
-            width: 16px;
-            height: 16px;
-            background: #c9a03d;
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 0 0 2px #c9a03d;
-            z-index: 1;
         }
         .step-icon {
             font-size: 2rem;
@@ -100,10 +85,6 @@
             left: auto;
             right: -55px;
         }
-        html[dir="rtl"] .step-card::before {
-            left: auto;
-            right: -23px;
-        }
         html[dir="rtl"] .step-card:hover {
             transform: translateX(-5px);
         }
@@ -123,19 +104,12 @@
                 font-size: 1rem;
                 top: 15px;
             }
-            .step-card::before {
-                left: -13px;
-                width: 12px;
-                height: 12px;
-                top: 22px;
-            }
             .step-icon {
                 font-size: 1.5rem;
             }
             .step-card h3 {
                 font-size: 1.1rem;
             }
-            /* RTL 移动端 */
             html[dir="rtl"] .process-timeline::before {
                 left: auto;
                 right: 20px;
@@ -147,10 +121,6 @@
             html[dir="rtl"] .step-number {
                 left: auto;
                 right: -35px;
-            }
-            html[dir="rtl"] .step-card::before {
-                left: auto;
-                right: -13px;
             }
         }
         /* 留言表单样式 */
@@ -257,7 +227,7 @@
         </div>
     </section>
 
-    <!-- 时间线流程（单侧垂直布局） -->
+    <!-- 时间线流程 -->
     <div class="process-timeline">
         <div class="step-card">
             <div class="step-number">1</div>
