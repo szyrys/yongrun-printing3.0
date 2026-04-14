@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         statusDiv.innerHTML = '<span style="color: #3498db;">Submitting...</span>';
         
         try {
-            let fullMessage = `Product: ${product}\nQuantity: ${quantity}\nExpected Delivery: ${deadline || 'Not specified'}\nFile Link: ${fileLink || 'Not provided'}\n\nDetails:\n${message || 'Not specified'}`;
+            let fullMessage = `Product: ${product}Quantity: ${quantity}Expected Delivery: ${deadline || 'Not specified'}File Link: ${fileLink || 'Not provided'}Details:${message || 'Not specified'}`;
             
             const { error } = await window.supabaseClient
                 .from('messages')
