@@ -51,7 +51,7 @@
         </div>
     </section>
 
-    <!-- 印刷案例展示（图片占位，后续替换） -->
+    <!-- 印刷案例展示 -->
     <section class="products-page" style="padding: 60px 0;">
         <div class="container">
             <div class="product-grid" id="puzzlesGrid">
@@ -74,18 +74,23 @@
     <script src="js/supabase-config.js"></script>
     <script src="js/common.js"></script>
     <script>
-        // 拼图类印刷案例（占位图片，后续替换真实封面）
+        // 拼图类印刷案例（点击跳转详情页）
         const puzzleCases = [
-    { name: "Children Puzzle", desc: "Educational puzzles for kids", icon: "fas fa-child", img: "https://picsum.photos/id/20/300/200", link: "product.html?slug=children-puzzle" },
-    { name: "Wooden Puzzle", desc: "Premium wooden pieces, custom shapes", icon: "fas fa-tree", img: "https://picsum.photos/id/40/300/200", link: "product.html?slug=wooden-puzzle" },
-    { name: "3D Puzzle", desc: "Interactive 3D puzzle designs", icon: "fas fa-cube", img: "https://picsum.photos/id/42/300/200", link: "product.html?slug=3d-puzzle" }
-];
+            { name: "Children Puzzle", desc: "Educational puzzles for kids", icon: "fas fa-child", img: "https://picsum.photos/id/20/300/200", link: "product.html?slug=children-puzzle" },
+            { name: "Wooden Puzzle", desc: "Premium wooden pieces, custom shapes", icon: "fas fa-tree", img: "https://picsum.photos/id/40/300/200", link: "product.html?slug=wooden-puzzle" },
+            { name: "3D Puzzle", desc: "Interactive 3D puzzle designs", icon: "fas fa-cube", img: "https://picsum.photos/id/42/300/200", link: "product.html?slug=3d-puzzle" }
+        ];
 
         const grid = document.getElementById('puzzlesGrid');
         if (grid) {
             puzzleCases.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                card.onclick = () => {
+                    if (item.link) {
+                        window.location.href = item.link;
+                    }
+                };
                 card.innerHTML = `
                     <div class="product-img" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
                         <img src="${item.img}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;">
