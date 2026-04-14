@@ -14,7 +14,6 @@ const languages = [
 let currentLang = 'en';
 let translations = {};
 
-// ===== 产品数据（8大类）=====
 const products = [
     { id: 1, key: 'laser', icon: 'fas fa-star-of-life', sampleCount: 9 },
     { id: 2, key: 'flashcards', icon: 'fas fa-brain', sampleCount: 9 },
@@ -26,7 +25,6 @@ const products = [
     { id: 8, key: 'books', icon: 'fas fa-book', sampleCount: 0 }
 ];
 
-// ===== 加载语言文件 =====
 async function loadLanguage(langCode) {
     try {
         const response = await fetch(`locales/${langCode}.json`);
@@ -110,9 +108,24 @@ function renderLanguageButtons() {
 function initMobileMenu() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
+    
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => navMenu.classList.toggle('active'));
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
     }
+    
+    // 移动端下拉菜单点击处理
+    const dropdowns = document.querySelectorAll('.dropdown > a');
+    dropdowns.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const parent = trigger.parentElement;
+                parent.classList.toggle('open');
+            }
+        });
+    });
 }
 
 function addLanguageSelectorToNavbar() {
@@ -142,7 +155,6 @@ function addLanguageSelectorToNavbar() {
     contactItem.insertAdjacentElement('afterend', newLi);
 }
 
-// ===== 加载 FAQ =====
 async function loadFaqs() {
     const container = document.getElementById('faqList');
     if (!container) return;
@@ -193,7 +205,6 @@ function t(key) {
     return translations[key] || key;
 }
 
-// ===== 初始化 =====
 document.addEventListener('DOMContentLoaded', async () => {
     renderLanguageButtons();
     initMobileMenu();
@@ -208,7 +219,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     addLanguageSelectorToNavbar();
     loadFaqs();
     
-         // ===== 七图画廊 =====
+    // 七图画廊
     const gallery = document.getElementById('sevenGallery');
     if (gallery) {
         let imgs = Array.from(gallery.querySelectorAll('.gallery-img'));
@@ -237,24 +248,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             
             imgs = newImgs;
-            
             gallery.innerHTML = '';
             imgs.forEach(img => {
                 gallery.appendChild(img.cloneNode(true));
             });
-            
             imgs = Array.from(gallery.querySelectorAll('.gallery-img'));
             bindClickEvents();
         }
         
-        // 自动轮播：向右移动一张（将当前中间图片的右边一张移到中间）
         function nextSlide() {
             if (isPaused) return;
             const nextIndex = (middleIndex + 1) % total;
             const nextImg = imgs[nextIndex];
-            if (nextImg) {
-                reorderToMiddle(nextImg);
-            }
+            if (nextImg) reorderToMiddle(nextImg);
         }
         
         function bindClickEvents() {
@@ -287,6 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         bindClickEvents();
         startAutoPlay();
     }
+    
     // 公司简介轮播图
     const slides = document.querySelectorAll('#aboutSlider .slide');
     const prevBtn = document.getElementById('sliderPrev');
@@ -296,7 +303,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     let slideInterval;
 
     if (slides.length > 0) {
-        // 创建圆点指示器
         slides.forEach((_, i) => {
             const dot = document.createElement('span');
             dot.classList.add('dot');
@@ -313,20 +319,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             dotsContainer.children[currentSlide].classList.add('active');
         }
 
-        function nextSlide() { goToSlide(currentSlide + 1); }
-        function prevSlide() { goToSlide(currentSlide - 1); }
+        function nextSlideFn() { goToSlide(currentSlide + 1); }
+        function prevSlideFn() { goToSlide(currentSlide - 1); }
 
         nextBtn.addEventListener('click', () => {
-            nextSlide();
+            nextSlideFn();
             resetInterval();
         });
         prevBtn.addEventListener('click', () => {
-            prevSlide();
+            prevSlideFn();
             resetInterval();
         });
 
         function startInterval() {
-            slideInterval = setInterval(nextSlide, 4000);
+            slideInterval = setInterval(nextSlideFn, 4000);
         }
         function resetInterval() {
             clearInterval(slideInterval);
