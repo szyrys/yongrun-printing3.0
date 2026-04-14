@@ -811,9 +811,11 @@ html[dir="rtl"] .language-selector button {
 .category-row {
     padding: 60px 0;
     border-bottom: 1px solid #eee;
+    width: 100%;
 }
 .category-row.alt-bg {
     background: #f8f9fa;
+    width: 100%;
 }
 .category-content {
     display: grid;
