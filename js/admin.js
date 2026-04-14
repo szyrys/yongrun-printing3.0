@@ -1,5 +1,4 @@
-const supabase = window.supabaseClient;
-// 管理后台脚本 - 登录和留言管理
+// 管理后台脚本 - 登录和留言/FAQ/产品管理
 
 let currentUser = null;
 
@@ -12,10 +11,18 @@ const adminEmail = document.getElementById('adminEmail');
 const adminPassword = document.getElementById('adminPassword');
 const loginError = document.getElementById('loginError');
 
+// 标签页
+const tabMessages = document.getElementById('tabMessages');
+const tabFaq = document.getElementById('tabFaq');
+const tabProducts = document.getElementById('tabProducts');
+const messagesPanel = document.getElementById('messagesPanel');
+const faqPanel = document.getElementById('faqPanel');
+const productsPanel = document.getElementById('productsPanel');
+
 // 检查登录状态
 async function checkSession() {
     try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const { data: { session }, error } = await window.supabaseClient.auth.getSession();
         
         if (error) {
             console.error('获取会话错误:', error);
@@ -27,6 +34,8 @@ async function checkSession() {
             currentUser = session.user;
             showAdminPanel();
             loadMessages();
+            loadFaqs();
+            loadProducts();
         } else {
             showLoginPanel();
         }
@@ -59,18 +68,16 @@ async function login() {
         return;
     }
     
-    // 显示加载状态
     loginBtn.disabled = true;
     loginBtn.textContent = '登录中...';
     
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await window.supabaseClient.auth.signInWithPassword({
             email: email,
             password: password
         });
         
         if (error) {
-            console.error('登录错误:', error);
             showLoginError(getLoginErrorMessage(error.message));
             loginBtn.disabled = false;
             loginBtn.textContent = '登录';
@@ -81,6 +88,8 @@ async function login() {
             currentUser = data.user;
             showAdminPanel();
             loadMessages();
+            loadFaqs();
+            loadProducts();
         }
         
     } catch (err) {
@@ -91,18 +100,12 @@ async function login() {
     }
 }
 
-// 获取登录错误信息
 function getLoginErrorMessage(message) {
-    if (message.includes('Invalid login credentials')) {
-        return '邮箱或密码错误';
-    }
-    if (message.includes('Email not confirmed')) {
-        return '邮箱未确认，请检查邮箱';
-    }
+    if (message.includes('Invalid login credentials')) return '邮箱或密码错误';
+    if (message.includes('Email not confirmed')) return '邮箱未确认，请检查邮箱';
     return '登录失败: ' + message;
 }
 
-// 显示登录错误
 function showLoginError(msg) {
     if (loginError) {
         loginError.textContent = msg;
@@ -116,7 +119,7 @@ function showLoginError(msg) {
 // 登出
 async function logout() {
     try {
-        const { error } = await supabase.auth.signOut();
+        const { error } = await window.supabaseClient.auth.signOut();
         if (error) throw error;
         currentUser = null;
         showLoginPanel();
@@ -128,7 +131,42 @@ async function logout() {
     }
 }
 
-// 加载留言列表
+// ===== 标签页切换 =====
+function initTabs() {
+    if (tabMessages) {
+        tabMessages.addEventListener('click', () => {
+            setActiveTab('messages');
+        });
+    }
+    if (tabFaq) {
+        tabFaq.addEventListener('click', () => {
+            setActiveTab('faq');
+        });
+    }
+    if (tabProducts) {
+        tabProducts.addEventListener('click', () => {
+            setActiveTab('products');
+        });
+    }
+}
+
+function setActiveTab(tab) {
+    // 更新按钮样式
+    const tabs = [tabMessages, tabFaq, tabProducts];
+    tabs.forEach(t => {
+        if (t) t.style.borderBottom = 'none';
+    });
+    if (tab === 'messages' && tabMessages) tabMessages.style.borderBottom = '2px solid #c9a03d';
+    if (tab === 'faq' && tabFaq) tabFaq.style.borderBottom = '2px solid #c9a03d';
+    if (tab === 'products' && tabProducts) tabProducts.style.borderBottom = '2px solid #c9a03d';
+    
+    // 显示对应面板
+    if (messagesPanel) messagesPanel.style.display = tab === 'messages' ? 'block' : 'none';
+    if (faqPanel) faqPanel.style.display = tab === 'faq' ? 'block' : 'none';
+    if (productsPanel) productsPanel.style.display = tab === 'products' ? 'block' : 'none';
+}
+
+// ===== 留言管理 =====
 async function loadMessages() {
     const container = document.getElementById('messagesContainer');
     if (!container) return;
@@ -136,7 +174,7 @@ async function loadMessages() {
     container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 加载留言中...</div>';
     
     try {
-        const { data, error } = await supabase
+        const { data, error } = await window.supabaseClient
             .from('messages')
             .select('*')
             .order('created_at', { ascending: false });
@@ -148,49 +186,32 @@ async function loadMessages() {
             return;
         }
         
-        // 构建表格
-        let html = `
-            <table class="message-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>姓名</th>
-                        <th>邮箱</th>
-                        <th>留言内容</th>
-                        <th>提交时间</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th></tr></thead><tbody>`;
         
         data.forEach(msg => {
             const date = new Date(msg.created_at).toLocaleString('zh-CN');
-            const shortMessage = msg.message.length > 80 ? msg.message.substring(0, 80) + '...' : msg.message;
+            const shortMessage = msg.message ? (msg.message.length > 80 ? msg.message.substring(0, 80) + '...' : msg.message) : '';
             
-            html += `
-                <tr data-id="${msg.id}">
-                    <td>${msg.id}</td>
-                    <td>${escapeHtml(msg.name)}</td>
-                    <td>${escapeHtml(msg.email)}</td>
-                    <td title="${escapeHtml(msg.message)}">${escapeHtml(shortMessage)}</td>
-                    <td>${date}</td>
-                    <td><button class="delete-btn" data-id="${msg.id}">删除</button></td>
-                </tr>
-            `;
+            html += `<tr>
+                        <td>${msg.id}</td>
+                        <td>${escapeHtml(msg.name)}</td>
+                        <td>${escapeHtml(msg.email || '-')}</td>
+                        <td>${escapeHtml(msg.phone || '-')}</td>
+                        <td title="${escapeHtml(msg.message)}">${escapeHtml(shortMessage)}</td>
+                        <td>${date}</td>
+                        <td><button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button></td>
+                     </tr>`;
         });
         
         html += `</tbody></table>`;
         container.innerHTML = html;
         
-        // 绑定删除事件
-        document.querySelectorAll('.delete-btn').forEach(btn => {
+        document.querySelectorAll('.delete-btn[data-type="message"]').forEach(btn => {
             btn.addEventListener('click', async (e) => {
-                e.stopPropagation();
                 const id = btn.getAttribute('data-id');
-                if (confirm('确定要删除这条留言吗？')) {
+                if (confirm('确定删除这条留言吗？')) {
                     await deleteMessage(id);
-                    loadMessages(); // 刷新列表
+                    loadMessages();
                 }
             });
         });
@@ -201,60 +222,23 @@ async function loadMessages() {
     }
 }
 
-// 删除留言
 async function deleteMessage(id) {
     try {
-        const { error } = await supabase
-            .from('messages')
-            .delete()
-            .eq('id', id);
-        
+        const { error } = await window.supabaseClient.from('messages').delete().eq('id', id);
         if (error) throw error;
-        
     } catch (err) {
         console.error('删除失败:', err);
         alert('删除失败: ' + err.message);
     }
 }
 
-// HTML转义（防止XSS）
-function escapeHtml(str) {
-    if (!str) return '';
-    return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
-
-// 绑定事件
-if (loginBtn) loginBtn.addEventListener('click', login);
-if (logoutBtn) logoutBtn.addEventListener('click', logout);
-
-// 支持回车登录
-if (adminPassword) {
-    adminPassword.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') login();
-    });
-}
-if (adminEmail) {
-    adminEmail.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') login();
-    });
-}
-
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
-    checkSession();
-});
 // ===== FAQ 管理 =====
 let currentFaqId = null;
 
 async function loadFaqs() {
     const container = document.getElementById('faqContainer');
     if (!container) return;
-    container.innerHTML = '<div class="loading">加载 FAQ 中...</div>';
+    container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 加载 FAQ 中...</div>';
     
     try {
         const { data, error } = await window.supabaseClient
@@ -269,14 +253,17 @@ async function loadFaqs() {
             return;
         }
         
-        let html = `<table class="message-table"><thead><tr><th>序号</th><th>问题</th><th>回答</th><th>操作</th></tr></thead><tbody>`;
-        data.forEach((faq, idx) => {
-            html += `<tr data-id="${faq.id}">
-                        <td>${idx+1}</td>
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>问题</th><th>回答</th><th>操作</th></tr></thead><tbody>`;
+        data.forEach(faq => {
+            html += `<tr>
+                        <td>${faq.id}</td>
                         <td>${escapeHtml(faq.question)}</td>
-                        <td>${escapeHtml(faq.answer.substring(0, 80))}${faq.answer.length>80 ? '...' : ''}</td>
-                        <td><button class="edit-faq-btn" data-id="${faq.id}">编辑</button> <button class="delete-faq-btn" data-id="${faq.id}">删除</button></td>
-                    </tr>`;
+                        <td>${escapeHtml(faq.answer.substring(0, 80))}${faq.answer.length > 80 ? '...' : ''}</td>
+                        <td>
+                            <button class="edit-faq-btn" data-id="${faq.id}">编辑</button>
+                            <button class="delete-faq-btn" data-id="${faq.id}">删除</button>
+                        </td>
+                     </tr>`;
         });
         html += `</tbody></table>`;
         container.innerHTML = html;
@@ -298,8 +285,8 @@ async function editFaq(id) {
     document.getElementById('faqQuestion').value = data.question;
     document.getElementById('faqAnswer').value = data.answer;
     document.getElementById('faqId').value = data.id;
-    document.getElementById('modalTitle').innerText = '编辑 FAQ';
-    document.getElementById('faqModal').style.display = 'block';
+    document.getElementById('faqModalTitle').innerText = '编辑 FAQ';
+    document.getElementById('faqModal').style.display = 'flex';
     currentFaqId = id;
 }
 
@@ -314,8 +301,8 @@ document.getElementById('addFaqBtn')?.addEventListener('click', () => {
     document.getElementById('faqQuestion').value = '';
     document.getElementById('faqAnswer').value = '';
     document.getElementById('faqId').value = '';
-    document.getElementById('modalTitle').innerText = '添加 FAQ';
-    document.getElementById('faqModal').style.display = 'block';
+    document.getElementById('faqModalTitle').innerText = '添加 FAQ';
+    document.getElementById('faqModal').style.display = 'flex';
     currentFaqId = null;
 });
 
@@ -339,5 +326,160 @@ document.getElementById('cancelFaqBtn')?.addEventListener('click', () => {
     document.getElementById('faqModal').style.display = 'none';
 });
 
-// 在显示后台面板时加载 FAQ（修改原有函数）
-// 找到 showAdminPanel 函数，在其中添加 loadFaqs();
+// ===== 产品管理 =====
+let currentProductId = null;
+
+async function loadProducts() {
+    const container = document.getElementById('productsContainer');
+    if (!container) return;
+    container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 加载产品中...</div>';
+    
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('products')
+            .select('*')
+            .order('category', { ascending: true })
+            .order('sort_order', { ascending: true });
+        
+        if (error) throw error;
+        
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="empty-state">暂无产品，点击“添加产品”创建。</div>';
+            return;
+        }
+        
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>分类</th><th>名称</th><th>标识(slug)</th><th>置顶</th><th>操作</th></tr></thead><tbody>`;
+        data.forEach(product => {
+            html += `<tr>
+                        <td>${product.id}</td>
+                        <td>${escapeHtml(product.category)}</td>
+                        <td>${escapeHtml(product.name)}</td>
+                        <td>${escapeHtml(product.slug)}</td>
+                        <td>${product.is_featured ? '⭐ 是' : '-'}</td>
+                        <td>
+                            <button class="edit-product-btn" data-id="${product.id}">编辑</button>
+                            <button class="delete-product-btn" data-id="${product.id}">删除</button>
+                        </td>
+                     </tr>`;
+        });
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+        
+        document.querySelectorAll('.edit-product-btn').forEach(btn => {
+            btn.addEventListener('click', () => editProduct(btn.getAttribute('data-id')));
+        });
+        document.querySelectorAll('.delete-product-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteProduct(btn.getAttribute('data-id')));
+        });
+    } catch (err) {
+        container.innerHTML = '<div class="empty-state">加载失败，请重试</div>';
+    }
+}
+
+async function editProduct(id) {
+    const { data, error } = await window.supabaseClient.from('products').select('*').eq('id', id).single();
+    if (error) return alert('加载失败');
+    
+    document.getElementById('productCategory').value = data.category || 'cards';
+    document.getElementById('productName').value = data.name || '';
+    document.getElementById('productSlug').value = data.slug || '';
+    document.getElementById('productShortDesc').value = data.short_desc || '';
+    document.getElementById('productFullDesc').value = data.full_desc || '';
+    document.getElementById('productFeatures').value = data.features || '';
+    document.getElementById('productImageUrl').value = data.image_url || '';
+    document.getElementById('productIsFeatured').checked = data.is_featured || false;
+    document.getElementById('productId').value = data.id;
+    document.getElementById('productModalTitle').innerText = '编辑产品';
+    document.getElementById('productModal').style.display = 'flex';
+    currentProductId = id;
+}
+
+async function deleteProduct(id) {
+    if (!confirm('确定删除这个产品吗？删除后首页轮播图也会受影响。')) return;
+    const { error } = await window.supabaseClient.from('products').delete().eq('id', id);
+    if (error) alert('删除失败');
+    else loadProducts();
+}
+
+document.getElementById('addProductBtn')?.addEventListener('click', () => {
+    document.getElementById('productCategory').value = 'cards';
+    document.getElementById('productName').value = '';
+    document.getElementById('productSlug').value = '';
+    document.getElementById('productShortDesc').value = '';
+    document.getElementById('productFullDesc').value = '';
+    document.getElementById('productFeatures').value = '';
+    document.getElementById('productImageUrl').value = '';
+    document.getElementById('productIsFeatured').checked = false;
+    document.getElementById('productId').value = '';
+    document.getElementById('productModalTitle').innerText = '添加产品';
+    document.getElementById('productModal').style.display = 'flex';
+    currentProductId = null;
+});
+
+document.getElementById('saveProductBtn')?.addEventListener('click', async () => {
+    const category = document.getElementById('productCategory').value;
+    const name = document.getElementById('productName').value.trim();
+    const slug = document.getElementById('productSlug').value.trim();
+    const short_desc = document.getElementById('productShortDesc').value.trim();
+    const full_desc = document.getElementById('productFullDesc').value.trim();
+    const features = document.getElementById('productFeatures').value.trim();
+    const image_url = document.getElementById('productImageUrl').value.trim();
+    const is_featured = document.getElementById('productIsFeatured').checked;
+    
+    if (!name || !slug) {
+        alert('请填写产品名称和 URL 标识(slug)');
+        return;
+    }
+    
+    if (currentProductId) {
+        const { error } = await window.supabaseClient
+            .from('products')
+            .update({ category, name, slug, short_desc, full_desc, features, image_url, is_featured })
+            .eq('id', currentProductId);
+        if (error) alert('更新失败: ' + error.message);
+    } else {
+        const { error } = await window.supabaseClient
+            .from('products')
+            .insert([{ category, name, slug, short_desc, full_desc, features, image_url, is_featured, sort_order: 0 }]);
+        if (error) alert('添加失败: ' + error.message);
+    }
+    document.getElementById('productModal').style.display = 'none';
+    loadProducts();
+});
+
+document.getElementById('cancelProductBtn')?.addEventListener('click', () => {
+    document.getElementById('productModal').style.display = 'none';
+});
+
+// HTML 转义
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+// 绑定登录事件
+if (loginBtn) loginBtn.addEventListener('click', login);
+if (logoutBtn) logoutBtn.addEventListener('click', logout);
+if (adminPassword) {
+    adminPassword.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') login();
+    });
+}
+if (adminEmail) {
+    adminEmail.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') login();
+    });
+}
+
+// 初始化标签页
+initTabs();
+
+// 初始化
+document.addEventListener('DOMContentLoaded', () => {
+    checkSession();
+});
