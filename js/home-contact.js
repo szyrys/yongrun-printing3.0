@@ -16,19 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const fileLink = document.getElementById('home_file_link').value.trim();
         const statusDiv = document.getElementById('homeFormStatus');
 
-        // 验证姓名
         if (!name) {
             statusDiv.innerHTML = '<span style="color: #e74c3c;">Please enter your name</span>';
             return;
         }
-        
-        // 验证电话或邮箱至少一个
         if (!phone && !email) {
             statusDiv.innerHTML = '<span style="color: #e74c3c;">Please provide either phone number or email address</span>';
             return;
         }
-        
-        // 验证邮箱格式（如果填写了）
         if (email && (!email.includes('@') || !email.includes('.'))) {
             statusDiv.innerHTML = '<span style="color: #e74c3c;">Please enter a valid email address</span>';
             return;
@@ -52,17 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             statusDiv.innerHTML = '<span style="color: #27ae60;">Message sent! We will contact you soon.</span>';
             form.reset();
-            // 重置 Turnstile（如果存在）
-            if (typeof turnstile !== 'undefined') {
-                turnstile.reset();
-            }
             setTimeout(() => statusDiv.innerHTML = '', 5000);
         } catch (err) {
             console.error('提交失败:', err);
             statusDiv.innerHTML = '<span style="color: #e74c3c;">Submission failed, please try again later.</span>';
-            if (typeof turnstile !== 'undefined') {
-                turnstile.reset();
-            }
         }
     });
 });
