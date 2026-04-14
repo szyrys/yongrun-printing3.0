@@ -34,6 +34,29 @@
         .thumb-img:hover {
             transform: scale(1.05);
         }
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.3);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+        .nav-arrow:hover {
+            background: rgba(0,0,0,0.6);
+        }
+        .prev-arrow {
+            left: 10px;
+        }
+        .next-arrow {
+            right: 10px;
+        }
         @media (max-width: 768px) {
             .main-image img {
                 width: 100%;
@@ -42,6 +65,10 @@
             .thumb-img {
                 width: 60px;
                 height: 60px;
+            }
+            .nav-arrow {
+                padding: 8px 12px;
+                font-size: 1rem;
             }
         }
     </style>
@@ -152,9 +179,11 @@
                         <div style="display: grid; grid-template-columns: 600px 1fr; gap: 50px;">
                             <div>
                                 <div class="product-gallery">
+                                    <button class="nav-arrow prev-arrow" id="prevArrow">❮</button>
                                     <div class="main-image">
                                         <img id="mainProductImage" src="${images[0]}" alt="${data.name}">
                                     </div>
+                                    <button class="nav-arrow next-arrow" id="nextArrow">❯</button>
                                     <div class="thumbnail-list">
                                         ${thumbnailsHtml}
                                     </div>
@@ -176,6 +205,8 @@
                 // 绑定缩略图点击事件
                 const thumbImgs = document.querySelectorAll('.thumb-img');
                 const mainImg = document.getElementById('mainProductImage');
+                const prevBtn = document.getElementById('prevArrow');
+                const nextBtn = document.getElementById('nextArrow');
                 let autoInterval;
                 let currentIndex = 0;
 
@@ -199,6 +230,7 @@
                     }, 3000);
                 }
 
+                // 缩略图点击
                 thumbImgs.forEach((thumb, idx) => {
                     thumb.addEventListener('click', () => {
                         stopAutoPlay();
@@ -208,6 +240,32 @@
                         currentIndex = idx;
                         startAutoPlay();
                     });
+                });
+
+                // 左箭头点击
+                prevBtn.addEventListener('click', () => {
+                    stopAutoPlay();
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    const prevImg = thumbImgs[currentIndex];
+                    if (prevImg) {
+                        mainImg.src = prevImg.getAttribute('src');
+                        thumbImgs.forEach(t => t.style.borderColor = '#ddd');
+                        thumbImgs[currentIndex].style.borderColor = '#c9a03d';
+                    }
+                    startAutoPlay();
+                });
+
+                // 右箭头点击
+                nextBtn.addEventListener('click', () => {
+                    stopAutoPlay();
+                    currentIndex = (currentIndex + 1) % images.length;
+                    const nextImg = thumbImgs[currentIndex];
+                    if (nextImg) {
+                        mainImg.src = nextImg.getAttribute('src');
+                        thumbImgs.forEach(t => t.style.borderColor = '#ddd');
+                        thumbImgs[currentIndex].style.borderColor = '#c9a03d';
+                    }
+                    startAutoPlay();
                 });
 
                 const gallery = document.querySelector('.product-gallery');
