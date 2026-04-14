@@ -823,12 +823,15 @@ html[dir="rtl"] .language-selector button {
 }
 .category-carousel {
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 .carousel-container {
     position: relative;
     overflow: hidden;
     border-radius: 12px;
     background: #f0f0f0;
+    max-width: 500px;
 }
 .carousel-track {
     display: flex;
@@ -836,9 +839,12 @@ html[dir="rtl"] .language-selector button {
 }
 .carousel-track img {
     width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
     flex-shrink: 0;
     aspect-ratio: 1 / 1;
     object-fit: cover;
+    border-radius: 12px;
 }
 .carousel-prev, .carousel-next {
     position: absolute;
