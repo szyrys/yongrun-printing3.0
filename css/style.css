@@ -903,26 +903,30 @@ html[dir="rtl"] .language-selector button {
 .free-sample-card {
     background: linear-gradient(135deg, #c9a03d, #b08a2c);
     border-radius: 16px;
-    padding: 50px;
+    padding: 30px 20px;
     text-align: center;
     margin-top: 40px;
+    width: 100%;
 }
 .free-sample-content i {
-    font-size: 3rem;
+    font-size: 2rem;
     color: white;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 .free-sample-content h3 {
     color: #1a2a4f;
-    font-size: 1.8rem;
-    margin-bottom: 10px;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
 }
 .free-sample-content p {
     color: #1a2a4f;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
 }
 .free-sample-content .btn-primary {
     background: #1a2a4f;
+    padding: 8px 20px;
+    font-size: 0.9rem;
 }
 .free-sample-content .btn-primary:hover {
     background: #0f1a33;
