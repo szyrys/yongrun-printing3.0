@@ -843,3 +843,7 @@ html[dir="rtl"] .language-selector button {
         text-align: center;
     }
 }
+.tab-btn.active {
+    border-bottom: 2px solid #c9a03d;
+    color: #c9a03d;
+}
