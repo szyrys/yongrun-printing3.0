@@ -208,38 +208,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     addLanguageSelectorToNavbar();
     loadFaqs();
     
-          // ===== 七图画廊：点击切换 + 自动轮播 =====
+         // ===== 七图画廊 =====
     const gallery = document.getElementById('sevenGallery');
     if (gallery) {
         let imgs = Array.from(gallery.querySelectorAll('.gallery-img'));
         const total = imgs.length;
-        const middleIndex = Math.floor(total / 2); // 中间索引 = 3
-        
+        const middleIndex = Math.floor(total / 2);
         let autoTimer = null;
         let isPaused = false;
         
-        // 更新图片尺寸（CSS 会自动根据 nth-child 应用样式）
-        function updateSizes() {
-            // CSS 会自动处理，无需额外代码
-        }
-        
-        // 重新排序：将点击的图片移动到中间
         function reorderToMiddle(clickedImg) {
             const currentIdx = imgs.indexOf(clickedImg);
             if (currentIdx === middleIndex) return;
             
-            // 计算需要移动的步数
             let steps = currentIdx - middleIndex;
             let newImgs = [...imgs];
             
             if (steps > 0) {
-                // 向左移动
                 for (let i = 0; i < steps; i++) {
                     const first = newImgs.shift();
                     newImgs.push(first);
                 }
             } else if (steps < 0) {
-                // 向右移动
                 for (let i = 0; i < -steps; i++) {
                     const last = newImgs.pop();
                     newImgs.unshift(last);
@@ -248,37 +238,34 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             imgs = newImgs;
             
-            // 重新渲染 DOM
             gallery.innerHTML = '';
             imgs.forEach(img => {
                 gallery.appendChild(img.cloneNode(true));
             });
             
-            // 重新绑定事件
             imgs = Array.from(gallery.querySelectorAll('.gallery-img'));
             bindClickEvents();
         }
         
-        // 自动轮播：向右移动一张
+        // 自动轮播：向右移动一张（将当前中间图片的右边一张移到中间）
         function nextSlide() {
             if (isPaused) return;
-            // 将最后一张移到最前面
-            const lastImg = imgs[imgs.length - 1];
-            reorderToMiddle(lastImg);
+            const nextIndex = (middleIndex + 1) % total;
+            const nextImg = imgs[nextIndex];
+            if (nextImg) {
+                reorderToMiddle(nextImg);
+            }
         }
         
-        // 绑定点击事件
         function bindClickEvents() {
             imgs.forEach(img => {
                 img.addEventListener('click', () => {
-                    // 暂停自动轮播
                     if (autoTimer) {
                         clearInterval(autoTimer);
                         autoTimer = null;
                     }
                     isPaused = true;
                     reorderToMiddle(img);
-                    // 5秒后恢复
                     setTimeout(() => {
                         isPaused = false;
                         startAutoPlay();
@@ -287,7 +274,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
         
-        // 启动自动轮播
         function startAutoPlay() {
             if (autoTimer) clearInterval(autoTimer);
             autoTimer = setInterval(() => {
@@ -295,16 +281,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             }, 3000);
         }
         
-        // 鼠标悬停暂停
-        gallery.addEventListener('mouseenter', () => {
-            isPaused = true;
-        });
-        gallery.addEventListener('mouseleave', () => {
-            isPaused = false;
-        });
+        gallery.addEventListener('mouseenter', () => { isPaused = true; });
+        gallery.addEventListener('mouseleave', () => { isPaused = false; });
         
-    // 初始化
-    bindClickEvents();
-    startAutoPlay();
-}
+        bindClickEvents();
+        startAutoPlay();
+    }
 });
