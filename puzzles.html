@@ -76,13 +76,10 @@
     <script>
         // 拼图类印刷案例（占位图片，后续替换真实封面）
         const puzzleCases = [
-            { name: "Children's Puzzle", desc: "Educational puzzles for kids", icon: "fas fa-child", img: "https://picsum.photos/id/20/300/200" },
-            { name: "Wooden Puzzle", desc: "Premium wooden pieces, custom shapes", icon: "fas fa-tree", img: "https://picsum.photos/id/40/300/200" },
-            { name: "Floor Puzzle", desc: "Large format for group activities", icon: "fas fa-expand", img: "https://picsum.photos/id/42/300/200" },
-            { name: "3D Puzzle", desc: "Interactive 3D puzzle designs", icon: "fas fa-cube", img: "https://picsum.photos/id/104/300/200" },
-            { name: "Custom Puzzle", desc: "Your artwork, your puzzle size", icon: "fas fa-palette", img: "https://picsum.photos/id/106/300/200" },
-            { name: "Eco-Friendly Puzzle", desc: "Recycled materials, sustainable", icon: "fas fa-leaf", img: "https://picsum.photos/id/107/300/200" }
-        ];
+    { name: "Children Puzzle", desc: "Educational puzzles for kids", icon: "fas fa-child", img: "https://picsum.photos/id/20/300/200", link: "product.html?slug=children-puzzle" },
+    { name: "Wooden Puzzle", desc: "Premium wooden pieces, custom shapes", icon: "fas fa-tree", img: "https://picsum.photos/id/40/300/200", link: "product.html?slug=wooden-puzzle" },
+    { name: "3D Puzzle", desc: "Interactive 3D puzzle designs", icon: "fas fa-cube", img: "https://picsum.photos/id/42/300/200", link: "product.html?slug=3d-puzzle" }
+];
 
         const grid = document.getElementById('puzzlesGrid');
         if (grid) {

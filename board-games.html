@@ -81,11 +81,16 @@
     { name: "Kickstarter Edition", desc: "Deluxe components, custom packaging", icon: "fas fa-rocket", img: "https://picsum.photos/id/107/300/200", link: "product.html?slug=kickstarter-edition" }
 ];
 
-        const grid = document.getElementById('boardGamesGrid');
+const grid = document.getElementById('boardGamesGrid');
         if (grid) {
             caseStudies.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                card.onclick = () => {
+                    if (item.link) {
+                        window.location.href = item.link;
+                    }
+                };
                 card.innerHTML = `
                     <div class="product-img" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
                         <img src="${item.img}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;">
