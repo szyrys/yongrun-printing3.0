@@ -132,11 +132,9 @@ function initTabs() {
         tab.addEventListener('click', () => {
             const tabId = tab.getAttribute('data-tab');
             
-            // 更新按钮样式
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             
-            // 显示对应面板
             Object.keys(panels).forEach(key => {
                 if (panels[key]) {
                     panels[key].classList.remove('active');
@@ -149,7 +147,6 @@ function initTabs() {
     });
 }
 
-// 刷新留言按钮
 document.getElementById('refreshMessagesBtn')?.addEventListener('click', () => {
     loadMessages();
 });
@@ -174,7 +171,9 @@ async function loadMessages() {
             return;
         }
         
-        let html = `<table class="data-table"><thead><tr><th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th></tr></thead><tbody>`;
+        let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>
+            <th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th>
+        </tr></thead><tbody>`;
         
         data.forEach(msg => {
             const date = new Date(msg.created_at).toLocaleString('zh-CN');
@@ -191,7 +190,7 @@ async function loadMessages() {
                     </tr>`;
         });
         
-        html += `</tbody></table>`;
+        html += `</tbody></table></div>`;
         container.innerHTML = html;
         
         document.querySelectorAll('.delete-btn[data-type="message"]').forEach(btn => {
@@ -241,7 +240,10 @@ async function loadFaqs() {
             return;
         }
         
-        let html = `<table class="data-table"><thead><tr><th>ID</th><th>问题</th><th>回答</th><th>操作</th></tr></thead><tbody>`;
+        let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>
+            <th>ID</th><th>问题</th><th>回答</th><th>操作</th>
+        </tr></thead><tbody>`;
+        
         data.forEach(faq => {
             html += `<tr>
                         <td>${faq.id}</td>
@@ -253,7 +255,8 @@ async function loadFaqs() {
                         </td>
                     </tr>`;
         });
-        html += `</tbody></table>`;
+        
+        html += `</tbody></table></div>`;
         container.innerHTML = html;
         
         document.querySelectorAll('.edit-faq-btn').forEach(btn => {
@@ -336,7 +339,10 @@ async function loadProducts() {
             return;
         }
         
-        let html = `<table class="data-table"><thead><tr><th>ID</th><th>分类</th><th>名称</th><th>标识(slug)</th><th>置顶</th><th>操作</th></tr></thead><tbody>`;
+        let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>
+            <th>ID</th><th>分类</th><th>名称</th><th>标识(slug)</th><th>置顶</th><th>操作</th>
+        </tr></thead><tbody>`;
+        
         data.forEach(product => {
             html += `<tr>
                         <td>${product.id}</td>
@@ -350,7 +356,8 @@ async function loadProducts() {
                         </td>
                     </tr>`;
         });
-        html += `</tbody></table>`;
+        
+        html += `</tbody></table></div>`;
         container.innerHTML = html;
         
         document.querySelectorAll('.edit-product-btn').forEach(btn => {
