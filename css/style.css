@@ -943,3 +943,12 @@ html[dir="rtl"] .language-selector button {
         padding: 30px;
     }
 }
+/* 隐藏轮播图底部的指示点 */
+.carousel-dots {
+    display: none !important;
+}
+.free-sample-card.full-width {
+    width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+}
