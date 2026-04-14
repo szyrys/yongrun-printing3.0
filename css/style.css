@@ -722,6 +722,7 @@ html[dir="rtl"] .language-selector button {
 .category-row {
     padding: 60px 0;
     width: 100%;
+    overflow-x: hidden;
 }
 .category-row.alt-bg {
     background: #f8f9fa;
@@ -737,6 +738,9 @@ html[dir="rtl"] .language-selector button {
     grid-template-columns: 1fr 1fr;
     gap: 50px;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 .category-carousel {
     position: relative;
@@ -782,7 +786,6 @@ html[dir="rtl"] .language-selector button {
 .carousel-prev:hover, .carousel-next:hover {
     background: rgba(0,0,0,0.8);
 }
-/* 隐藏轮播图指示点 */
 .carousel-dots {
     display: none;
 }
@@ -797,7 +800,6 @@ html[dir="rtl"] .language-selector button {
     margin-bottom: 20px;
     font-size: 1rem;
 }
-
 /* ===== 免费样品卡片 ===== */
 .free-sample-card {
     background: linear-gradient(135deg, #c9a03d, #b08a2c);
