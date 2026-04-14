@@ -6,6 +6,39 @@
     <title id="pageTitle">Product - Yongrun Printing</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .product-gallery {
+            position: relative;
+        }
+        .main-image img {
+            width: 100%;
+            border-radius: 12px;
+        }
+        .thumbnail-list {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .thumb-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .thumb-img:hover {
+            transform: scale(1.05);
+        }
+        @media (max-width: 768px) {
+            .thumb-img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="language-bar">
@@ -85,11 +118,41 @@
 
                 const featuresList = data.features ? data.features.split('|').map(f => `<li><i class="fas fa-check-circle" style="color: #c9a03d;"></i> ${f}</li>`).join('') : '';
 
+                // 处理图片列表
+                let images = [];
+                if (data.image_url && data.image_url.includes(',')) {
+                    images = data.image_url.split(',');
+                } else if (data.image_url) {
+                    images = [data.image_url];
+                } else {
+                    images = [
+                        'https://picsum.photos/id/20/600/400',
+                        'https://picsum.photos/id/40/600/400',
+                        'https://picsum.photos/id/42/600/400',
+                        'https://picsum.photos/id/104/600/400',
+                        'https://picsum.photos/id/106/600/400',
+                        'https://picsum.photos/id/107/600/400'
+                    ];
+                }
+
+                // 生成缩略图 HTML
+                let thumbnailsHtml = '';
+                images.forEach((img, idx) => {
+                    thumbnailsHtml += `<img src="${img}" class="thumb-img" data-index="${idx}" style="border-color: ${idx === 0 ? '#c9a03d' : '#ddd'};">`;
+                });
+
                 container.innerHTML = `
                     <div class="container">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
                             <div>
-                                <img src="${data.image_url || 'https://picsum.photos/id/20/500/400'}" alt="${data.name}" style="width: 100%; border-radius: 12px;">
+                                <div class="product-gallery">
+                                    <div class="main-image">
+                                        <img id="mainProductImage" src="${images[0]}" alt="${data.name}">
+                                    </div>
+                                    <div class="thumbnail-list">
+                                        ${thumbnailsHtml}
+                                    </div>
+                                </div>
                             </div>
                             <div>
                                 <h1 style="color: #1a2a4f; margin-bottom: 20px;">${data.name}</h1>
@@ -103,6 +166,49 @@
                         </div>
                     </div>
                 `;
+
+                // 绑定缩略图点击事件
+                const thumbImgs = document.querySelectorAll('.thumb-img');
+                const mainImg = document.getElementById('mainProductImage');
+                let autoInterval;
+                let currentIndex = 0;
+
+                function stopAutoPlay() {
+                    if (autoInterval) {
+                        clearInterval(autoInterval);
+                        autoInterval = null;
+                    }
+                }
+
+                function startAutoPlay() {
+                    if (autoInterval) stopAutoPlay();
+                    autoInterval = setInterval(() => {
+                        currentIndex = (currentIndex + 1) % images.length;
+                        const nextImg = thumbImgs[currentIndex];
+                        if (nextImg) {
+                            mainImg.src = nextImg.getAttribute('src');
+                            thumbImgs.forEach(t => t.style.borderColor = '#ddd');
+                            thumbImgs[currentIndex].style.borderColor = '#c9a03d';
+                        }
+                    }, 3000);
+                }
+
+                thumbImgs.forEach((thumb, idx) => {
+                    thumb.addEventListener('click', () => {
+                        stopAutoPlay();
+                        mainImg.src = thumb.getAttribute('src');
+                        thumbImgs.forEach(t => t.style.borderColor = '#ddd');
+                        thumb.style.borderColor = '#c9a03d';
+                        currentIndex = idx;
+                        startAutoPlay();
+                    });
+                });
+
+                const gallery = document.querySelector('.product-gallery');
+                gallery.addEventListener('mouseenter', stopAutoPlay);
+                gallery.addEventListener('mouseleave', startAutoPlay);
+
+                startAutoPlay();
             } catch (err) {
                 console.error('加载产品失败:', err);
                 container.innerHTML = '<div class="container"><p style="text-align: center;">Failed to load product. Please refresh.</p></div>';
