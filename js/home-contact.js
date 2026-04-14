@@ -34,13 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 验证 Turnstile
-        const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
-        if (!turnstileResponse) {
-            statusDiv.innerHTML = '<span style="color: #e74c3c;">Please complete the verification</span>';
-            return;
-        }
-
         statusDiv.innerHTML = '<span style="color: #3498db;">Submitting...</span>';
         
         try {
