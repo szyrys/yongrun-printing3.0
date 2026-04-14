@@ -7,12 +7,15 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         /* 管理后台专用样式 */
         .admin-container {
-            max-width: 100%;
+            max-width: 1400px;
             margin: 30px auto;
             padding: 20px;
-            overflow-x: auto;
         }
         
         /* 登录表单 */
@@ -94,12 +97,14 @@
             color: #c9a03d;
         }
         
-        /* 表格容器支持横向滚动 */
+        /* 表格容器 - 关键：横向滚动 */
         .table-wrapper {
             overflow-x: auto;
+            overflow-y: visible;
             margin-bottom: 20px;
             border-radius: 12px;
             width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
         
         .data-table {
@@ -108,7 +113,6 @@
             border-collapse: collapse;
             background: white;
             border-radius: 12px;
-            overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
@@ -117,6 +121,7 @@
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #eee;
+            white-space: nowrap;
         }
         
         .data-table th {
@@ -127,6 +132,13 @@
         
         .data-table tr:hover {
             background: #f8f9fa;
+        }
+        
+        /* 留言内容列允许换行 */
+        .data-table td:nth-child(5) {
+            white-space: normal;
+            max-width: 300px;
+            word-break: break-word;
         }
         
         .edit-btn, .delete-btn, .add-btn {
