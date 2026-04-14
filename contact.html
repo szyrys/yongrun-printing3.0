@@ -7,25 +7,58 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* 联系页面表单样式 - 等比例缩小 */
+        /* 联系页面表单样式 - 两列布局 */
         .contact-page .contact-form {
             max-width: 100%;
         }
-        .contact-page .form-group {
+        .contact-page .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
             margin-bottom: 18px;
+        }
+        .contact-page .form-group {
+            margin-bottom: 0;
+        }
+        .contact-page .full-width {
+            grid-column: span 2;
         }
         .contact-page .contact-form input,
         .contact-page .contact-form textarea,
         .contact-page .contact-form select {
+            width: 100%;
             padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             font-size: 0.95rem;
+            font-family: inherit;
+        }
+        .contact-page .contact-form input:focus,
+        .contact-page .contact-form textarea:focus,
+        .contact-page .contact-form select:focus {
+            outline: none;
+            border-color: #c9a03d;
         }
         .contact-page .contact-form button {
             padding: 12px 20px;
             font-size: 1rem;
+            width: 100%;
+        }
+        .contact-page .contact-form textarea {
+            resize: vertical;
+        }
+        .contact-page .contact-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .contact-page .contact-form small {
+            color: #666;
+            font-size: 12px;
         }
         .contact-info-item {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
@@ -48,7 +81,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
-            margin-top: 10px;
+            margin: 15px 0;
         }
         .social-item {
             font-size: 14px;
@@ -67,7 +100,19 @@
             color: #1a2a4f;
             font-weight: 500;
         }
+        .required-hint {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 15px;
+        }
         @media (max-width: 768px) {
+            .contact-page .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .contact-page .full-width {
+                grid-column: span 1;
+            }
             .contact-page .contact-grid {
                 grid-template-columns: 1fr !important;
                 gap: 30px !important;
@@ -124,33 +169,42 @@
             <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
                 <!-- 表单区域 -->
                 <div>
-                    <p class="contact-desc" data-i18n="contact_desc" style="margin-bottom: 25px;">Tell us about your project, we'll reply within 24 hours</p>
+                    <p class="contact-desc" data-i18n="contact_desc" style="margin-bottom: 20px;">Tell us about your project, we'll reply within 24 hours</p>
                     
                     <form id="contactMessageForm" class="contact-form">
-                        <div class="form-group">
-                            <input type="text" id="contact_name" data-i18n-placeholder="form_name" placeholder="Your Name *" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" id="contact_phone" data-i18n-placeholder="form_phone" placeholder="Phone Number">
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="contact_email" data-i18n-placeholder="form_email" placeholder="Email Address">
-                        </div>
-                        <div class="form-group">
-                            <select id="contact_product" data-i18n-placeholder="form_product">
-                                <option value="" disabled selected>Select Product Type</option>
-                                <option value="playingcards">Playing Cards</option>
-                                <option value="boardgames">Board Game Cards</option>
-                                <option value="tarot">Tarot Cards</option>
-                                <option value="laser">Holographic Cards</option>
-                                <option value="flashcards">Flashcards</option>
-                                <option value="books">Paperback/Hardcover Books</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <!-- 第一行：姓名 + 电话 -->
+                        <div class="form-row">
                             <div class="form-group">
-                                <select id="contact_quantity" data-i18n-placeholder="form_quantity">
+                                <input type="text" id="contact_name" placeholder="Your Name *" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="contact_phone" placeholder="Phone Number">
+                            </div>
+                        </div>
+                        
+                        <!-- 第二行：邮箱 + 产品类型 -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="email" id="contact_email" placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <select id="contact_product">
+                                    <option value="" disabled selected>Select Product Type</option>
+                                    <option value="playingcards">Playing Cards</option>
+                                    <option value="boardgames">Board Game Cards</option>
+                                    <option value="tarot">Tarot Cards</option>
+                                    <option value="laser">Holographic Cards</option>
+                                    <option value="flashcards">Flashcards</option>
+                                    <option value="books">Paperback/Hardcover Books</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- 第三行：数量范围 + 期望交货时间 -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <select id="contact_quantity">
                                     <option value="" disabled selected>Quantity Range</option>
                                     <option value="500-1000">500 - 1,000 sets</option>
                                     <option value="1000-5000">1,000 - 5,000 sets</option>
@@ -159,25 +213,32 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="contact_deadline" data-i18n-placeholder="form_deadline" placeholder="Expected Delivery Date">
+                                <input type="text" id="contact_deadline" placeholder="Expected Delivery Date (e.g., 30 days)">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <textarea id="contact_message" rows="4" data-i18n-placeholder="form_message" placeholder="Tell us about your project (size, material, special requirements...)"></textarea>
+                        
+                        <!-- 第四行：留言（跨列） -->
+                        <div class="form-group full-width">
+                            <textarea id="contact_message" rows="4" placeholder="Tell us about your project (size, material, special requirements...)"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="contact_file_link" style="display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px;">File Sharing Link (Google Drive / Dropbox / WeTransfer)</label>
+                        
+                        <!-- 第五行：网盘链接（跨列） -->
+                        <div class="form-group full-width">
+                            <label for="contact_file_link">File Sharing Link (Google Drive / Dropbox / WeTransfer)</label>
                             <input type="url" id="contact_file_link" placeholder="https://drive.google.com/...">
-                            <small style="color: #666; font-size: 12px;">Upload your design files to cloud storage and paste the link here.</small>
+                            <small>Upload your design files to cloud storage and paste the link here.</small>
                         </div>
-                        <div class="form-group">
+                        
+                        <!-- 提示信息 -->
+                        <div class="form-group full-width">
                             <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
                                 <p style="margin: 0; font-size: 13px; color: #666;">
                                     <strong>Contact Info Required:</strong> Please provide either <strong>Phone</strong> or <strong>Email</strong> so we can reach you.
                                 </p>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary" data-i18n="form_submit">Submit Message</button>
+                        
+                        <button type="submit" class="btn btn-primary">Submit Message</button>
                         <div id="contactFormStatus" class="form-status" style="margin-top: 15px;"></div>
                     </form>
                 </div>
@@ -215,14 +276,12 @@
                         <div class="contact-info-text"><strong>WhatsApp:</strong> +86 185 6569 8935</div>
                     </div>
                     
-                    <div style="margin: 20px 0 15px;">
-                        <div class="social-row">
-                            <span class="social-item"><i class="fab fa-linkedin"></i> CNyongrun-in</span>
-                            <span class="social-item"><i class="fab fa-youtube"></i> CNyongrun-yt</span>
-                            <span class="social-item"><i class="fab fa-facebook"></i> CNyongrun-fb</span>
-                            <span class="social-item"><i class="fab fa-instagram"></i> CNyongrun-ig</span>
-                            <span class="social-item"><i class="fab fa-tiktok"></i> CNyongrun-tk</span>
-                        </div>
+                    <div class="social-row">
+                        <span class="social-item"><i class="fab fa-linkedin"></i> CNyongrun-in</span>
+                        <span class="social-item"><i class="fab fa-youtube"></i> CNyongrun-yt</span>
+                        <span class="social-item"><i class="fab fa-facebook"></i> CNyongrun-fb</span>
+                        <span class="social-item"><i class="fab fa-instagram"></i> CNyongrun-ig</span>
+                        <span class="social-item"><i class="fab fa-tiktok"></i> CNyongrun-tk</span>
                     </div>
                     
                     <div class="reply-badge">
