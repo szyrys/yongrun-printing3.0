@@ -784,3 +784,10 @@ html[dir="rtl"] .language-selector button {
         grid-template-columns: 1fr;
     }
 }
+/* 强制修复所有副标题间距 */
+.section-subtitle {
+    margin-top: 0 !important;
+    margin-bottom: 15px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
