@@ -11,14 +11,6 @@ const adminEmail = document.getElementById('adminEmail');
 const adminPassword = document.getElementById('adminPassword');
 const loginError = document.getElementById('loginError');
 
-// 标签页
-const tabMessages = document.getElementById('tabMessages');
-const tabFaq = document.getElementById('tabFaq');
-const tabProducts = document.getElementById('tabProducts');
-const messagesPanel = document.getElementById('messagesPanel');
-const faqPanel = document.getElementById('faqPanel');
-const productsPanel = document.getElementById('productsPanel');
-
 // 检查登录状态
 async function checkSession() {
     try {
@@ -45,20 +37,17 @@ async function checkSession() {
     }
 }
 
-// 显示登录面板
 function showLoginPanel() {
     if (loginPanel) loginPanel.style.display = 'block';
     if (adminPanel) adminPanel.style.display = 'none';
     if (loginError) loginError.style.display = 'none';
 }
 
-// 显示管理面板
 function showAdminPanel() {
     if (loginPanel) loginPanel.style.display = 'none';
     if (adminPanel) adminPanel.style.display = 'block';
 }
 
-// 登录
 async function login() {
     const email = adminEmail.value.trim();
     const password = adminPassword.value.trim();
@@ -116,7 +105,6 @@ function showLoginError(msg) {
     }
 }
 
-// 登出
 async function logout() {
     try {
         const { error } = await window.supabaseClient.auth.signOut();
@@ -133,38 +121,38 @@ async function logout() {
 
 // ===== 标签页切换 =====
 function initTabs() {
-    if (tabMessages) {
-        tabMessages.addEventListener('click', () => {
-            setActiveTab('messages');
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panels = {
+        messages: document.getElementById('messagesPanel'),
+        faq: document.getElementById('faqPanel'),
+        products: document.getElementById('productsPanel')
+    };
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            
+            // 更新按钮样式
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            // 显示对应面板
+            Object.keys(panels).forEach(key => {
+                if (panels[key]) {
+                    panels[key].classList.remove('active');
+                }
+            });
+            if (panels[tabId]) {
+                panels[tabId].classList.add('active');
+            }
         });
-    }
-    if (tabFaq) {
-        tabFaq.addEventListener('click', () => {
-            setActiveTab('faq');
-        });
-    }
-    if (tabProducts) {
-        tabProducts.addEventListener('click', () => {
-            setActiveTab('products');
-        });
-    }
+    });
 }
 
-function setActiveTab(tab) {
-    // 更新按钮样式
-    const tabs = [tabMessages, tabFaq, tabProducts];
-    tabs.forEach(t => {
-        if (t) t.style.borderBottom = 'none';
-    });
-    if (tab === 'messages' && tabMessages) tabMessages.style.borderBottom = '2px solid #c9a03d';
-    if (tab === 'faq' && tabFaq) tabFaq.style.borderBottom = '2px solid #c9a03d';
-    if (tab === 'products' && tabProducts) tabProducts.style.borderBottom = '2px solid #c9a03d';
-    
-    // 显示对应面板
-    if (messagesPanel) messagesPanel.style.display = tab === 'messages' ? 'block' : 'none';
-    if (faqPanel) faqPanel.style.display = tab === 'faq' ? 'block' : 'none';
-    if (productsPanel) productsPanel.style.display = tab === 'products' ? 'block' : 'none';
-}
+// 刷新留言按钮
+document.getElementById('refreshMessagesBtn')?.addEventListener('click', () => {
+    loadMessages();
+});
 
 // ===== 留言管理 =====
 async function loadMessages() {
@@ -200,7 +188,7 @@ async function loadMessages() {
                         <td title="${escapeHtml(msg.message)}">${escapeHtml(shortMessage)}</td>
                         <td>${date}</td>
                         <td><button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button></td>
-                     </tr>`;
+                    </tr>`;
         });
         
         html += `</tbody></table>`;
@@ -263,7 +251,7 @@ async function loadFaqs() {
                             <button class="edit-faq-btn" data-id="${faq.id}">编辑</button>
                             <button class="delete-faq-btn" data-id="${faq.id}">删除</button>
                         </td>
-                     </tr>`;
+                    </tr>`;
         });
         html += `</tbody></table>`;
         container.innerHTML = html;
@@ -360,7 +348,7 @@ async function loadProducts() {
                             <button class="edit-product-btn" data-id="${product.id}">编辑</button>
                             <button class="delete-product-btn" data-id="${product.id}">删除</button>
                         </td>
-                     </tr>`;
+                    </tr>`;
         });
         html += `</tbody></table>`;
         container.innerHTML = html;
@@ -451,7 +439,6 @@ document.getElementById('cancelProductBtn')?.addEventListener('click', () => {
     document.getElementById('productModal').style.display = 'none';
 });
 
-// HTML 转义
 function escapeHtml(str) {
     if (!str) return '';
     return str.replace(/[&<>]/g, function(m) {
@@ -462,7 +449,7 @@ function escapeHtml(str) {
     });
 }
 
-// 绑定登录事件
+// 绑定事件
 if (loginBtn) loginBtn.addEventListener('click', login);
 if (logoutBtn) logoutBtn.addEventListener('click', logout);
 if (adminPassword) {
@@ -476,10 +463,8 @@ if (adminEmail) {
     });
 }
 
-// 初始化标签页
-initTabs();
-
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
+    initTabs();
     checkSession();
 });
