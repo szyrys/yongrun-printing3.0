@@ -34,19 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 验证 reCAPTCHA（如果有）
-        if (typeof grecaptcha !== 'undefined') {
-            const captchaResponse = grecaptcha.getResponse();
-            if (!captchaResponse) {
-                statusDiv.innerHTML = '<span style="color: #e74c3c;">Please complete the reCAPTCHA verification</span>';
-                return;
-            }
+        // 验证 Turnstile
+        const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
+        if (!turnstileResponse) {
+            statusDiv.innerHTML = '<span style="color: #e74c3c;">Please complete the verification</span>';
+            return;
         }
 
         statusDiv.innerHTML = '<span style="color: #3498db;">Submitting...</span>';
         
         try {
-            let fullMessage = `Product: ${product}Quantity: ${quantity}Expected Delivery: ${deadline || 'Not specified'}File Link: ${fileLink || 'Not provided'}Details:${message || 'Not specified'}`;
+            let fullMessage = `Product: ${product}\nQuantity: ${quantity}\nExpected Delivery: ${deadline || 'Not specified'}\nFile Link: ${fileLink || 'Not provided'}\n\nDetails:\n${message || 'Not specified'}`;
             
             const { error } = await window.supabaseClient
                 .from('messages')
@@ -59,19 +57,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (error) throw error;
             
-            // 重置 reCAPTCHA（如果有）
-            if (typeof grecaptcha !== 'undefined') {
-                grecaptcha.reset();
-            }
-            
             statusDiv.innerHTML = '<span style="color: #27ae60;">Message sent! We will contact you soon.</span>';
             form.reset();
+            // 重置 Turnstile（如果存在）
+            if (typeof turnstile !== 'undefined') {
+                turnstile.reset();
+            }
             setTimeout(() => statusDiv.innerHTML = '', 5000);
         } catch (err) {
             console.error('提交失败:', err);
             statusDiv.innerHTML = '<span style="color: #e74c3c;">Submission failed, please try again later.</span>';
-            if (typeof grecaptcha !== 'undefined') {
-                grecaptcha.reset();
+            if (typeof turnstile !== 'undefined') {
+                turnstile.reset();
             }
         }
     });
