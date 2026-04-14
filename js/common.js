@@ -303,7 +303,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             isPaused = false;
         });
         
-        // 初始化
-        bindClickEvents();
-        startAutoPlay();
-    }
+    // 初始化
+    bindClickEvents();
+    startAutoPlay();
+}
+});
