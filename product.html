@@ -11,11 +11,11 @@
             position: relative;
         }
         .main-image img {
-    width: 600px;
-    height: 600px;
-    object-fit: cover;
-    border-radius: 12px;
-}
+            width: 600px;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
         .thumbnail-list {
             display: flex;
             gap: 10px;
@@ -35,6 +35,10 @@
             transform: scale(1.05);
         }
         @media (max-width: 768px) {
+            .main-image img {
+                width: 100%;
+                height: auto;
+            }
             .thumb-img {
                 width: 60px;
                 height: 60px;
@@ -145,7 +149,7 @@
 
                 container.innerHTML = `
                     <div class="container">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
+                        <div style="display: grid; grid-template-columns: 600px 1fr; gap: 50px;">
                             <div>
                                 <div class="product-gallery">
                                     <div class="main-image">
