@@ -964,3 +964,22 @@ html[dir="rtl"] .language-selector button {
     margin-left: -50vw;
     margin-right: -50vw;
 }
+/* 修复分类背景贯穿全宽，同时保持内容居中 */
+.category-row {
+    width: 100%;
+    overflow: hidden;
+}
+.category-row .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.category-row.alt-bg {
+    background: #f8f9fa;
+}
+/* 确保内容不跟着拉伸 */
+.category-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
