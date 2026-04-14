@@ -742,7 +742,7 @@ html[dir="rtl"] .language-selector button {
     overflow: hidden;
     border-radius: 12px;
     background: #f0f0f0;
-    max-width: 500px;
+    max-width: 450px;
 }
 .carousel-track {
     display: flex;
@@ -750,7 +750,7 @@ html[dir="rtl"] .language-selector button {
 }
 .carousel-track img {
     width: 100%;
-    max-width: 500px;
+    max-width: 450px;
     margin: 0 auto;
     flex-shrink: 0;
     aspect-ratio: 1 / 1;
