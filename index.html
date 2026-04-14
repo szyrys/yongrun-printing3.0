@@ -154,8 +154,7 @@
                 <i class="fas fa-gift"></i>
                 <h3 data-i18n="free_sample_title">Free Exquisite Sample</h3>
                 <p data-i18n="free_sample_desc">Request a free sample to see our quality →</p>
-                <a href="#homeMessageForm" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('homeMessageForm').scrollIntoView({ behavior: 'smooth', block: 'start' });" data-i18n="free_sample_btn">Request Free Sample</a>
-            </div>
+                <a href="#homeMessageForm" class="btn btn-primary" onclick="event.preventDefault(); var element = document.getElementById('homeMessageForm'); var offset = 80; var elementPosition = element.getBoundingClientRect().top; var offsetPosition = elementPosition + window.pageYOffset - offset; window.scrollTo({ top: offsetPosition, behavior: 'smooth' });" data-i18n="free_sample_btn">Request Free Sample</a>            </div>
         </div>
     </div>
 
