@@ -81,6 +81,29 @@
             <a href="contact.html" class="btn btn-primary" data-i18n="cta_btn">Request a Quote →</a>
         </div>
     </section>
+        <!-- 首页留言表单 -->
+        <section class="home-contact-section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="home_contact_title">Send Us a Message</h2>
+                <p class="section-subtitle" data-i18n="home_contact_subtitle">We'll reply within 24 hours</p>
+                
+                <form id="homeMessageForm" class="home-contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="home_name" data-i18n-placeholder="form_name" placeholder="Your Name *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="home_email" data-i18n-placeholder="form_email" placeholder="Email Address *" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="home_message" rows="5" data-i18n-placeholder="form_message" placeholder="Message (card type, quantity, special requirements) *" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-i18n="form_submit">Submit Message</button>
+                    <div id="homeFormStatus" class="form-status"></div>
+                </form>
+            </div>
+        </section>
 
     <!-- 常见问题 FAQ 区（从数据库动态加载） -->
     <section class="faq-section">
@@ -89,15 +112,6 @@
             <div id="faqList" class="faq-list">
                 <div class="loading">加载 FAQ 中...</div>
             </div>
-        </div>
-    </section>
-
-    <!-- 联系简短区（跳转到 contact.html） -->
-    <section class="contact-short">
-        <div class="container">
-            <h2 class="section-title" data-i18n="contact_short_title">Get In Touch</h2>
-            <p data-i18n="contact_short_desc">Have a project in mind? Let's talk!</p>
-            <a href="contact.html" class="btn btn-primary" data-i18n="contact_short_btn">Contact Us →</a>
         </div>
     </section>
 
