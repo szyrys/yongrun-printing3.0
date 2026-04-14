@@ -791,3 +791,8 @@ html[dir="rtl"] .language-selector button {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
+/* 修复所有页面顶部副标题间距 */
+.page-header p {
+    margin-top: 5px !important;
+    margin-bottom: 0 !important;
+}
