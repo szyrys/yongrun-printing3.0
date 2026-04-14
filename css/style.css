@@ -594,3 +594,60 @@ html[dir="rtl"] .language-selector button {
         gap: 0;
     }
 }
+/* 首页留言表单样式 - 橙色背景 */
+.home-contact-section {
+    padding: 60px 0;
+    background: #c9a03d;
+}
+.home-contact-section .section-title {
+    color: #1a2a4f;
+}
+.section-subtitle {
+    text-align: center;
+    color: #1a2a4f;
+    margin-bottom: 40px;
+}
+.home-contact-form {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+.home-contact-form .form-group {
+    margin-bottom: 20px;
+}
+.home-contact-form input,
+.home-contact-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+.home-contact-form input:focus,
+.home-contact-form textarea:focus {
+    outline: none;
+    border-color: #c9a03d;
+}
+.home-contact-form button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+}
+.form-status {
+    margin-top: 15px;
+    text-align: center;
+}
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
