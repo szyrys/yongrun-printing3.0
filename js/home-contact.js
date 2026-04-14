@@ -68,3 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+        // 验证 reCAPTCHA
+        const captchaResponse = grecaptcha.getResponse();
+        if (!captchaResponse) {
+            statusDiv.innerHTML = '<span style="color: #e74c3c;">请完成人机验证（勾选“我不是机器人”）</span>';
+            return;
+        }
