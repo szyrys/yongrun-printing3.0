@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>表格滚动测试</title>
+    <style>
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            border: 2px solid red;
+            background: white;
+        }
+        .data-table {
+            width: 1200px;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <h2>表格滚动测试</h2>
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr><th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容留言内容留言内容留言内容留言内容</th><th>提交时间</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>张三</td><td>test@example.com</td><td>13800138000</td><td>这是一条很长的留言内容这是一条很长的留言内容这是一条很长的留言内容</td><td>2024-01-01</td><td>删除</td></tr>
+                <tr><td>2</td><td>李四</td><td>test2@example.com</td><td>13800138001</td><td>短留言</td><td>2024-01-02</td><td>删除</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <p>如果下方出现横向滚动条，说明 CSS 正常。如果没有，说明浏览器或显示区域有问题。</p>
+</body>
+</html>
