@@ -55,4 +55,15 @@
   "form_product": "Select Product Type",
   "form_quantity": "Quantity Range",
   "form_deadline": "Expected Delivery Date"
+  "category_cards_desc": "Custom playing cards, tarot cards, holographic cards, flashcards and more. Premium quality with various finishes including gloss, matte, UV coating, and foil stamping. Perfect for casinos, promotions, collectors, and educational purposes. Low MOQ available with fast turnaround.",
+"category_books_desc": "Hardcover, paperback, pop-up, perfect bound books, product catalogs, and picture books. Custom sizes, premium paper stocks, and professional binding. Ideal for coffee table books, children's books, art books, and corporate publications. Free design consultation available.",
+"category_boardgames_desc": "Custom board game printing including cards, rulebooks, game boards, and custom boxes. Perfect for crowdfunding campaigns, family games, and strategy games. We handle everything from prototyping to mass production with high-quality components and packaging.",
+"category_puzzles_desc": "Custom puzzles for all ages - children's puzzles, wooden puzzles, 3D puzzles, and floor puzzles. Educational and entertaining designs with eco-friendly materials. Perfect for gifts, educational toys, and promotional items. Custom shapes and sizes available.",
+"category_cards_btn": "View All Cards →",
+"category_books_btn": "View All Books →",
+"category_boardgames_btn": "View All Board Games →",
+"category_puzzles_btn": "View All Puzzles →",
+"free_sample_title": "Free Exquisite Sample",
+"free_sample_desc": "Request a free sample to see our quality →",
+"free_sample_btn": "Request Free Sample"
 }
