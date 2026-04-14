@@ -10,14 +10,12 @@ body {
     line-height: 1.6;
     color: #333;
     background: #f5f5f5;
-    /* 页脚贴底 */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
 }
 
-/* 主内容区域，用于页脚贴底 */
 main {
     flex: 1;
 }
@@ -154,7 +152,6 @@ main {
     margin: 3px 0;
 }
 
-/* 移动端下拉菜单适配 */
 @media (max-width: 768px) {
     .nav-menu .dropdown-menu {
         position: static;
@@ -189,6 +186,17 @@ main {
 .btn-primary:hover {
     background: #b08a2c;
     transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #c9a03d;
+    color: #1a2a4f;
+}
+
+.btn-outline:hover {
+    background: #c9a03d;
+    color: white;
 }
 
 /* ===== Hero Banner ===== */
@@ -245,46 +253,6 @@ main {
 
 .section-title span {
     color: #c9a03d;
-}
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-.product-card {
-    background: #f8f9fa;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transition: transform 0.3s;
-    cursor: pointer;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-.product-img {
-    height: 200px;
-    background: #1a2a4f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 3rem;
-}
-
-.product-card h3 {
-    padding: 15px 15px 5px;
-    color: #1a2a4f;
-}
-
-.product-card p {
-    padding: 0 15px 15px;
-    color: #666;
-    font-size: 14px;
 }
 
 /* ===== CTA 区域 ===== */
@@ -389,10 +357,6 @@ main {
     
     .about-grid {
         grid-template-columns: 1fr;
-    }
-    
-    .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
 }
 
@@ -549,7 +513,6 @@ html[dir="rtl"] .language-selector button {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-/* 尺寸：从外到内逐渐变大 */
 .seven-gallery .gallery-img:nth-child(1) {
     width: 100px;
     height: 138px;
@@ -614,40 +577,17 @@ html[dir="rtl"] .language-selector button {
 /* ===== 页面头部 ===== */
 .page-header {
     background: #ecf0f1;
-    padding: 60px 0;
+    padding: 40px 0;
     text-align: center;
 }
 .page-header h1 {
     font-size: 2.5rem;
     color: #1a2a4f;
+    margin-bottom: 5px;
 }
 .page-header p {
     color: #666;
-    margin-top: 10px;
-}
-
-/* ===== 客户案例 ===== */
-.cases-section {
-    padding: 60px 0;
-}
-.cases-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
-.case-item {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-.case-item img {
-    width: 100%;
-    height: auto;
-}
-.case-item p {
-    padding: 12px;
-    text-align: center;
+    margin-top: 5px;
 }
 
 /* ===== 公司简介轮播图样式 ===== */
@@ -718,22 +658,15 @@ html[dir="rtl"] .language-selector button {
     gap: 8px;
     z-index: 10;
 }
-.dot {
+.slider-dots .dot {
     width: 10px;
     height: 10px;
     background: rgba(255,255,255,0.5);
     border-radius: 50%;
     cursor: pointer;
 }
-.dot.active {
+.slider-dots .dot.active {
     background: white;
-}
-
-/* ===== 联系简短区 ===== */
-.contact-short {
-    text-align: center;
-    padding: 60px 0;
-    background: #f8f9fa;
 }
 
 /* ===== 产品详情页 9宫格 ===== */
@@ -784,38 +717,14 @@ html[dir="rtl"] .language-selector button {
         grid-template-columns: 1fr;
     }
 }
-/* 强制修复所有副标题间距 */
-.section-subtitle {
-    margin-top: 0 !important;
-    margin-bottom: 15px !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-}
-/* 修复所有页面顶部副标题间距 */
-.page-header p {
-    margin-top: 5px !important;
-    margin-bottom: 0 !important;
-}
-/* 页面头部间距修复 */
-.page-header {
-    padding: 30px 0 20px 0 !important;
-}
-.page-header h1 {
-    margin-bottom: 5px !important;
-}
-.page-header p {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-}
-/* 分类轮播样式 */
+
+/* ===== 分类轮播样式 ===== */
 .category-row {
     padding: 60px 0;
-    border-bottom: 1px solid #eee;
     width: 100%;
 }
 .category-row.alt-bg {
     background: #f8f9fa;
-    width: 100%;
 }
 .category-content {
     display: grid;
@@ -867,21 +776,9 @@ html[dir="rtl"] .language-selector button {
 .carousel-prev:hover, .carousel-next:hover {
     background: rgba(0,0,0,0.8);
 }
+/* 隐藏轮播图指示点 */
 .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 15px;
-}
-.dot {
-    width: 10px;
-    height: 10px;
-    background: #ccc;
-    border-radius: 50%;
-    cursor: pointer;
-}
-.dot.active {
-    background: #c9a03d;
+    display: none;
 }
 .category-info h3 {
     font-size: 2rem;
@@ -890,25 +787,19 @@ html[dir="rtl"] .language-selector button {
 }
 .category-info p {
     color: #555;
-    line-height: 1.6;
+    line-height: 1.8;
     margin-bottom: 20px;
+    font-size: 1rem;
 }
-.btn-outline {
-    background: transparent;
-    border: 2px solid #c9a03d;
-    color: #1a2a4f;
-}
-.btn-outline:hover {
-    background: #c9a03d;
-    color: white;
-}
+
+/* ===== 免费样品卡片 ===== */
 .free-sample-card {
     background: linear-gradient(135deg, #c9a03d, #b08a2c);
-    border-radius: 16px;
-    padding: 30px 20px;
-    text-align: center;
-    margin-top: 40px;
+    padding: 40px 0;
     width: 100%;
+}
+.free-sample-content {
+    text-align: center;
 }
 .free-sample-content i {
     font-size: 2rem;
@@ -933,6 +824,8 @@ html[dir="rtl"] .language-selector button {
 .free-sample-content .btn-primary:hover {
     background: #0f1a33;
 }
+
+/* 响应式 */
 @media (max-width: 768px) {
     .category-content {
         grid-template-columns: 1fr;
@@ -941,45 +834,4 @@ html[dir="rtl"] .language-selector button {
     .category-info {
         text-align: center;
     }
-    .free-sample-card {
-        padding: 30px;
-    }
-}
-/* 隐藏轮播图底部的指示点 */
-.carousel-dots {
-    display: none !important;
-}
-.free-sample-card.full-width {
-    width: 100%;
-    border-radius: 0;
-    margin-top: 0;
-}
-/* 确保分类背景贯穿全宽 */
-.category-row.alt-bg {
-    background: #f8f9fa;
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-}
-/* 修复分类背景贯穿全宽，同时保持内容居中 */
-.category-row {
-    width: 100%;
-    overflow: hidden;
-}
-.category-row .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-.category-row.alt-bg {
-    background: #f8f9fa;
-}
-/* 确保内容不跟着拉伸 */
-.category-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
 }
