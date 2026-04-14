@@ -796,3 +796,14 @@ html[dir="rtl"] .language-selector button {
     margin-top: 5px !important;
     margin-bottom: 0 !important;
 }
+/* 页面头部间距修复 */
+.page-header {
+    padding: 30px 0 20px 0 !important;
+}
+.page-header h1 {
+    margin-bottom: 5px !important;
+}
+.page-header p {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
