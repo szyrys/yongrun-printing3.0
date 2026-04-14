@@ -47,4 +47,6 @@
   "form_error_empty": "请填写所有必填项",
   "form_error_email": "请输入有效的邮箱地址",
   "form_error_submit": "提交失败，请稍后重试"
+  ,"home_contact_title": "给我们留言",
+  "home_contact_subtitle": "我们将在24小时内回复您"
 }
