@@ -3,6 +3,8 @@ import { serve } from 'https://deno.land/std@0.177.0/http/server.ts'
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY') || ''
 
 serve(async (req) => {
+  // 绕过 JWT 验证（仅测试用，正式环境需要移除）
+  // 允许任何请求调用此函数
   if (req.method === 'OPTIONS') {
     return new Response('ok', {
       headers: {
