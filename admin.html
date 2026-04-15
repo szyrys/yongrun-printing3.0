@@ -43,6 +43,7 @@
             margin-top: 15px;
         }
         
+        /* 管理面板头部 - 标题在左，登出在右 */
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -55,6 +56,7 @@
         .admin-header h1 {
             color: #1a2a4f;
             font-size: 1.8rem;
+            margin: 0;
         }
         
         .logout-btn {
@@ -66,6 +68,11 @@
             cursor: pointer;
         }
         
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        
+        /* 标签页 */
         .tab-bar {
             display: flex;
             gap: 10px;
@@ -87,12 +94,16 @@
             color: #c9a03d;
         }
         
+        /* 表格容器 - 支持固定表头 */
         .table-wrapper {
-            overflow-x: visible;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 500px;
             width: 100%;
             margin-bottom: 20px;
             border-radius: 12px;
             background: white;
+            position: relative;
         }
         
         .data-table {
@@ -104,6 +115,14 @@
             table-layout: fixed;
         }
         
+        /* 固定表头 */
+        .data-table thead tr {
+            position: sticky;
+            top: 0;
+            background: #1a2a4f;
+            z-index: 10;
+        }
+        
         .data-table th,
         .data-table td {
             padding: 12px 15px;
@@ -111,21 +130,22 @@
             border-bottom: 1px solid #eee;
         }
         
+        .data-table th {
+            background: #1a2a4f;
+            color: white;
+            font-weight: 500;
+        }
+        
         .data-table td {
             white-space: nowrap;
         }
         
+        /* 留言内容列自动换行 */
         .data-table td:nth-child(5) {
             white-space: normal !important;
             word-wrap: break-word !important;
             word-break: break-word !important;
             max-width: 300px;
-        }
-        
-        .data-table th {
-            background: #1a2a4f;
-            color: white;
-            font-weight: 500;
         }
         
         .data-table tr:hover {
@@ -327,7 +347,6 @@
         <div class="modal-content">
             <h3 id="productModalTitle">添加产品</h3>
             
-            <!-- 分类 -->
             <select id="productCategory">
                 <option value="cards">Cards</option>
                 <option value="books">Books</option>
@@ -335,10 +354,7 @@
                 <option value="puzzles">Puzzles</option>
             </select>
             
-            <!-- URL标识 -->
             <input type="text" id="productSlug" placeholder="URL标识 (slug) * 例如: playingcards">
-            
-            <!-- 图片URL -->
             <input type="text" id="productImageUrl" placeholder="图片URL (多张用逗号分隔)">
             
             <div style="display: flex; gap: 10px; align-items: center;">
@@ -348,7 +364,6 @@
             <hr style="margin: 15px 0;">
             <h4>多语言信息</h4>
             
-            <!-- 语言标签页 -->
             <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 15px;">
                 <button type="button" class="lang-tab active" data-lang="en">English</button>
                 <button type="button" class="lang-tab" data-lang="zh">简体中文</button>
@@ -361,62 +376,44 @@
                 <button type="button" class="lang-tab" data-lang="ko">한국어</button>
             </div>
             
-            <!-- 英文 -->
             <div class="lang-panel active" data-lang="en">
-                <input type="text" id="productName_en" placeholder="产品名称 (英文) *" style="margin-bottom: 10px;">
-                <textarea id="productDesc_en" placeholder="产品描述 (英文)" rows="3" style="margin-bottom: 10px;"></textarea>
+                <input type="text" id="productName_en" placeholder="产品名称 (英文) *">
+                <textarea id="productDesc_en" placeholder="产品描述 (英文)" rows="3"></textarea>
             </div>
-            
-            <!-- 简体中文 -->
             <div class="lang-panel" data-lang="zh">
                 <input type="text" id="productName_zh" placeholder="产品名称 (简体中文)">
                 <textarea id="productDesc_zh" placeholder="产品描述 (简体中文)" rows="3"></textarea>
             </div>
-            
-            <!-- 繁体中文 -->
             <div class="lang-panel" data-lang="zh-TW">
                 <input type="text" id="productName_zh_TW" placeholder="产品名称 (繁體中文)">
                 <textarea id="productDesc_zh_TW" placeholder="产品描述 (繁體中文)" rows="3"></textarea>
             </div>
-            
-            <!-- 西班牙语 -->
             <div class="lang-panel" data-lang="es">
                 <input type="text" id="productName_es" placeholder="Nombre del producto">
                 <textarea id="productDesc_es" placeholder="Descripción del producto" rows="3"></textarea>
             </div>
-            
-            <!-- 德语 -->
             <div class="lang-panel" data-lang="de">
                 <input type="text" id="productName_de" placeholder="Produktname">
                 <textarea id="productDesc_de" placeholder="Produktbeschreibung" rows="3"></textarea>
             </div>
-            
-            <!-- 葡萄牙语 -->
             <div class="lang-panel" data-lang="pt">
                 <input type="text" id="productName_pt" placeholder="Nome do produto">
                 <textarea id="productDesc_pt" placeholder="Descrição do produto" rows="3"></textarea>
             </div>
-            
-            <!-- 阿拉伯语 -->
             <div class="lang-panel" data-lang="ar">
                 <input type="text" id="productName_ar" placeholder="اسم المنتج">
                 <textarea id="productDesc_ar" placeholder="وصف المنتج" rows="3"></textarea>
             </div>
-            
-            <!-- 日语 -->
             <div class="lang-panel" data-lang="ja">
                 <input type="text" id="productName_ja" placeholder="製品名">
                 <textarea id="productDesc_ja" placeholder="製品説明" rows="3"></textarea>
             </div>
-            
-            <!-- 韩语 -->
             <div class="lang-panel" data-lang="ko">
                 <input type="text" id="productName_ko" placeholder="제품명">
                 <textarea id="productDesc_ko" placeholder="제품 설명" rows="3"></textarea>
             </div>
             
             <input type="hidden" id="productId">
-            
             <button id="saveProductBtn" class="btn btn-primary">保存</button>
             <button id="cancelProductBtn" class="btn">取消</button>
         </div>
