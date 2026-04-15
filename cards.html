@@ -195,20 +195,22 @@
             const imageUrl = product.image_url ? product.image_url.split(',')[0] : null;
             
             if (imageUrl) {
-                card.innerHTML = `
-                    <div class="product-img" style="background: none; height: 200px; overflow: hidden;">
-                        <img src="${imageUrl}" alt="${name}" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <h3>${name}</h3>
-                    <p>${desc || ''}</p>
-                `;
-            } else {
-                card.innerHTML = `
-                    <div class="product-img"><i class="fas fa-image"></i></div>
-                    <h3>${name}</h3>
-                    <p>${desc || ''}</p>
-                `;
-            }
+    card.innerHTML = `
+        <div class="product-img">
+            <img src="${imageUrl}" alt="${name}">
+        </div>
+        <h3>${name}</h3>
+        <p>${desc || ''}</p>
+    `;
+} else {
+    card.innerHTML = `
+        <div class="product-img">
+            <i class="fas fa-image"></i>
+        </div>
+        <h3>${name}</h3>
+        <p>${desc || ''}</p>
+    `;
+}
             grid.appendChild(card);
         });
     } catch (err) {
