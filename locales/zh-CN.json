@@ -54,16 +54,17 @@
   "form_phone": "联系电话",
   "form_product": "选择产品类型",
   "form_quantity": "数量范围",
-  "form_deadline": "期望交货时间"
+  "form_deadline": "期望交货时间",
+
   "category_cards_desc": "定制扑克牌、塔罗牌、镭射卡、学习卡片等。提供光面、哑光、UV覆膜、烫金等多种表面处理工艺。适用于赌场、促销活动、收藏品和教育用途。起订量低，快速交货。",
-"category_books_desc": "精装书、平装书、立体书、胶装书、产品目录和绘本。定制尺寸、优质纸张和专业装订。适用于咖啡桌书、儿童书籍、艺术书籍和企业出版物。免费设计咨询。",
-"category_boardgames_desc": "定制桌游印刷，包括卡牌、规则书、游戏板和定制盒子。适合众筹项目、家庭游戏和策略游戏。从打样到量产，提供高品质组件和包装。",
-"category_puzzles_desc": "定制拼图，适用于儿童拼图、木质拼图、3D拼图和地板拼图。环保材料，教育和娱乐兼具。适合礼品、教育玩具和促销品。定制形状和尺寸。",
-"category_cards_btn": "查看卡牌系列 →",
-"category_books_btn": "查看书籍系列 →",
-"category_boardgames_btn": "查看桌游系列 →",
-"category_puzzles_btn": "查看拼图系列 →",
-"free_sample_title": "免费获取精美样品",
-"free_sample_desc": "申请免费样品，体验我们的品质 →",
-"free_sample_btn": "申请免费样品"
+  "category_books_desc": "精装书、平装书、立体书、胶装书、产品目录和绘本。定制尺寸、优质纸张和专业装订。适用于咖啡桌书、儿童书籍、艺术书籍和企业出版物。免费设计咨询。",
+  "category_boardgames_desc": "定制桌游印刷，包括卡牌、规则书、游戏板和定制盒子。适合众筹项目、家庭游戏和策略游戏。从打样到量产，提供高品质组件和包装。",
+  "category_puzzles_desc": "定制拼图，适用于儿童拼图、木质拼图、3D拼图和地板拼图。环保材料，教育和娱乐兼具。适合礼品、教育玩具和促销品。定制形状和尺寸。",
+  "category_cards_btn": "查看卡牌系列 →",
+  "category_books_btn": "查看书籍系列 →",
+  "category_boardgames_btn": "查看桌游系列 →",
+  "category_puzzles_btn": "查看拼图系列 →",
+  "free_sample_title": "免费获取精美样品",
+  "free_sample_desc": "申请免费样品，体验我们的品质 →",
+  "free_sample_btn": "申请免费样品"
 }
