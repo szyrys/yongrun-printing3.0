@@ -10,6 +10,33 @@ const adminEmail = document.getElementById('adminEmail');
 const adminPassword = document.getElementById('adminPassword');
 const loginError = document.getElementById('loginError');
 
+// 标签页
+const tabMessages = document.getElementById('tabMessages');
+const tabFaq = document.getElementById('tabFaq');
+const tabProducts = document.getElementById('tabProducts');
+const messagesPanel = document.getElementById('messagesPanel');
+const faqPanel = document.getElementById('faqPanel');
+const productsPanel = document.getElementById('productsPanel');
+
+// 多语言标签页切换
+function initLangTabs() {
+    const tabs = document.querySelectorAll('.lang-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const lang = tab.getAttribute('data-lang');
+            // 更新按钮样式
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            // 切换面板
+            document.querySelectorAll('.lang-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.querySelector(`.lang-panel[data-lang="${lang}"]`).classList.add('active');
+        });
+    });
+}
+
+// 检查登录状态
 async function checkSession() {
     try {
         const { data: { session }, error } = await window.supabaseClient.auth.getSession();
@@ -77,13 +104,11 @@ async function logout() {
 }
 
 function initTabs() {
-    const tabs = document.querySelectorAll('.tab-btn');
-    const panels = {
-        messages: document.getElementById('messagesPanel'),
-        faq: document.getElementById('faqPanel'),
-        products: document.getElementById('productsPanel')
-    };
+    const tabs = [tabMessages, tabFaq, tabProducts];
+    const panels = { messages: messagesPanel, faq: faqPanel, products: productsPanel };
+    
     tabs.forEach(tab => {
+        if (!tab) return;
         tab.addEventListener('click', () => {
             const tabId = tab.getAttribute('data-tab');
             tabs.forEach(t => t.classList.remove('active'));
@@ -96,44 +121,38 @@ function initTabs() {
 
 document.getElementById('refreshMessagesBtn')?.addEventListener('click', () => loadMessages());
 
+// ===== 留言管理 =====
 async function loadMessages() {
     const container = document.getElementById('messagesContainer');
     if (!container) return;
-    
+    container.innerHTML = '<div class="loading">加载留言中...</div>';
     try {
         const { data, error } = await window.supabaseClient
             .from('messages')
             .select('*')
             .order('created_at', { ascending: false });
-        
         if (error) throw error;
-        
-        // 始终显示表格结构，无论是否有数据
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="empty-state">暂无留言</div>';
+            return;
+        }
         let html = `<table class="data-table"><thead><tr>
             <th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th>
         </tr></thead><tbody>`;
-        
-        if (!data || data.length === 0) {
-            // 无数据时显示一行提示
-            html += `<tr><td colspan="7" style="text-align: center; padding: 40px;">暂无留言</td></tr>`;
-        } else {
-            data.forEach(msg => {
-                const date = new Date(msg.created_at).toLocaleString('zh-CN');
-                html += `<tr>
-                    <td>${msg.id}</td>
-                    <td>${escapeHtml(msg.name)}</td>
-                    <td>${escapeHtml(msg.email || '-')}</td>
-                    <td>${escapeHtml(msg.phone || '-')}</td>
-                    <td style="white-space: normal; word-break: break-word;">${escapeHtml(msg.message || '')}</td>
-                    <td>${date}</td>
-                    <td><button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button></td>
-                </tr>`;
-            });
-        }
-        
+        data.forEach(msg => {
+            const date = new Date(msg.created_at).toLocaleString('zh-CN');
+            html += `<tr>
+                <td>${msg.id}</td>
+                <td>${escapeHtml(msg.name)}</td>
+                <td>${escapeHtml(msg.email || '-')}</td>
+                <td>${escapeHtml(msg.phone || '-')}</td>
+                <td style="white-space: normal; word-break: break-word;">${escapeHtml(msg.message || '')}</td>
+                <td>${date}</td>
+                <td><button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button></td>
+            </tr>`;
+        });
         html += `</tbody></table>`;
         container.innerHTML = html;
-        
         document.querySelectorAll('.delete-btn[data-type="message"]').forEach(btn => {
             btn.addEventListener('click', async () => {
                 if (confirm('确定删除？')) {
@@ -142,11 +161,13 @@ async function loadMessages() {
                 }
             });
         });
-        
     } catch (err) {
         container.innerHTML = '<div class="empty-state">加载失败</div>';
     }
 }
+
+// ===== FAQ 管理 =====
+let currentFaqId = null;
 
 async function loadFaqs() {
     const container = document.getElementById('faqContainer');
@@ -177,7 +198,6 @@ async function loadFaqs() {
     }
 }
 
-let currentFaqId = null;
 async function editFaq(id) {
     const { data } = await window.supabaseClient.from('faq').select('*').eq('id', id).single();
     document.getElementById('faqQuestion').value = data.question;
@@ -217,24 +237,29 @@ document.getElementById('cancelFaqBtn')?.addEventListener('click', () => {
     document.getElementById('faqModal').style.display = 'none';
 });
 
+// ===== 产品管理（多语言版本）=====
 let currentProductId = null;
+
 async function loadProducts() {
     const container = document.getElementById('productsContainer');
     if (!container) return;
     container.innerHTML = '<div class="loading">加载产品中...</div>';
     try {
-        const { data, error } = await window.supabaseClient.from('products').select('*').order('category');
+        const { data, error } = await window.supabaseClient
+            .from('products')
+            .select('*')
+            .order('category', { ascending: true });
         if (error) throw error;
         if (!data || data.length === 0) {
             container.innerHTML = '<div class="empty-state">暂无产品</div>';
             return;
         }
-        let html = `<table class="data-table"><thead><tr><th>ID</th><th>分类</th><th>名称</th><th>标识</th><th>置顶</th><th>操作</th></tr></thead><tbody>`;
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>分类</th><th>名称(EN)</th><th>标识(slug)</th><th>置顶</th><th>操作</th></tr></thead><tbody>`;
         data.forEach(p => {
             html += `<tr>
                 <td>${p.id}</td>
                 <td>${p.category}</td>
-                <td>${escapeHtml(p.name)}</td>
+                <td>${escapeHtml(p.name_en || '-')}</td>
                 <td>${p.slug}</td>
                 <td>${p.is_featured ? '⭐' : '-'}</td>
                 <td><button class="edit-product-btn" data-id="${p.id}">编辑</button><button class="delete-product-btn" data-id="${p.id}">删除</button></td>
@@ -248,62 +273,132 @@ async function loadProducts() {
         container.innerHTML = '<div class="empty-state">加载失败</div>';
     }
 }
+
 async function editProduct(id) {
     const { data } = await window.supabaseClient.from('products').select('*').eq('id', id).single();
-    document.getElementById('productCategory').value = data.category;
-    document.getElementById('productName').value = data.name;
-    document.getElementById('productSlug').value = data.slug;
-    document.getElementById('productShortDesc').value = data.short_desc || '';
-    document.getElementById('productFullDesc').value = data.full_desc || '';
-    document.getElementById('productFeatures').value = data.features || '';
+    
+    // 清空所有字段
+    document.getElementById('productCategory').value = data.category || 'cards';
+    document.getElementById('productSlug').value = data.slug || '';
     document.getElementById('productImageUrl').value = data.image_url || '';
     document.getElementById('productIsFeatured').checked = data.is_featured || false;
     document.getElementById('productId').value = data.id;
+    
+    // 多语言字段
+    document.getElementById('productName_en').value = data.name_en || '';
+    document.getElementById('productDesc_en').value = data.desc_en || '';
+    document.getElementById('productName_zh').value = data.name_zh || '';
+    document.getElementById('productDesc_zh').value = data.desc_zh || '';
+    document.getElementById('productName_zh_TW').value = data.name_zh_tw || '';
+    document.getElementById('productDesc_zh_TW').value = data.desc_zh_tw || '';
+    document.getElementById('productName_es').value = data.name_es || '';
+    document.getElementById('productDesc_es').value = data.desc_es || '';
+    document.getElementById('productName_de').value = data.name_de || '';
+    document.getElementById('productDesc_de').value = data.desc_de || '';
+    document.getElementById('productName_pt').value = data.name_pt || '';
+    document.getElementById('productDesc_pt').value = data.desc_pt || '';
+    document.getElementById('productName_ar').value = data.name_ar || '';
+    document.getElementById('productDesc_ar').value = data.desc_ar || '';
+    document.getElementById('productName_ja').value = data.name_ja || '';
+    document.getElementById('productDesc_ja').value = data.desc_ja || '';
+    document.getElementById('productName_ko').value = data.name_ko || '';
+    document.getElementById('productDesc_ko').value = data.desc_ko || '';
+    
     document.getElementById('productModalTitle').innerText = '编辑产品';
     document.getElementById('productModal').style.display = 'flex';
     currentProductId = id;
 }
+
 async function deleteProduct(id) {
     if (confirm('确定删除？')) {
         await window.supabaseClient.from('products').delete().eq('id', id);
         loadProducts();
     }
 }
+
 document.getElementById('addProductBtn')?.addEventListener('click', () => {
+    // 清空所有字段
     document.getElementById('productCategory').value = 'cards';
-    document.getElementById('productName').value = '';
     document.getElementById('productSlug').value = '';
-    document.getElementById('productShortDesc').value = '';
-    document.getElementById('productFullDesc').value = '';
-    document.getElementById('productFeatures').value = '';
     document.getElementById('productImageUrl').value = '';
     document.getElementById('productIsFeatured').checked = false;
     document.getElementById('productId').value = '';
+    
+    // 清空多语言字段
+    document.getElementById('productName_en').value = '';
+    document.getElementById('productDesc_en').value = '';
+    document.getElementById('productName_zh').value = '';
+    document.getElementById('productDesc_zh').value = '';
+    document.getElementById('productName_zh_TW').value = '';
+    document.getElementById('productDesc_zh_TW').value = '';
+    document.getElementById('productName_es').value = '';
+    document.getElementById('productDesc_es').value = '';
+    document.getElementById('productName_de').value = '';
+    document.getElementById('productDesc_de').value = '';
+    document.getElementById('productName_pt').value = '';
+    document.getElementById('productDesc_pt').value = '';
+    document.getElementById('productName_ar').value = '';
+    document.getElementById('productDesc_ar').value = '';
+    document.getElementById('productName_ja').value = '';
+    document.getElementById('productDesc_ja').value = '';
+    document.getElementById('productName_ko').value = '';
+    document.getElementById('productDesc_ko').value = '';
+    
     document.getElementById('productModalTitle').innerText = '添加产品';
     document.getElementById('productModal').style.display = 'flex';
     currentProductId = null;
 });
+
 document.getElementById('saveProductBtn')?.addEventListener('click', async () => {
     const category = document.getElementById('productCategory').value;
-    const name = document.getElementById('productName').value.trim();
     const slug = document.getElementById('productSlug').value.trim();
-    if (!name || !slug) return alert('请填写名称和标识');
-    const data = {
-        category, name, slug,
-        short_desc: document.getElementById('productShortDesc').value.trim(),
-        full_desc: document.getElementById('productFullDesc').value.trim(),
-        features: document.getElementById('productFeatures').value.trim(),
-        image_url: document.getElementById('productImageUrl').value.trim(),
-        is_featured: document.getElementById('productIsFeatured').checked
+    const image_url = document.getElementById('productImageUrl').value.trim();
+    const is_featured = document.getElementById('productIsFeatured').checked;
+    
+    if (!slug) {
+        alert('请填写 URL 标识(slug)');
+        return;
+    }
+    
+    const productData = {
+        category,
+        slug,
+        image_url,
+        is_featured,
+        name_en: document.getElementById('productName_en').value.trim(),
+        desc_en: document.getElementById('productDesc_en').value.trim(),
+        name_zh: document.getElementById('productName_zh').value.trim(),
+        desc_zh: document.getElementById('productDesc_zh').value.trim(),
+        name_zh_tw: document.getElementById('productName_zh_TW').value.trim(),
+        desc_zh_tw: document.getElementById('productDesc_zh_TW').value.trim(),
+        name_es: document.getElementById('productName_es').value.trim(),
+        desc_es: document.getElementById('productDesc_es').value.trim(),
+        name_de: document.getElementById('productName_de').value.trim(),
+        desc_de: document.getElementById('productDesc_de').value.trim(),
+        name_pt: document.getElementById('productName_pt').value.trim(),
+        desc_pt: document.getElementById('productDesc_pt').value.trim(),
+        name_ar: document.getElementById('productName_ar').value.trim(),
+        desc_ar: document.getElementById('productDesc_ar').value.trim(),
+        name_ja: document.getElementById('productName_ja').value.trim(),
+        desc_ja: document.getElementById('productDesc_ja').value.trim(),
+        name_ko: document.getElementById('productName_ko').value.trim(),
+        desc_ko: document.getElementById('productDesc_ko').value.trim()
     };
+    
+    if (!productData.name_en) {
+        alert('请填写英文名称');
+        return;
+    }
+    
     if (currentProductId) {
-        await window.supabaseClient.from('products').update(data).eq('id', currentProductId);
+        await window.supabaseClient.from('products').update(productData).eq('id', currentProductId);
     } else {
-        await window.supabaseClient.from('products').insert([{ ...data, sort_order: 0 }]);
+        await window.supabaseClient.from('products').insert([{ ...productData, sort_order: 0 }]);
     }
     document.getElementById('productModal').style.display = 'none';
     loadProducts();
 });
+
 document.getElementById('cancelProductBtn')?.addEventListener('click', () => {
     document.getElementById('productModal').style.display = 'none';
 });
@@ -313,11 +408,15 @@ function escapeHtml(str) {
     return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
 }
 
+// 绑定登录事件
 if (loginBtn) loginBtn.addEventListener('click', login);
 if (logoutBtn) logoutBtn.addEventListener('click', logout);
-[adminEmail, adminPassword].forEach(el => el?.addEventListener('keypress', e => e.key === 'Enter' && login()));
+if (adminPassword) adminPassword.addEventListener('keypress', e => e.key === 'Enter' && login());
+if (adminEmail) adminEmail.addEventListener('keypress', e => e.key === 'Enter' && login());
 
+// 初始化
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
+    initLangTabs();
     checkSession();
 });
