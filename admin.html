@@ -43,7 +43,6 @@
             margin-top: 15px;
         }
         
-        /* 管理面板头部 - 标题在左，登出在右 */
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -72,7 +71,6 @@
             background: #c0392b;
         }
         
-        /* 标签页 */
         .tab-bar {
             display: flex;
             gap: 10px;
@@ -94,7 +92,6 @@
             color: #c9a03d;
         }
         
-        /* 表格容器 - 支持固定表头 */
         .table-wrapper {
             overflow-x: auto;
             overflow-y: auto;
@@ -115,7 +112,6 @@
             table-layout: fixed;
         }
         
-        /* 固定表头 */
         .data-table thead tr {
             position: sticky;
             top: 0;
@@ -140,7 +136,6 @@
             white-space: nowrap;
         }
         
-        /* 留言内容列自动换行 */
         .data-table td:nth-child(5) {
             white-space: normal !important;
             word-wrap: break-word !important;
@@ -331,11 +326,78 @@
         </div>
     </div>
 
+    <!-- FAQ 模态框（多语言版本） -->
     <div id="faqModal" class="modal">
         <div class="modal-content">
             <h3 id="faqModalTitle">添加 FAQ</h3>
-            <input type="text" id="faqQuestion" placeholder="问题">
-            <textarea id="faqAnswer" placeholder="回答" rows="4"></textarea>
+            
+            <!-- 语言标签页 -->
+            <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 15px;">
+                <button type="button" class="lang-tab active" data-lang="en">English</button>
+                <button type="button" class="lang-tab" data-lang="zh">简体中文</button>
+                <button type="button" class="lang-tab" data-lang="zh-TW">繁體中文</button>
+                <button type="button" class="lang-tab" data-lang="es">Español</button>
+                <button type="button" class="lang-tab" data-lang="de">Deutsch</button>
+                <button type="button" class="lang-tab" data-lang="pt">Português</button>
+                <button type="button" class="lang-tab" data-lang="ar">العربية</button>
+                <button type="button" class="lang-tab" data-lang="ja">日本語</button>
+                <button type="button" class="lang-tab" data-lang="ko">한국어</button>
+            </div>
+            
+            <!-- 英文 -->
+            <div class="lang-panel active" data-lang="en">
+                <input type="text" id="faqQuestion_en" placeholder="Question (English) *">
+                <textarea id="faqAnswer_en" placeholder="Answer (English)" rows="4"></textarea>
+            </div>
+            
+            <!-- 简体中文 -->
+            <div class="lang-panel" data-lang="zh">
+                <input type="text" id="faqQuestion_zh" placeholder="问题 (简体中文)">
+                <textarea id="faqAnswer_zh" placeholder="回答 (简体中文)" rows="4"></textarea>
+            </div>
+            
+            <!-- 繁体中文 -->
+            <div class="lang-panel" data-lang="zh-TW">
+                <input type="text" id="faqQuestion_zh_tw" placeholder="問題 (繁體中文)">
+                <textarea id="faqAnswer_zh_tw" placeholder="回答 (繁體中文)" rows="4"></textarea>
+            </div>
+            
+            <!-- 西班牙语 -->
+            <div class="lang-panel" data-lang="es">
+                <input type="text" id="faqQuestion_es" placeholder="Pregunta (Español)">
+                <textarea id="faqAnswer_es" placeholder="Respuesta (Español)" rows="4"></textarea>
+            </div>
+            
+            <!-- 德语 -->
+            <div class="lang-panel" data-lang="de">
+                <input type="text" id="faqQuestion_de" placeholder="Frage (Deutsch)">
+                <textarea id="faqAnswer_de" placeholder="Antwort (Deutsch)" rows="4"></textarea>
+            </div>
+            
+            <!-- 葡萄牙语 -->
+            <div class="lang-panel" data-lang="pt">
+                <input type="text" id="faqQuestion_pt" placeholder="Pergunta (Português)">
+                <textarea id="faqAnswer_pt" placeholder="Resposta (Português)" rows="4"></textarea>
+            </div>
+            
+            <!-- 阿拉伯语 -->
+            <div class="lang-panel" data-lang="ar">
+                <input type="text" id="faqQuestion_ar" placeholder="السؤال (العربية)">
+                <textarea id="faqAnswer_ar" placeholder="الجواب (العربية)" rows="4"></textarea>
+            </div>
+            
+            <!-- 日语 -->
+            <div class="lang-panel" data-lang="ja">
+                <input type="text" id="faqQuestion_ja" placeholder="質問 (日本語)">
+                <textarea id="faqAnswer_ja" placeholder="回答 (日本語)" rows="4"></textarea>
+            </div>
+            
+            <!-- 韩语 -->
+            <div class="lang-panel" data-lang="ko">
+                <input type="text" id="faqQuestion_ko" placeholder="질문 (한국어)">
+                <textarea id="faqAnswer_ko" placeholder="답변 (한국어)" rows="4"></textarea>
+            </div>
+            
             <input type="hidden" id="faqId">
             <button id="saveFaqBtn" class="btn btn-primary">保存</button>
             <button id="cancelFaqBtn" class="btn">取消</button>
