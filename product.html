@@ -58,6 +58,13 @@
         .next-arrow {
             right: 15px;
         }
+        /* 产品描述宽度限制 */
+        .product-description {
+            margin-bottom: 15px;
+            max-width: 70ch;
+            word-wrap: break-word;
+            line-height: 1.6;
+        }
         @media (max-width: 768px) {
             .main-image img {
                 width: 100%;
@@ -70,6 +77,9 @@
             .nav-arrow {
                 padding: 8px 12px;
                 font-size: 1rem;
+            }
+            .product-description {
+                max-width: 100%;
             }
         }
     </style>
@@ -209,7 +219,7 @@
                             </div>
                             <div>
                                 <h1 style="color: #1a2a4f; margin-bottom: 20px;">${productName}</h1>
-                                <p style="margin-bottom: 15px;">${productDesc}</p>
+                                <p class="product-description">${productDesc}</p>
                                 <a href="contact.html" class="btn btn-primary" style="margin-top: 30px;">Request a Quote →</a>
                             </div>
                         </div>
