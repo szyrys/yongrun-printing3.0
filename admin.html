@@ -43,6 +43,7 @@
             margin-top: 15px;
         }
         
+        /* 管理面板头部 - 标签页在标题右侧，登出在最右侧 */
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -50,46 +51,61 @@
             margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 2px solid #eee;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
-        .admin-header h1 {
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .admin-header-left h1 {
             color: #1a2a4f;
             font-size: 1.8rem;
             margin: 0;
+        }
+        
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin: 0;
+        }
+        
+        .tab-btn {
+            padding: 8px 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1rem;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+        
+        .tab-btn:hover {
+            background: #f0f0f0;
+        }
+        
+        .tab-btn.active {
+            background: #c9a03d;
+            color: white;
         }
         
         .logout-btn {
             background: #e74c3c;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 20px;
             border-radius: 6px;
             cursor: pointer;
+            font-size: 14px;
         }
         
         .logout-btn:hover {
             background: #c0392b;
-        }
-        
-        .tab-bar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .tab-btn {
-            padding: 10px 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 1rem;
-        }
-        
-        .tab-btn.active {
-            border-bottom: 2px solid #c9a03d;
-            color: #c9a03d;
         }
         
         .table-wrapper {
@@ -136,6 +152,7 @@
             white-space: nowrap;
         }
         
+        /* 留言内容列自动换行 */
         .data-table td:nth-child(5) {
             white-space: normal !important;
             word-wrap: break-word !important;
@@ -259,6 +276,14 @@
         }
         
         @media (max-width: 768px) {
+            .admin-header-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .tab-bar {
+                flex-wrap: wrap;
+            }
             .data-table {
                 font-size: 12px;
             }
@@ -281,21 +306,22 @@
             <button id="loginBtn" class="btn btn-primary">登录</button>
             <div id="loginError" class="error-msg" style="display: none;"></div>
             <p style="margin-top: 20px; font-size: 12px; color: #999; text-align: center;">
-                提示：请在 Supabase Authentication 中创建管理员账户
+            兔子不吃胡萝卜
             </p>
         </div>
     </div>
 
     <div id="adminPanel" class="admin-container" style="display: none;">
         <div class="admin-header">
-            <h1><i class="fas fa-cogs"></i> 管理后台</h1>
+            <div class="admin-header-left">
+                <h1><i class="fas fa-cogs"></i> 管理后台</h1>
+                <div class="tab-bar">
+                    <button class="tab-btn active" data-tab="messages">📋 留言管理</button>
+                    <button class="tab-btn" data-tab="faq">❓ FAQ 管理</button>
+                    <button class="tab-btn" data-tab="products">📦 产品管理</button>
+                </div>
+            </div>
             <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> 登出</button>
-        </div>
-        
-        <div class="tab-bar">
-            <button class="tab-btn active" data-tab="messages">📋 留言管理</button>
-            <button class="tab-btn" data-tab="faq">❓ FAQ 管理</button>
-            <button class="tab-btn" data-tab="products">📦 产品管理</button>
         </div>
         
         <div id="messagesPanel" class="panel active">
@@ -331,7 +357,6 @@
         <div class="modal-content">
             <h3 id="faqModalTitle">添加 FAQ</h3>
             
-            <!-- 语言标签页 -->
             <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 15px;">
                 <button type="button" class="lang-tab active" data-lang="en">English</button>
                 <button type="button" class="lang-tab" data-lang="zh">简体中文</button>
@@ -344,55 +369,38 @@
                 <button type="button" class="lang-tab" data-lang="ko">한국어</button>
             </div>
             
-            <!-- 英文 -->
             <div class="lang-panel active" data-lang="en">
                 <input type="text" id="faqQuestion_en" placeholder="Question (English) *">
                 <textarea id="faqAnswer_en" placeholder="Answer (English)" rows="4"></textarea>
             </div>
-            
-            <!-- 简体中文 -->
             <div class="lang-panel" data-lang="zh">
                 <input type="text" id="faqQuestion_zh" placeholder="问题 (简体中文)">
                 <textarea id="faqAnswer_zh" placeholder="回答 (简体中文)" rows="4"></textarea>
             </div>
-            
-            <!-- 繁体中文 -->
             <div class="lang-panel" data-lang="zh-TW">
                 <input type="text" id="faqQuestion_zh_tw" placeholder="問題 (繁體中文)">
                 <textarea id="faqAnswer_zh_tw" placeholder="回答 (繁體中文)" rows="4"></textarea>
             </div>
-            
-            <!-- 西班牙语 -->
             <div class="lang-panel" data-lang="es">
                 <input type="text" id="faqQuestion_es" placeholder="Pregunta (Español)">
                 <textarea id="faqAnswer_es" placeholder="Respuesta (Español)" rows="4"></textarea>
             </div>
-            
-            <!-- 德语 -->
             <div class="lang-panel" data-lang="de">
                 <input type="text" id="faqQuestion_de" placeholder="Frage (Deutsch)">
                 <textarea id="faqAnswer_de" placeholder="Antwort (Deutsch)" rows="4"></textarea>
             </div>
-            
-            <!-- 葡萄牙语 -->
             <div class="lang-panel" data-lang="pt">
                 <input type="text" id="faqQuestion_pt" placeholder="Pergunta (Português)">
                 <textarea id="faqAnswer_pt" placeholder="Resposta (Português)" rows="4"></textarea>
             </div>
-            
-            <!-- 阿拉伯语 -->
             <div class="lang-panel" data-lang="ar">
                 <input type="text" id="faqQuestion_ar" placeholder="السؤال (العربية)">
                 <textarea id="faqAnswer_ar" placeholder="الجواب (العربية)" rows="4"></textarea>
             </div>
-            
-            <!-- 日语 -->
             <div class="lang-panel" data-lang="ja">
                 <input type="text" id="faqQuestion_ja" placeholder="質問 (日本語)">
                 <textarea id="faqAnswer_ja" placeholder="回答 (日本語)" rows="4"></textarea>
             </div>
-            
-            <!-- 韩语 -->
             <div class="lang-panel" data-lang="ko">
                 <input type="text" id="faqQuestion_ko" placeholder="질문 (한국어)">
                 <textarea id="faqAnswer_ko" placeholder="답변 (한국어)" rows="4"></textarea>
