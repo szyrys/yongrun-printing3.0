@@ -2,7 +2,7 @@
   "nav_home": "Startseite",
   "nav_products": "Produkte",
   "nav_process": "Produktionsablauf",
-  "nav_craft": "Veredelungsoptionen",
+  "nav_craft": "Materialien & Oberflächen",
   "nav_about": "Über uns",
   "nav_contact": "Kontakt",
 
@@ -37,14 +37,34 @@
 
   "footer_rights": "Alle Rechte vorbehalten",
 
-  "contact_title": "Angebot einholen",
-  "contact_desc": "Teilen Sie uns Ihr Projekt mit, wir antworten innerhalb von 24 Stunden",
+  "contact_title": "Kontaktieren Sie uns",
+  "contact_desc": "Erzählen Sie uns von Ihrem Projekt, wir antworten innerhalb von 24 Stunden",
   "form_name": "Ihr Name *",
-  "form_email": "E-Mail-Adresse *",
-  "form_message": "Nachricht (Kartentyp, Menge, besondere Anforderungen) *",
+  "form_email": "E-Mail-Adresse",
+  "form_message": "Nachricht (Kartentyp, Menge, besondere Anforderungen)",
   "form_submit": "Nachricht senden",
   "form_success": "Nachricht gesendet! Wir werden Sie bald kontaktieren.",
   "form_error_empty": "Bitte füllen Sie alle Pflichtfelder aus",
   "form_error_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
-  "form_error_submit": "Übermittlung fehlgeschlagen, bitte versuchen Sie es später erneut"
+  "form_error_submit": "Übermittlung fehlgeschlagen, bitte versuchen Sie es später erneut",
+
+  "home_contact_title": "Angebot anfordern",
+  "home_contact_subtitle": "Wir antworten innerhalb von 12 Stunden",
+
+  "form_phone": "Telefonnummer",
+  "form_product": "Produkttyp auswählen",
+  "form_quantity": "Mengenbereich",
+  "form_deadline": "Voraussichtliches Lieferdatum",
+
+  "category_cards_desc": "Benutzerdefinierte Spielkarten, Tarotkarten, holografische Karten, Lernkarten und mehr. Hochwertige Qualität mit verschiedenen Oberflächen wie Glanz, Matt, UV-Beschichtung und Folienprägung. Perfekt für Casinos, Werbeaktionen, Sammler und Bildungszwecke. Niedrige Mindestabnahme mit schneller Lieferung.",
+  "category_books_desc": "Hardcover, Taschenbuch, Pop-up, perfekte Bindung, Produktkataloge und Bilderbücher. Benutzerdefinierte Größen, hochwertige Papiersorten und professionelle Bindung. Ideal für Coffee-Table-Bücher, Kinderbücher, Kunstbücher und Unternehmenspublikationen. Kostenlose Designberatung verfügbar.",
+  "category_boardgames_desc": "Benutzerdefinierter Brettspieldruck inklusive Karten, Regelbücher, Spielbretter und individueller Boxen. Perfekt für Crowdfunding-Kampagnen, Familienspiele und Strategiespiele. Wir kümmern uns um alles vom Prototyping bis zur Massenproduktion mit hochwertigen Komponenten und Verpackungen.",
+  "category_puzzles_desc": "Benutzerdefinierte Puzzles für alle Altersgruppen - Kinderpuzzles, Holzpuzzles, 3D-Puzzles und Bodenpuzzles. Pädagogische und unterhaltsame Designs mit umweltfreundlichen Materialien. Perfekt für Geschenke, Lernspielzeug und Werbeartikel. Individuelle Formen und Größen verfügbar.",
+  "category_cards_btn": "Alle Karten anzeigen →",
+  "category_books_btn": "Alle Bücher anzeigen →",
+  "category_boardgames_btn": "Alle Brettspiele anzeigen →",
+  "category_puzzles_btn": "Alle Puzzles anzeigen →",
+  "free_sample_title": "Kostenloses Muster",
+  "free_sample_desc": "Fordern Sie ein kostenloses Muster an, um unsere Qualität zu sehen →",
+  "free_sample_btn": "Kostenloses Muster anfordern"
 }
