@@ -20,18 +20,17 @@ const productsPanel = document.getElementById('productsPanel');
 
 // 多语言标签页切换
 function initLangTabs() {
-    const tabs = document.querySelectorAll('.lang-tab');
-    tabs.forEach(tab => {
+    document.querySelectorAll('.lang-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             const lang = tab.getAttribute('data-lang');
-            // 更新按钮样式
-            tabs.forEach(t => t.classList.remove('active'));
+            const container = tab.closest('.modal-content');
+            container.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            // 切换面板
-            document.querySelectorAll('.lang-panel').forEach(panel => {
+            container.querySelectorAll('.lang-panel').forEach(panel => {
                 panel.classList.remove('active');
             });
-            document.querySelector(`.lang-panel[data-lang="${lang}"]`).classList.add('active');
+            const activePanel = container.querySelector(`.lang-panel[data-lang="${lang}"]`);
+            if (activePanel) activePanel.classList.add('active');
         });
     });
 }
@@ -104,19 +103,36 @@ async function logout() {
 }
 
 function initTabs() {
-    const tabs = [tabMessages, tabFaq, tabProducts];
-    const panels = { messages: messagesPanel, faq: faqPanel, products: productsPanel };
-    
-    tabs.forEach(tab => {
-        if (!tab) return;
-        tab.addEventListener('click', () => {
-            const tabId = tab.getAttribute('data-tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            Object.values(panels).forEach(p => p.classList.remove('active'));
-            if (panels[tabId]) panels[tabId].classList.add('active');
+    if (tabMessages) {
+        tabMessages.addEventListener('click', () => {
+            tabMessages.classList.add('active');
+            tabFaq.classList.remove('active');
+            tabProducts.classList.remove('active');
+            messagesPanel.classList.add('active');
+            faqPanel.classList.remove('active');
+            productsPanel.classList.remove('active');
         });
-    });
+    }
+    if (tabFaq) {
+        tabFaq.addEventListener('click', () => {
+            tabFaq.classList.add('active');
+            tabMessages.classList.remove('active');
+            tabProducts.classList.remove('active');
+            faqPanel.classList.add('active');
+            messagesPanel.classList.remove('active');
+            productsPanel.classList.remove('active');
+        });
+    }
+    if (tabProducts) {
+        tabProducts.addEventListener('click', () => {
+            tabProducts.classList.add('active');
+            tabMessages.classList.remove('active');
+            tabFaq.classList.remove('active');
+            productsPanel.classList.add('active');
+            messagesPanel.classList.remove('active');
+            faqPanel.classList.remove('active');
+        });
+    }
 }
 
 document.getElementById('refreshMessagesBtn')?.addEventListener('click', () => loadMessages());
@@ -166,7 +182,7 @@ async function loadMessages() {
     }
 }
 
-// ===== FAQ 管理 =====
+// ===== FAQ 管理（多语言）=====
 let currentFaqId = null;
 
 async function loadFaqs() {
@@ -180,12 +196,12 @@ async function loadFaqs() {
             container.innerHTML = '<div class="empty-state">暂无 FAQ</div>';
             return;
         }
-        let html = `<table class="data-table"><thead><tr><th>ID</th><th>问题</th><th>回答</th><th>操作</th></tr></thead><tbody>`;
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>问题(EN)</th><th>回答(EN)</th><th>操作</th></tr></thead><tbody>`;
         data.forEach(faq => {
             html += `<tr>
                 <td>${faq.id}</td>
-                <td>${escapeHtml(faq.question)}</td>
-                <td>${escapeHtml(faq.answer.substring(0, 80))}${faq.answer.length > 80 ? '...' : ''}</td>
+                <td>${escapeHtml(faq.question_en || '-')}</td>
+                <td>${escapeHtml((faq.answer_en || '').substring(0, 80))}${(faq.answer_en || '').length > 80 ? '...' : ''}</td>
                 <td><button class="edit-faq-btn" data-id="${faq.id}">编辑</button><button class="delete-faq-btn" data-id="${faq.id}">删除</button></td>
             </tr>`;
         });
@@ -200,44 +216,106 @@ async function loadFaqs() {
 
 async function editFaq(id) {
     const { data } = await window.supabaseClient.from('faq').select('*').eq('id', id).single();
-    document.getElementById('faqQuestion').value = data.question;
-    document.getElementById('faqAnswer').value = data.answer;
+    
+    document.getElementById('faqQuestion_en').value = data.question_en || '';
+    document.getElementById('faqAnswer_en').value = data.answer_en || '';
+    document.getElementById('faqQuestion_zh').value = data.question_zh || '';
+    document.getElementById('faqAnswer_zh').value = data.answer_zh || '';
+    document.getElementById('faqQuestion_zh_tw').value = data.question_zh_tw || '';
+    document.getElementById('faqAnswer_zh_tw').value = data.answer_zh_tw || '';
+    document.getElementById('faqQuestion_es').value = data.question_es || '';
+    document.getElementById('faqAnswer_es').value = data.answer_es || '';
+    document.getElementById('faqQuestion_de').value = data.question_de || '';
+    document.getElementById('faqAnswer_de').value = data.answer_de || '';
+    document.getElementById('faqQuestion_pt').value = data.question_pt || '';
+    document.getElementById('faqAnswer_pt').value = data.answer_pt || '';
+    document.getElementById('faqQuestion_ar').value = data.question_ar || '';
+    document.getElementById('faqAnswer_ar').value = data.answer_ar || '';
+    document.getElementById('faqQuestion_ja').value = data.question_ja || '';
+    document.getElementById('faqAnswer_ja').value = data.answer_ja || '';
+    document.getElementById('faqQuestion_ko').value = data.question_ko || '';
+    document.getElementById('faqAnswer_ko').value = data.answer_ko || '';
+    
     document.getElementById('faqId').value = data.id;
     document.getElementById('faqModalTitle').innerText = '编辑 FAQ';
     document.getElementById('faqModal').style.display = 'flex';
     currentFaqId = id;
 }
+
 async function deleteFaq(id) {
     if (confirm('确定删除？')) {
         await window.supabaseClient.from('faq').delete().eq('id', id);
         loadFaqs();
     }
 }
+
 document.getElementById('addFaqBtn')?.addEventListener('click', () => {
-    document.getElementById('faqQuestion').value = '';
-    document.getElementById('faqAnswer').value = '';
+    document.getElementById('faqQuestion_en').value = '';
+    document.getElementById('faqAnswer_en').value = '';
+    document.getElementById('faqQuestion_zh').value = '';
+    document.getElementById('faqAnswer_zh').value = '';
+    document.getElementById('faqQuestion_zh_tw').value = '';
+    document.getElementById('faqAnswer_zh_tw').value = '';
+    document.getElementById('faqQuestion_es').value = '';
+    document.getElementById('faqAnswer_es').value = '';
+    document.getElementById('faqQuestion_de').value = '';
+    document.getElementById('faqAnswer_de').value = '';
+    document.getElementById('faqQuestion_pt').value = '';
+    document.getElementById('faqAnswer_pt').value = '';
+    document.getElementById('faqQuestion_ar').value = '';
+    document.getElementById('faqAnswer_ar').value = '';
+    document.getElementById('faqQuestion_ja').value = '';
+    document.getElementById('faqAnswer_ja').value = '';
+    document.getElementById('faqQuestion_ko').value = '';
+    document.getElementById('faqAnswer_ko').value = '';
     document.getElementById('faqId').value = '';
     document.getElementById('faqModalTitle').innerText = '添加 FAQ';
     document.getElementById('faqModal').style.display = 'flex';
     currentFaqId = null;
 });
+
 document.getElementById('saveFaqBtn')?.addEventListener('click', async () => {
-    const question = document.getElementById('faqQuestion').value.trim();
-    const answer = document.getElementById('faqAnswer').value.trim();
-    if (!question || !answer) return alert('请填写完整');
+    const question_en = document.getElementById('faqQuestion_en').value.trim();
+    if (!question_en) {
+        alert('请填写英文问题');
+        return;
+    }
+    
+    const faqData = {
+        question_en: question_en,
+        answer_en: document.getElementById('faqAnswer_en').value.trim(),
+        question_zh: document.getElementById('faqQuestion_zh').value.trim(),
+        answer_zh: document.getElementById('faqAnswer_zh').value.trim(),
+        question_zh_tw: document.getElementById('faqQuestion_zh_tw').value.trim(),
+        answer_zh_tw: document.getElementById('faqAnswer_zh_tw').value.trim(),
+        question_es: document.getElementById('faqQuestion_es').value.trim(),
+        answer_es: document.getElementById('faqAnswer_es').value.trim(),
+        question_de: document.getElementById('faqQuestion_de').value.trim(),
+        answer_de: document.getElementById('faqAnswer_de').value.trim(),
+        question_pt: document.getElementById('faqQuestion_pt').value.trim(),
+        answer_pt: document.getElementById('faqAnswer_pt').value.trim(),
+        question_ar: document.getElementById('faqQuestion_ar').value.trim(),
+        answer_ar: document.getElementById('faqAnswer_ar').value.trim(),
+        question_ja: document.getElementById('faqQuestion_ja').value.trim(),
+        answer_ja: document.getElementById('faqAnswer_ja').value.trim(),
+        question_ko: document.getElementById('faqQuestion_ko').value.trim(),
+        answer_ko: document.getElementById('faqAnswer_ko').value.trim()
+    };
+    
     if (currentFaqId) {
-        await window.supabaseClient.from('faq').update({ question, answer }).eq('id', currentFaqId);
+        await window.supabaseClient.from('faq').update(faqData).eq('id', currentFaqId);
     } else {
-        await window.supabaseClient.from('faq').insert([{ question, answer, sort_order: 0 }]);
+        await window.supabaseClient.from('faq').insert([{ ...faqData, sort_order: 0 }]);
     }
     document.getElementById('faqModal').style.display = 'none';
     loadFaqs();
 });
+
 document.getElementById('cancelFaqBtn')?.addEventListener('click', () => {
     document.getElementById('faqModal').style.display = 'none';
 });
 
-// ===== 产品管理（多语言版本）=====
+// ===== 产品管理（多语言）=====
 let currentProductId = null;
 
 async function loadProducts() {
@@ -277,14 +355,12 @@ async function loadProducts() {
 async function editProduct(id) {
     const { data } = await window.supabaseClient.from('products').select('*').eq('id', id).single();
     
-    // 清空所有字段
     document.getElementById('productCategory').value = data.category || 'cards';
     document.getElementById('productSlug').value = data.slug || '';
     document.getElementById('productImageUrl').value = data.image_url || '';
     document.getElementById('productIsFeatured').checked = data.is_featured || false;
     document.getElementById('productId').value = data.id;
     
-    // 多语言字段
     document.getElementById('productName_en').value = data.name_en || '';
     document.getElementById('productDesc_en').value = data.desc_en || '';
     document.getElementById('productName_zh').value = data.name_zh || '';
@@ -317,14 +393,12 @@ async function deleteProduct(id) {
 }
 
 document.getElementById('addProductBtn')?.addEventListener('click', () => {
-    // 清空所有字段
     document.getElementById('productCategory').value = 'cards';
     document.getElementById('productSlug').value = '';
     document.getElementById('productImageUrl').value = '';
     document.getElementById('productIsFeatured').checked = false;
     document.getElementById('productId').value = '';
     
-    // 清空多语言字段
     document.getElementById('productName_en').value = '';
     document.getElementById('productDesc_en').value = '';
     document.getElementById('productName_zh').value = '';
