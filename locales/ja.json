@@ -2,7 +2,7 @@
   "nav_home": "ホーム",
   "nav_products": "製品",
   "nav_process": "カスタムプロセス",
-  "nav_craft": "加工オプション",
+  "nav_craft": "素材と仕上げ",
   "nav_about": "会社概要",
   "nav_contact": "お問い合わせ",
 
@@ -26,6 +26,8 @@
   "product_advertising_desc": "プロモーションデッキ、ポイントカード。低ロット対応、迅速な納品可能。",
   "product_kids_title": "子供用教育セット",
   "product_kids_desc": "エコインク、安全な素材。パズル、フラッシュカード、インタラクティブゲーム。",
+  "product_books_title": "ペーパーバック / ハードカバー書籍",
+  "product_books_desc": "高品質な書籍印刷、カスタムサイズ、無線綴じ、ハードカバーまたはペーパーバックオプション。",
 
   "cta_title": "カスタムカードプロジェクトを始めますか？",
   "cta_subtitle": "24時間以内に見積もりを取得。サンプルに最小注文数量はありません。",
@@ -37,14 +39,34 @@
 
   "footer_rights": "全著作権所有",
 
-  "contact_title": "見積もり依頼",
+  "contact_title": "お問い合わせ",
   "contact_desc": "プロジェクトについてご連絡ください。24時間以内に返信いたします",
   "form_name": "お名前 *",
-  "form_email": "メールアドレス *",
-  "form_message": "メッセージ（カードタイプ、数量、特別な要件）*",
+  "form_email": "メールアドレス",
+  "form_message": "メッセージ（カードタイプ、数量、特別な要件）",
   "form_submit": "送信",
   "form_success": "メッセージを送信しました！すぐにご連絡いたします。",
   "form_error_empty": "必須項目をすべて入力してください",
   "form_error_email": "有効なメールアドレスを入力してください",
-  "form_error_submit": "送信に失敗しました。後でもう一度お試しください"
+  "form_error_submit": "送信に失敗しました。後でもう一度お試しください",
+
+  "home_contact_title": "見積もり依頼",
+  "home_contact_subtitle": "12時間以内に返信",
+
+  "form_phone": "電話番号",
+  "form_product": "製品タイプを選択",
+  "form_quantity": "数量範囲",
+  "form_deadline": "納期希望日",
+
+  "category_cards_desc": "カスタムトランプ、タロット、ホログラムカード、フラッシュカードなど。光沢、マット、UVコーティング、箔押しなど様々な仕上げに対応。カジノ、プロモーション、コレクター、教育目的に最適。低ロット対応、迅速な納品。",
+  "category_books_desc": "ハードカバー、ペーパーバック、ポップアップ、無線綴じ、製品カタログ、絵本。カスタムサイズ、プレミアム紙、専門的な製本。テーブルブック、児童書、アートブック、企業出版物に最適。無料デザイン相談可能。",
+  "category_boardgames_desc": "カスタムボードゲーム印刷（カード、ルールブック、ゲームボード、カスタムボックスを含む）。クラウドファンディングキャンペーン、家族向けゲーム、戦略ゲームに最適。プロトタイプから量産まで、高品質なコンポーネントとパッケージで対応。",
+  "category_puzzles_desc": "全年齢向けカスタムパズル - 子供用パズル、木製パズル、3Dパズル、フロアパズル。環境に優しい素材を使用した教育的で楽しいデザイン。ギフト、教育玩具、販促品に最適。カスタム形状・サイズ対応可能。",
+  "category_cards_btn": "すべてのカードを見る →",
+  "category_books_btn": "すべての書籍を見る →",
+  "category_boardgames_btn": "すべてのボードゲームを見る →",
+  "category_puzzles_btn": "すべてのパズルを見る →",
+  "free_sample_title": "無料サンプル",
+  "free_sample_desc": "無料サンプルをリクエストして品質をご確認ください →",
+  "free_sample_btn": "無料サンプルをリクエスト"
 }
