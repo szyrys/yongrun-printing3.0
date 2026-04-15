@@ -2,7 +2,7 @@
   "nav_home": "Inicio",
   "nav_products": "Productos",
   "nav_process": "Proceso Personalizado",
-  "nav_craft": "Opciones de Acabado",
+  "nav_craft": "Materiales y Acabados",
   "nav_about": "Sobre Nosotros",
   "nav_contact": "Contacto",
 
@@ -24,8 +24,10 @@
   "product_tarot_desc": "Impresión premium, acabado suave. Completo con cajas personalizadas y guías.",
   "product_advertising_title": "Tarjetas Publicitarias",
   "product_advertising_desc": "Mazos promocionales, tarjetas de fidelidad. Pedido mínimo bajo, entrega rápida disponible.",
-  "product_kids_title": "Sets Educativos para Niños",
+  "product_kids_title": "Kits Educativos para Niños",
   "product_kids_desc": "Tintas ecológicas, materiales seguros. Rompecabezas, flashcards y juegos interactivos.",
+  "product_books_title": "Libros de Tapa Blanda / Tapa Dura",
+  "product_books_desc": "Impresión de libros de alta calidad, tamaños personalizados, encuadernación perfecta, opciones de tapa dura o blanda.",
 
   "cta_title": "¿Listo para comenzar su proyecto de tarjetas personalizadas?",
   "cta_subtitle": "Obtenga un presupuesto en 24 horas. Sin cantidad mínima de pedido para muestras.",
@@ -33,18 +35,38 @@
 
   "about_title": "Shenzhen Yongrun Printing Co., Ltd.",
   "about_text1": "Fundada en 2003, tenemos más de 20 años de experiencia profesional en impresión. Somos un proveedor de servicios integral que integra desarrollo, prototipado, diseño, impresión, procesamiento y empaque.",
-  "about_text2": "Especializados en desarrollo infantil, juegos y sets de cartas personalizadas. La capacidad de producción anual supera los millones de sets.",
+  "about_text2": "Especializados en desarrollo infantil, juegos y conjuntos de cartas personalizadas. La capacidad de producción anual supera los millones de conjuntos.",
 
   "footer_rights": "Todos los derechos reservados",
 
-  "contact_title": "Obtener Presupuesto",
+  "contact_title": "Contáctenos",
   "contact_desc": "Cuéntenos sobre su proyecto, le responderemos en 24 horas",
   "form_name": "Su Nombre *",
-  "form_email": "Correo Electrónico *",
-  "form_message": "Mensaje (tipo de tarjeta, cantidad, requisitos especiales) *",
+  "form_email": "Correo Electrónico",
+  "form_message": "Mensaje (tipo de tarjeta, cantidad, requisitos especiales)",
   "form_submit": "Enviar Mensaje",
   "form_success": "¡Mensaje enviado! Nos pondremos en contacto pronto.",
   "form_error_empty": "Por favor, complete todos los campos obligatorios",
   "form_error_email": "Por favor, introduzca una dirección de correo electrónico válida",
-  "form_error_submit": "Error al enviar, por favor intente de nuevo más tarde"
+  "form_error_submit": "Error al enviar, por favor intente de nuevo más tarde",
+
+  "home_contact_title": "Solicitar Presupuesto",
+  "home_contact_subtitle": "Respondemos en 12 horas",
+
+  "form_phone": "Número de Teléfono",
+  "form_product": "Seleccionar Tipo de Producto",
+  "form_quantity": "Rango de Cantidad",
+  "form_deadline": "Fecha de Entrega Prevista",
+
+  "category_cards_desc": "Naipes personalizados, tarot, tarjetas holográficas, flashcards y más. Calidad premium con varios acabados como brillo, mate, recubrimiento UV y estampado en foil. Perfecto para casinos, promociones, coleccionistas y fines educativos. Pedido mínimo bajo con entrega rápida.",
+  "category_books_desc": "Tapa dura, tapa blanda, pop-up, encuadernación perfecta, catálogos de productos y libros ilustrados. Tamaños personalizados, papeles premium y encuadernación profesional. Ideal para libros de mesa, libros infantiles, libros de arte y publicaciones corporativas. Consultoría de diseño gratuita disponible.",
+  "category_boardgames_desc": "Impresión de juegos de mesa personalizados que incluye cartas, libros de reglas, tableros y cajas personalizadas. Perfecto para campañas de crowdfunding, juegos familiares y juegos de estrategia. Nos encargamos de todo, desde el prototipado hasta la producción en masa con componentes y empaques de alta calidad.",
+  "category_puzzles_desc": "Rompecabezas personalizados para todas las edades: rompecabezas infantiles, rompecabezas de madera, rompecabezas 3D y rompecabezas de piso. Diseños educativos y entretenidos con materiales ecológicos. Perfecto para regalos, juguetes educativos y artículos promocionales. Formas y tamaños personalizados disponibles.",
+  "category_cards_btn": "Ver Todas las Tarjetas →",
+  "category_books_btn": "Ver Todos los Libros →",
+  "category_boardgames_btn": "Ver Todos los Juegos de Mesa →",
+  "category_puzzles_btn": "Ver Todos los Rompecabezas →",
+  "free_sample_title": "Muestra Gratis",
+  "free_sample_desc": "Solicite una muestra gratis para ver nuestra calidad →",
+  "free_sample_btn": "Solicitar Muestra Gratis"
 }
