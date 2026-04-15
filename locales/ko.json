@@ -2,7 +2,7 @@
   "nav_home": "홈",
   "nav_products": "제품",
   "nav_process": "맞춤 제작 공정",
-  "nav_craft": "후가공 옵션",
+  "nav_craft": "재질 및 마감",
   "nav_about": "회사 소개",
   "nav_contact": "문의하기",
 
@@ -26,6 +26,8 @@
   "product_advertising_desc": "프로모션 데크, 멤버십 카드. 최소 주문 수량 낮음, 빠른 납품 가능.",
   "product_kids_title": "어린이 교육 세트",
   "product_kids_desc": "친환경 잉크, 안전한 소재. 퍼즐, 플래시카드 및 인터랙티브 게임.",
+  "product_books_title": "페이퍼백 / 하드커버 도서",
+  "product_books_desc": "고품질 도서 인쇄, 맞춤형 크기, 완벽한 제본, 하드커버 또는 페이퍼백 옵션.",
 
   "cta_title": "맞춤형 카드 프로젝트를 시작할 준비가 되셨나요?",
   "cta_subtitle": "24시간 이내에 견적을 받아보세요. 샘플은 최소 주문 수량이 없습니다.",
@@ -37,14 +39,34 @@
 
   "footer_rights": "판권 소유",
 
-  "contact_title": "견적 받기",
+  "contact_title": "문의하기",
   "contact_desc": "프로젝트에 대해 알려주시면 24시간 이내에 답변드리겠습니다",
   "form_name": "이름 *",
-  "form_email": "이메일 주소 *",
-  "form_message": "메시지(카드 종류, 수량, 특별 요청사항) *",
+  "form_email": "이메일 주소",
+  "form_message": "메시지(카드 종류, 수량, 특별 요청사항)",
   "form_submit": "메시지 보내기",
   "form_success": "메시지가 전송되었습니다! 곧 연락드리겠습니다.",
   "form_error_empty": "모든 필수 항목을 작성해주세요",
   "form_error_email": "유효한 이메일 주소를 입력해주세요",
-  "form_error_submit": "전송 실패, 나중에 다시 시도해주세요"
+  "form_error_submit": "전송 실패, 나중에 다시 시도해주세요",
+
+  "home_contact_title": "견적 요청",
+  "home_contact_subtitle": "12시간 이내 답변",
+
+  "form_phone": "전화번호",
+  "form_product": "제품 유형 선택",
+  "form_quantity": "수량 범위",
+  "form_deadline": "예상 납기일",
+
+  "category_cards_desc": "맞춤형 포커 카드, 타로, 홀로그램 카드, 플래시카드 등. 광택, 무광, UV 코팅, 호일 스탬핑 등 다양한 마감 처리 가능. 카지노, 프로모션, 수집가, 교육 목적에 적합. 낮은 최소 주문 수량, 빠른 납품.",
+  "category_books_desc": "하드커버, 페이퍼백, 팝업, 완벽 제본, 제품 카탈로그, 그림책. 맞춤형 크기, 프리미엄 종이, 전문 제본. 테이블북, 아동 도서, 아트북, 기업 출판물에 이상적. 무료 디자인 상담 가능.",
+  "category_boardgames_desc": "맞춤형 보드게임 인쇄(카드, 규칙서, 게임 보드, 맞춤형 상자 포함). 크라우드펀딩 캠페인, 가족 게임, 전략 게임에 적합. 프로토타입에서 대량 생산까지 고품질 구성 요소와 포장으로 처리합니다.",
+  "category_puzzles_desc": "전 연령대를 위한 맞춤형 퍼즐 - 어린이 퍼즐, 나무 퍼즐, 3D 퍼즐, 바닥 퍼즐. 친환경 소재를 사용한 교육적이고 재미있는 디자인. 선물, 교육용 장난감, 판촉물에 적합. 맞춤형 모양과 크기 가능.",
+  "category_cards_btn": "모든 카드 보기 →",
+  "category_books_btn": "모든 도서 보기 →",
+  "category_boardgames_btn": "모든 보드게임 보기 →",
+  "category_puzzles_btn": "모든 퍼즐 보기 →",
+  "free_sample_title": "무료 샘플",
+  "free_sample_desc": "무료 샘플을 요청하여 당사의 품질을 확인하세요 →",
+  "free_sample_btn": "무료 샘플 요청"
 }
