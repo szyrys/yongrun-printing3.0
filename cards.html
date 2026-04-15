@@ -7,33 +7,13 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* 产品卡片图片样式 - 固定尺寸 */
-.product-card .product-img {
-    width: 100%;
-    height: 200px;
-    background: #f8f9fa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.product-card .product-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.product-card .product-img i {
-    font-size: 3rem;
-    color: #1a2a4f;
-}
-        /* 确保产品网格样式正确 */
+        /* 产品卡片样式 - 统一尺寸 */
         .product-grid {
             display: grid !important;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
             gap: 30px !important;
         }
+        
         .product-card {
             background: #f8f9fa;
             border-radius: 12px;
@@ -42,26 +22,48 @@
             transition: transform 0.3s;
             cursor: pointer;
         }
+        
         .product-card:hover {
             transform: translateY(-5px);
         }
-        .product-img {
+        
+        /* 图片容器固定尺寸 */
+        .product-card .product-img {
+            width: 100%;
             height: 200px;
             background: #1a2a4f;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 3rem;
+            overflow: hidden;
         }
+        
+        .product-card .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-card .product-img i {
+            font-size: 3rem;
+            color: white;
+        }
+        
         .product-card h3 {
             padding: 15px 15px 5px;
             color: #1a2a4f;
         }
+        
         .product-card p {
             padding: 0 15px 15px;
             color: #666;
             font-size: 14px;
+        }
+        
+        .loading, .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #999;
         }
     </style>
 </head>
@@ -133,92 +135,92 @@
     <script src="js/supabase-config.js"></script>
     <script src="js/common.js"></script>
     <script>
-       async function loadCardProducts() {
-    const grid = document.getElementById('cardsGrid');
-    if (!grid) return;
-    
-    const loadingText = (window.translations && window.translations.loading_text) || 'Loading products...';
-    grid.innerHTML = `<div class="loading">${loadingText}</div>`;
-    
-    try {
-        const { data, error } = await window.supabaseClient
-            .from('products')
-            .select('*')
-            .eq('category', 'cards')
-            .order('sort_order', { ascending: true });
-        
-        if (error) throw error;
-        
-        if (!data || data.length === 0) {
-            const emptyText = (window.translations && window.translations.no_products) || '暂无产品';
-            grid.innerHTML = `<div class="empty-state">${emptyText}</div>`;
-            return;
-        }
-        
-        grid.innerHTML = '';
-        
-        data.forEach(product => {
-            const lang = currentLang || 'en';
-            let name = product.name_en;
-            let desc = product.desc_en;
+        async function loadCardProducts() {
+            const grid = document.getElementById('cardsGrid');
+            if (!grid) return;
             
-            if (lang === 'zh-CN') {
-                name = product.name_zh || product.name_en;
-                desc = product.desc_zh || product.desc_en;
-            } else if (lang === 'zh-TW') {
-                name = product.name_zh_tw || product.name_en;
-                desc = product.desc_zh_tw || product.desc_en;
-            } else if (lang === 'es') {
-                name = product.name_es || product.name_en;
-                desc = product.desc_es || product.desc_en;
-            } else if (lang === 'de') {
-                name = product.name_de || product.name_en;
-                desc = product.desc_de || product.desc_en;
-            } else if (lang === 'pt') {
-                name = product.name_pt || product.name_en;
-                desc = product.desc_pt || product.desc_en;
-            } else if (lang === 'ar') {
-                name = product.name_ar || product.name_en;
-                desc = product.desc_ar || product.desc_en;
-            } else if (lang === 'ja') {
-                name = product.name_ja || product.name_en;
-                desc = product.desc_ja || product.desc_en;
-            } else if (lang === 'ko') {
-                name = product.name_ko || product.name_en;
-                desc = product.desc_ko || product.desc_en;
+            const loadingText = (window.translations && window.translations.loading_text) || 'Loading products...';
+            grid.innerHTML = `<div class="loading">${loadingText}</div>`;
+            
+            try {
+                const { data, error } = await window.supabaseClient
+                    .from('products')
+                    .select('*')
+                    .eq('category', 'cards')
+                    .order('sort_order', { ascending: true });
+                
+                if (error) throw error;
+                
+                if (!data || data.length === 0) {
+                    const emptyText = (window.translations && window.translations.no_products) || 'No products found';
+                    grid.innerHTML = `<div class="empty-state">${emptyText}</div>`;
+                    return;
+                }
+                
+                grid.innerHTML = '';
+                
+                data.forEach(product => {
+                    const lang = currentLang || 'en';
+                    let name = product.name_en;
+                    let desc = product.desc_en;
+                    
+                    if (lang === 'zh-CN') {
+                        name = product.name_zh || product.name_en;
+                        desc = product.desc_zh || product.desc_en;
+                    } else if (lang === 'zh-TW') {
+                        name = product.name_zh_tw || product.name_en;
+                        desc = product.desc_zh_tw || product.desc_en;
+                    } else if (lang === 'es') {
+                        name = product.name_es || product.name_en;
+                        desc = product.desc_es || product.desc_en;
+                    } else if (lang === 'de') {
+                        name = product.name_de || product.name_en;
+                        desc = product.desc_de || product.desc_en;
+                    } else if (lang === 'pt') {
+                        name = product.name_pt || product.name_en;
+                        desc = product.desc_pt || product.desc_en;
+                    } else if (lang === 'ar') {
+                        name = product.name_ar || product.name_en;
+                        desc = product.desc_ar || product.desc_en;
+                    } else if (lang === 'ja') {
+                        name = product.name_ja || product.name_en;
+                        desc = product.desc_ja || product.desc_en;
+                    } else if (lang === 'ko') {
+                        name = product.name_ko || product.name_en;
+                        desc = product.desc_ko || product.desc_en;
+                    }
+                    
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.onclick = () => { window.location.href = `product.html?slug=${product.slug}`; };
+                    
+                    const imageUrl = product.image_url ? product.image_url.split(',')[0] : null;
+                    
+                    if (imageUrl) {
+                        card.innerHTML = `
+                            <div class="product-img">
+                                <img src="${imageUrl}" alt="${name}">
+                            </div>
+                            <h3>${name}</h3>
+                            <p>${desc || ''}</p>
+                        `;
+                    } else {
+                        card.innerHTML = `
+                            <div class="product-img">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <h3>${name}</h3>
+                            <p>${desc || ''}</p>
+                        `;
+                    }
+                    grid.appendChild(card);
+                });
+            } catch (err) {
+                console.error('加载产品失败:', err);
+                const errorText = (window.translations && window.translations.load_error) || 'Failed to load, please refresh';
+                grid.innerHTML = `<div class="empty-state">${errorText}</div>`;
             }
-            
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.onclick = () => { window.location.href = `product.html?slug=${product.slug}`; };
-            
-            const imageUrl = product.image_url ? product.image_url.split(',')[0] : null;
-            
-            if (imageUrl) {
-    card.innerHTML = `
-        <div class="product-img">
-            <img src="${imageUrl}" alt="${name}">
-        </div>
-        <h3>${name}</h3>
-        <p>${desc || ''}</p>
-    `;
-} else {
-    card.innerHTML = `
-        <div class="product-img">
-            <i class="fas fa-image"></i>
-        </div>
-        <h3>${name}</h3>
-        <p>${desc || ''}</p>
-    `;
-}
-            grid.appendChild(card);
-        });
-    } catch (err) {
-        console.error('加载产品失败:', err);
-        const errorText = (window.translations && window.translations.load_error) || '加载失败，请刷新重试';
-        grid.innerHTML = `<div class="empty-state">${errorText}</div>`;
-    }
-}
+        }
         
         // 页面加载后执行
         document.addEventListener('DOMContentLoaded', () => {
