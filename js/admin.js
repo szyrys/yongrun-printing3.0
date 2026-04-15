@@ -657,7 +657,7 @@ if (adminEmail) adminEmail.addEventListener('keypress', e => e.key === 'Enter' &
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     checkSession();
-    // 统一三个表格的宽度
+// 统一三个表格的宽度
 function unifyTableWidth() {
     setTimeout(() => {
         const tables = [
@@ -666,7 +666,6 @@ function unifyTableWidth() {
             document.querySelector('#productsContainer .data-table')
         ];
         
-        // 获取最大宽度
         let maxWidth = 0;
         tables.forEach(table => {
             if (table) {
@@ -675,7 +674,6 @@ function unifyTableWidth() {
             }
         });
         
-        // 设置所有表格为最大宽度
         tables.forEach(table => {
             if (table) {
                 table.style.width = maxWidth + 'px';
