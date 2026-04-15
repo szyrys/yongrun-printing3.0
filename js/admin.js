@@ -558,11 +558,14 @@ try {
         
         const uploadedUrls = [];
         
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${category}-${nextNumber + i}.${fileExt}`;
-            const filePath = `${category}/${fileName}`;
+        let currentNumber = nextNumber;
+for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const fileExt = file.name.split('.').pop();
+    // 每张图片使用递增的序号
+    const fileName = `${category}-${currentNumber}.${fileExt}`;
+    const filePath = `${category}/${fileName}`;
+    currentNumber++;
             
             try {
                 const { data, error } = await window.supabaseClient
