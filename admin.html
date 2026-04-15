@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* 管理后台专用样式 */
+        * {
+            box-sizing: border-box;
+        }
+        
         .admin-container {
             max-width: 1400px;
             margin: 30px auto;
@@ -110,21 +113,9 @@
             transition: opacity 0.2s;
         }
         
-        .action-btn:hover {
-            opacity: 0.85;
-        }
-        
-        .action-btn-red {
-            background: #e74c3c;
-        }
-        
-        .action-btn-blue {
-            background: #3498db;
-        }
-        
-        .action-btn-green {
-            background: #27ae60;
-        }
+        .action-btn-red { background: #e74c3c; }
+        .action-btn-blue { background: #3498db; }
+        .action-btn-green { background: #27ae60; }
         
         .logout-btn {
             background: #e74c3c;
@@ -140,6 +131,7 @@
             background: #c0392b;
         }
         
+        /* 表格容器 - 只横向滚动，不限制高度 */
         .table-wrapper {
             overflow-x: auto;
             width: 100%;
@@ -150,6 +142,7 @@
         
         .data-table {
             width: 100%;
+            min-width: 800px;
             border-collapse: collapse;
             background: white;
             border-radius: 12px;
@@ -170,8 +163,11 @@
             white-space: nowrap;
         }
         
-        .data-table td {
-            white-space: nowrap;
+        /* 留言内容列允许换行 */
+        .data-table td:nth-child(5) {
+            white-space: normal;
+            word-break: break-word;
+            max-width: 300px;
         }
         
         .data-table tr:hover {
@@ -187,20 +183,9 @@
             margin-right: 5px;
         }
         
-        .edit-btn {
-            background: #3498db;
-            color: white;
-        }
-        
-        .delete-btn {
-            background: #e74c3c;
-            color: white;
-        }
-        
-        .view-btn {
-            background: #27ae60;
-            color: white;
-        }
+        .edit-btn { background: #3498db; color: white; }
+        .delete-btn { background: #e74c3c; color: white; }
+        .view-btn { background: #27ae60; color: white; }
         
         .empty-state {
             text-align: center;
@@ -235,7 +220,7 @@
         
         .modal-content {
             background: white;
-            max-width: 600px;
+            max-width: 500px;
             margin: 50px auto;
             padding: 20px;
             border-radius: 12px;
@@ -257,13 +242,8 @@
             border-radius: 6px;
         }
         
-        .panel {
-            display: none;
-        }
-        
-        .panel.active {
-            display: block;
-        }
+        .panel { display: none; }
+        .panel.active { display: block; }
         
         .lang-tab {
             padding: 5px 12px;
@@ -278,14 +258,9 @@
             background: #c9a03d;
             color: white;
         }
-        .lang-panel {
-            display: none;
-        }
-        .lang-panel.active {
-            display: block;
-        }
+        .lang-panel { display: none; }
+        .lang-panel.active { display: block; }
         
-        /* 留言详情弹窗样式 */
         #messageDetailModal p {
             margin: 8px 0;
         }
@@ -307,18 +282,12 @@
             .tab-bar {
                 flex-wrap: wrap;
             }
-            .admin-header-right {
-                flex-wrap: wrap;
-            }
             .data-table {
                 font-size: 12px;
             }
             .data-table th,
             .data-table td {
                 padding: 8px 10px;
-            }
-            .admin-header h1 {
-                font-size: 1.3rem;
             }
         }
     </style>
@@ -379,7 +348,6 @@
     <div id="faqModal" class="modal">
         <div class="modal-content">
             <h3 id="faqModalTitle">添加 FAQ</h3>
-            
             <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 15px;">
                 <button type="button" class="lang-tab active" data-lang="en">English</button>
                 <button type="button" class="lang-tab" data-lang="zh">简体中文</button>
@@ -391,7 +359,6 @@
                 <button type="button" class="lang-tab" data-lang="ja">日本語</button>
                 <button type="button" class="lang-tab" data-lang="ko">한국어</button>
             </div>
-            
             <div class="lang-panel active" data-lang="en">
                 <input type="text" id="faqQuestion_en" placeholder="Question (English) *">
                 <textarea id="faqAnswer_en" placeholder="Answer (English)" rows="4"></textarea>
@@ -428,7 +395,6 @@
                 <input type="text" id="faqQuestion_ko" placeholder="질문 (한국어)">
                 <textarea id="faqAnswer_ko" placeholder="답변 (한국어)" rows="4"></textarea>
             </div>
-            
             <input type="hidden" id="faqId">
             <button id="saveFaqBtn" class="btn btn-primary">保存</button>
             <button id="cancelFaqBtn" class="btn">取消</button>
@@ -439,17 +405,14 @@
     <div id="productModal" class="modal">
         <div class="modal-content">
             <h3 id="productModalTitle">添加产品</h3>
-            
             <select id="productCategory">
                 <option value="cards">Cards</option>
                 <option value="books">Books</option>
                 <option value="board-games">Board Games</option>
                 <option value="puzzles">Puzzles</option>
             </select>
-            
             <input type="text" id="productSlug" placeholder="URL标识 (slug) * 例如: playingcards">
             <input type="text" id="productImageUrl" placeholder="图片URL (多张用逗号分隔)">
-            
             <div style="margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;">
                 <label style="display: block; margin-bottom: 10px; font-weight: 500;">📤 上传产品图片（自动命名）</label>
                 <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
@@ -457,17 +420,12 @@
                     <button type="button" id="uploadImagesBtn" class="btn btn-primary" style="background: #3498db; padding: 8px 20px;">上传图片</button>
                 </div>
                 <div id="uploadStatus" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
-                <div id="uploadedUrls" style="margin-top: 10px; display: none;">
-                    <small>已上传的图片URL将自动填入上方</small>
-                </div>
             </div>
             <div style="display: flex; gap: 10px; align-items: center;">
                 <label><input type="checkbox" id="productIsFeatured"> 置顶推荐</label>
             </div>
-            
             <hr style="margin: 15px 0;">
             <h4>多语言信息</h4>
-            
             <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 15px;">
                 <button type="button" class="lang-tab active" data-lang="en">English</button>
                 <button type="button" class="lang-tab" data-lang="zh">简体中文</button>
@@ -479,7 +437,6 @@
                 <button type="button" class="lang-tab" data-lang="ja">日本語</button>
                 <button type="button" class="lang-tab" data-lang="ko">한국어</button>
             </div>
-            
             <div class="lang-panel active" data-lang="en">
                 <input type="text" id="productName_en" placeholder="产品名称 (英文) *">
                 <textarea id="productDesc_en" placeholder="产品描述 (英文)" rows="3"></textarea>
@@ -516,7 +473,6 @@
                 <input type="text" id="productName_ko" placeholder="제품명">
                 <textarea id="productDesc_ko" placeholder="제품 설명" rows="3"></textarea>
             </div>
-            
             <input type="hidden" id="productId">
             <button id="saveProductBtn" class="btn btn-primary">保存</button>
             <button id="cancelProductBtn" class="btn">取消</button>
@@ -527,14 +483,12 @@
     <div id="messageDetailModal" class="modal">
         <div class="modal-content">
             <h3>留言详情</h3>
-            <div id="messageDetailContent">
-                <p><strong>姓名：</strong> <span id="detailName"></span></p>
-                <p><strong>邮箱：</strong> <span id="detailEmail"></span></p>
-                <p><strong>电话：</strong> <span id="detailPhone"></span></p>
-                <p><strong>留言内容：</strong></p>
-                <div id="detailMessage"></div>
-                <p><strong>提交时间：</strong> <span id="detailTime"></span></p>
-            </div>
+            <p><strong>姓名：</strong> <span id="detailName"></span></p>
+            <p><strong>邮箱：</strong> <span id="detailEmail"></span></p>
+            <p><strong>电话：</strong> <span id="detailPhone"></span></p>
+            <p><strong>留言内容：</strong></p>
+            <div id="detailMessage"></div>
+            <p><strong>提交时间：</strong> <span id="detailTime"></span></p>
             <button id="closeDetailModal" class="btn btn-primary" style="margin-top: 15px;">关闭</button>
         </div>
     </div>
