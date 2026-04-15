@@ -557,43 +557,45 @@ try {
 }
         
         const uploadedUrls = [];
+let currentNumber = nextNumber;
         
-        let currentNumber = nextNumber;
 for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const fileExt = file.name.split('.').pop();
-    // 每张图片使用递增的序号
     const fileName = `${category}-${currentNumber}.${fileExt}`;
     const filePath = `${category}/${fileName}`;
-    currentNumber++;
-            
-            try {
-                const { data, error } = await window.supabaseClient
-                    .storage
-                    .from('product-images')
-                    .upload(filePath, file, {
-                        cacheControl: '3600',
-                        upsert: false
-                    });
-                
-                if (error) throw error;
-                
-                const { data: publicUrlData } = window.supabaseClient
-                    .storage
-                    .from('product-images')
-                    .getPublicUrl(filePath);
-                
-                const publicUrl = publicUrlData.publicUrl;
-                uploadedUrls.push(publicUrl);
-                
-                uploadStatus.innerHTML = `<span style="color: #3498db;">已上传 ${i + 1}/${files.length} 个文件...</span>`;
-                
-            } catch (err) {
-                console.error('上传失败:', err);
-                uploadStatus.innerHTML = `<span style="color: #e74c3c;">${fileName} 上传失败: ${err.message}</span>`;
-                return;
-            }
-        }
+    
+    try {
+        const { data, error } = await window.supabaseClient
+            .storage
+            .from('product-images')
+            .upload(filePath, file, {
+                cacheControl: '3600',
+                upsert: false
+            });
+        
+        if (error) throw error;
+        
+        const { data: publicUrlData } = window.supabaseClient
+            .storage
+            .from('product-images')
+            .getPublicUrl(filePath);
+        
+        const publicUrl = publicUrlData.publicUrl;
+        uploadedUrls.push(publicUrl);
+        
+        uploadStatus.innerHTML = `<span style="color: #3498db;">已上传 ${i + 1}/${files.length} 个文件...</span>`;
+        
+        currentNumber++;
+        
+    } catch (err) {
+        console.error('上传失败:', err);
+        uploadStatus.innerHTML = `<span style="color: #e74c3c;">${fileName} 上传失败: ${err.message}</span>`;
+        return;
+    }
+}
+
+nextNumber = currentNumber;
         
         const currentUrls = imageUrlInput.value.trim();
         if (currentUrls) {
