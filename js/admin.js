@@ -524,28 +524,37 @@ if (uploadBtn) {
         
         uploadStatus.innerHTML = '<span style="color: #3498db;">上传中...</span>';
         
-        // 获取当前分类已有图片数量，计算下一个序号
-        let nextNumber = 1;
-        try {
-            const { data: existingFiles, error } = await window.supabaseClient
-                .storage
-                .from('product-images')
-                .list(category);
-            
-            if (!error && existingFiles && existingFiles.length > 0) {
-                const prefix = `${category}-`;
-                const numbers = existingFiles
-                    .filter(f => f.name.startsWith(prefix))
-                    .map(f => {
-                        const match = f.name.match(new RegExp(`^${prefix}(\\d+)`));
-                        return match ? parseInt(match[1]) : 0;
-                    })
-                    .filter(n => n > 0);
-                nextNumber = numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
-            }
-        } catch (err) {
-            console.log('无法获取已有文件数量，从1开始');
+// 获取当前分类已有图片数量，计算下一个序号
+let nextNumber = 1;
+try {
+    const { data: existingFiles, error } = await window.supabaseClient
+        .storage
+        .from('product-images')
+        .list(category);
+    
+    if (!error && existingFiles && existingFiles.length > 0) {
+        const prefix = `${category}-`;
+        // 提取所有已存在文件的序号
+        const numbers = existingFiles
+            .filter(f => f.name.startsWith(prefix))
+            .map(f => {
+                // 提取数字部分，如 cards-1.jpg -> 1
+                const numStr = f.name.replace(prefix, '').split('.')[0];
+                const num = parseInt(numStr);
+                return isNaN(num) ? 0 : num;
+            })
+            .filter(n => n > 0);
+        
+        if (numbers.length > 0) {
+            // 取最大值 + 1
+            nextNumber = Math.max(...numbers) + 1;
+        } else {
+            nextNumber = 1;
         }
+    }
+} catch (err) {
+    console.log('无法获取已有文件数量，从1开始');
+}
         
         const uploadedUrls = [];
         
