@@ -531,21 +531,86 @@ if (uploadBtn) {
         
         uploadStatus.innerHTML = '<span style="color: #3498db;">上传中...</span>';
         
-        // 获取当前分类已有图片数量，用于自动命名
-        let existingCount = 0;
+        // 获取当前分类已有图片数量，计算下一个序号
+        let nextNumber = 1;
         try {
             const { data: existingFiles, error } = await window.supabaseClient
                 .storage
                 .from('product-images')
                 .list(category);
             
-            if (!error && existingFiles) {
-                existingCount = existingFiles.length;
+            if (!error && existingFiles && existingFiles.length > 0) {
+                const prefix = `${category}-`;
+                const numbers = existingFiles
+                    .filter(f => f.name.startsWith(prefix))
+                    .map(f => {
+                        const match = f.name.match(new RegExp(`^${prefix}(\\d+)`));
+                        return match ? parseInt(match[1]) : 0;
+                    })
+                    .filter(n => n > 0);
+                nextNumber = numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
             }
         } catch (err) {
             console.log('无法获取已有文件数量，从1开始');
         }
         
+        const uploadedUrls = [];
+        
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            // 获取文件扩展名
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${category}-${nextNumber + i}.${fileExt}`;
+            const filePath = `${category}/${fileName}`;
+            
+            try {
+                const { data, error } = await window.supabaseClient
+                    .storage
+                    .from('product-images')
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+                
+                if (error) throw error;
+                
+                // 获取公开 URL
+                const { data: publicUrlData } = window.supabaseClient
+                    .storage
+                    .from('product-images')
+                    .getPublicUrl(filePath);
+                
+                const publicUrl = publicUrlData.publicUrl;
+                uploadedUrls.push(publicUrl);
+                
+                uploadStatus.innerHTML = `<span style="color: #3498db;">已上传 ${i + 1}/${files.length} 个文件...</span>`;
+                
+            } catch (err) {
+                console.error('上传失败:', err);
+                uploadStatus.innerHTML = `<span style="color: #e74c3c;">${fileName} 上传失败: ${err.message}</span>`;
+                return;
+            }
+        }
+        
+        // 更新图片URL输入框
+        const currentUrls = imageUrlInput.value.trim();
+        if (currentUrls) {
+            imageUrlInput.value = currentUrls + ',' + uploadedUrls.join(',');
+        } else {
+            imageUrlInput.value = uploadedUrls.join(',');
+        }
+        
+        uploadStatus.innerHTML = `<span style="color: #27ae60;">✅ 成功上传 ${uploadedUrls.length} 张图片！URL已自动填入上方</span>`;
+        fileInput.value = '';
+        
+        // 3秒后清除状态
+        setTimeout(() => {
+            if (uploadStatus.innerHTML.includes('成功')) {
+                uploadStatus.innerHTML = '';
+            }
+        }, 5000);
+    });
+}
         const uploadedUrls = [];
         
         for (let i = 0; i < files.length; i++) {
