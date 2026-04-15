@@ -43,7 +43,6 @@
             margin-top: 15px;
         }
         
-        /* 管理面板头部 */
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -100,7 +99,6 @@
             gap: 15px;
         }
         
-        /* 动态操作按钮 */
         .action-btn {
             padding: 8px 20px;
             border: none;
@@ -142,15 +140,13 @@
             background: #c0392b;
         }
         
+        /* 表格容器 - 只保留横向滚动，移除纵向滚动限制 */
         .table-wrapper {
             overflow-x: auto;
-            overflow-y: auto;
-            max-height: 500px;
             width: 100%;
             margin-bottom: 20px;
             border-radius: 12px;
             background: white;
-            position: relative;
         }
         
         .data-table {
@@ -159,14 +155,6 @@
             background: white;
             border-radius: 12px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            table-layout: fixed;
-        }
-        
-        .data-table thead tr {
-            position: sticky;
-            top: 0;
-            background: #1a2a4f;
-            z-index: 10;
         }
         
         .data-table th,
@@ -180,18 +168,21 @@
             background: #1a2a4f;
             color: white;
             font-weight: 500;
-        }
-        
-        .data-table td {
             white-space: nowrap;
         }
         
-        /* 留言内容列自动换行 */
+        /* 留言内容列允许换行，设置合理宽度 */
         .data-table td:nth-child(5) {
             white-space: normal !important;
             word-wrap: break-word !important;
             word-break: break-word !important;
-            max-width: 300px;
+            max-width: 400px;
+            min-width: 200px;
+        }
+        
+        /* 其他列不换行 */
+        .data-table td {
+            white-space: nowrap;
         }
         
         .data-table tr:hover {
@@ -280,7 +271,6 @@
             display: block;
         }
         
-        /* 多语言标签页样式 */
         .lang-tab {
             padding: 5px 12px;
             background: #eee;
@@ -452,9 +442,7 @@
             
             <input type="text" id="productSlug" placeholder="URL标识 (slug) * 例如: playingcards">
             <input type="text" id="productImageUrl" placeholder="图片URL (多张用逗号分隔)">
-                        <!-- 图片URL输入框 -->
             
-            <!-- 图片上传组件 -->
             <div style="margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;">
                 <label style="display: block; margin-bottom: 10px; font-weight: 500;">📤 上传产品图片（自动命名）</label>
                 <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
