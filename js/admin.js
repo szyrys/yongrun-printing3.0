@@ -204,28 +204,23 @@ function truncateText(text, maxLength) {
 // ===== 统一三个表格宽度 =====
 function unifyTableWidth() {
     setTimeout(() => {
-        const fixedWidth = '1200px';
-        const tables = [
-            document.querySelector('#messagesContainer .data-table'),
-            document.querySelector('#faqContainer .data-table'),
-            document.querySelector('#productsContainer .data-table')
-        ];
+        const msgTable = document.querySelector('#messagesContainer .data-table');
+        const faqTable = document.querySelector('#faqContainer .data-table');
+        const productTable = document.querySelector('#productsContainer .data-table');
         
-        let maxWidth = 0;
-        tables.forEach(table => {
-            if (table) {
-                const width = table.offsetWidth;
-                if (width > maxWidth) maxWidth = width;
-            }
-        });
+        if (!msgTable) return;
         
-        tables.forEach(table => {
-            if (table) {
-                table.style.width = maxWidth + 'px';
-                table.style.minWidth = maxWidth + 'px';
-            }
-        });
-    }, 100);
+        const targetWidth = msgTable.offsetWidth + 'px';
+        
+        if (faqTable) {
+            faqTable.style.width = targetWidth;
+            faqTable.style.minWidth = targetWidth;
+        }
+        if (productTable) {
+            productTable.style.width = targetWidth;
+            productTable.style.minWidth = targetWidth;
+        }
+    }, 200);
 }
 
 // ===== 留言管理 =====
