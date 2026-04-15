@@ -5,7 +5,12 @@
   "nav_craft": "材质与工艺",
   "nav_about": "关于我们",
   "nav_contact": "联系我们",
-
+  "nav_cards": "卡牌类",
+"nav_books": "书籍类",
+"nav_boardgames": "桌游类",
+"nav_puzzles": "拼图类",
+  
+  
   "hero_title": "专业定制印刷<br>卡牌与游戏",
   "hero_subtitle": "20年经验 | ISO9002 | FSC认证 | 全球配送",
   "hero_btn": "免费获取报价 →",
