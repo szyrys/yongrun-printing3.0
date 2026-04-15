@@ -420,81 +420,89 @@
 
     <!-- 产品模态框 -->
     <div id="productModal" class="modal">
-        <div class="modal-content">
-            <h3 id="productModalTitle">添加产品</h3>
-            <select id="productCategory">
-                <option value="cards">卡片类</option>
-                <option value="books">书籍类</option>
-                <option value="board-games">桌游类</option>
-                <option value="puzzles">拼图类</option>
-            </select>
-            <input type="text" id="productSlug" placeholder="URL标识 (slug) * 例如: playingcards">
-            <input type="text" id="productImageUrl" placeholder="图片URL (多张用逗号分隔)">
-            <div style="margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-                <label style="display: block; margin-bottom: 10px; font-weight: 500;">📤 上传产品图片（自动命名）</label>
-                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                    <input type="file" id="productImageUpload" accept="image/*" multiple style="flex: 1;">
-                    <button type="button" id="uploadImagesBtn" class="btn btn-primary" style="background: #3498db; padding: 8px 20px;">上传图片</button>
-                </div>
-                <div id="uploadStatus" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
+    <div class="modal-content">
+        <h3 id="productModalTitle">添加产品</h3>
+        
+        <select id="productCategory">
+            <option value="cards">卡片类</option>
+            <option value="books">书籍类</option>
+            <option value="board-games">桌游类</option>
+            <option value="puzzles">拼图类</option>
+        </select>
+        
+        <input type="text" id="productSlug" placeholder="URL标识 (slug) * 例如: playingcards">
+        <input type="text" id="productImageUrl" placeholder="图片URL (多张用逗号分隔)">
+        
+        <div style="margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+            <label style="display: block; margin-bottom: 10px; font-weight: 500;">📤 上传产品图片（自动命名）</label>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <input type="file" id="productImageUpload" accept="image/*" multiple style="flex: 1;">
+                <button type="button" id="uploadImagesBtn" class="btn btn-primary" style="background: #3498db; padding: 8px 20px;">上传图片</button>
             </div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <label><input type="checkbox" id="productIsFeatured"> 置顶推荐</label>
-            </div>
-            <hr style="margin: 15px 0;">
-            <h4>多语言信息</h4>
-            <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 15px;">
-                <button type="button" class="lang-tab active" data-lang="en">英文</button>
-                <button type="button" class="lang-tab" data-lang="zh">简体中文</button>
-                <button type="button" class="lang-tab" data-lang="zh-TW">繁體中文</button>
-                <button type="button" class="lang-tab" data-lang="es">西班牙语</button>
-                <button type="button" class="lang-tab" data-lang="de">德语</button>
-                <button type="button" class="lang-tab" data-lang="pt">葡萄牙语</button>
-                <button type="button" class="lang-tab" data-lang="ar">阿拉伯语</button>
-                <button type="button" class="lang-tab" data-lang="ja">日语</button>
-                <button type="button" class="lang-tab" data-lang="ko">韩语</button>
-            </div>
-            <div class="lang-panel active" data-lang="en">
-                <input type="text" id="productName_en" placeholder="产品名称 (英文) * 例如: Playing Cards">
-                <textarea id="productDesc_en" placeholder="产品描述 (英文) 例如: Custom poker cards..." rows="3"></textarea>
-            </div>
-            <div class="lang-panel" data-lang="zh">
-                <input type="text" id="productName_zh" placeholder="产品名称 (简体中文) * 例如: 扑克牌">
-                <textarea id="productDesc_zh" placeholder="产品描述 (简体中文)" rows="3"></textarea>
-            </div>
-            <div class="lang-panel" data-lang="zh-TW">
-                <input type="text" id="productName_zh_TW" placeholder="产品名称 (繁體中文) * 例如: 撲克牌">
-                <textarea id="productDesc_zh_TW" placeholder="产品描述 (繁體中文)" rows="3"></textarea>
-            </div>
-            <div class="lang-panel" data-lang="es">
-                <input type="text" id="productName_es" placeholder="Nombre del producto">
-                <textarea id="productDesc_es" placeholder="Descripción del producto" rows="3"></textarea>
-            </div>
-            <div class="lang-panel" data-lang="de">
-                <input type="text" id="productName_de" placeholder="Produktname">
-                <textarea id="productDesc_de" placeholder="Produktbeschreibung" rows="3"></textarea>
-            </div>
-            <div class="lang-panel" data-lang="pt">
-                <input type="text" id="productName_pt" placeholder="Nome do produto">
-                <textarea id="productDesc_pt" placeholder="Descrição do produto" rows="3"></textarea>
-            </div>
-            <div class="lang-panel" data-lang="ar">
-                <input type="text" id="productName_ar" placeholder="اسم المنتج">
-                <textarea id="productDesc_ar" placeholder="وصف المنتج" rows="3"></textarea>
-            </div>
-            <div class="lang-panel" data-lang="ja">
-                <input type="text" id="productName_ja" placeholder="製品名">
-                <textarea id="productDesc_ja" placeholder="製品説明" rows="3"></textarea>
-            </div>
-            <div class="lang-panel" data-lang="ko">
-                <input type="text" id="productName_ko" placeholder="제품명">
-                <textarea id="productDesc_ko" placeholder="제품 설명" rows="3"></textarea>
-            </div>
-            <input type="hidden" id="productId">
-            <button id="saveProductBtn" class="btn btn-primary">保存</button>
-            <button id="cancelProductBtn" class="btn">取消</button>
+            <div id="uploadStatus" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
         </div>
+        
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <label>置顶推荐 <input type="checkbox" id="productIsFeatured"></label>
+        </div>
+        
+        <hr style="margin: 15px 0;">
+        <h4>多语言信息</h4>
+        
+        <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 15px;">
+            <button type="button" class="lang-tab active" data-lang="en">英文</button>
+            <button type="button" class="lang-tab" data-lang="zh">简体中文</button>
+            <button type="button" class="lang-tab" data-lang="zh-TW">繁體中文</button>
+            <button type="button" class="lang-tab" data-lang="es">西班牙语</button>
+            <button type="button" class="lang-tab" data-lang="de">德语</button>
+            <button type="button" class="lang-tab" data-lang="pt">葡萄牙语</button>
+            <button type="button" class="lang-tab" data-lang="ar">阿拉伯语</button>
+            <button type="button" class="lang-tab" data-lang="ja">日语</button>
+            <button type="button" class="lang-tab" data-lang="ko">韩语</button>
+        </div>
+        
+        <div class="lang-panel active" data-lang="en">
+            <input type="text" id="productName_en" placeholder="产品名称 (英文) * 例如: Playing Cards">
+            <textarea id="productDesc_en" placeholder="产品描述 (英文) 例如: Custom poker cards..." rows="3"></textarea>
+        </div>
+        <div class="lang-panel" data-lang="zh">
+            <input type="text" id="productName_zh" placeholder="产品名称 (简体中文) * 例如: 扑克牌">
+            <textarea id="productDesc_zh" placeholder="产品描述 (简体中文)" rows="3"></textarea>
+        </div>
+        <div class="lang-panel" data-lang="zh-TW">
+            <input type="text" id="productName_zh_TW" placeholder="产品名称 (繁體中文) * 例如: 撲克牌">
+            <textarea id="productDesc_zh_TW" placeholder="产品描述 (繁體中文)" rows="3"></textarea>
+        </div>
+        <div class="lang-panel" data-lang="es">
+            <input type="text" id="productName_es" placeholder="Nombre del producto">
+            <textarea id="productDesc_es" placeholder="Descripción del producto" rows="3"></textarea>
+        </div>
+        <div class="lang-panel" data-lang="de">
+            <input type="text" id="productName_de" placeholder="Produktname">
+            <textarea id="productDesc_de" placeholder="Produktbeschreibung" rows="3"></textarea>
+        </div>
+        <div class="lang-panel" data-lang="pt">
+            <input type="text" id="productName_pt" placeholder="Nome do produto">
+            <textarea id="productDesc_pt" placeholder="Descrição do produto" rows="3"></textarea>
+        </div>
+        <div class="lang-panel" data-lang="ar">
+            <input type="text" id="productName_ar" placeholder="اسم المنتج">
+            <textarea id="productDesc_ar" placeholder="وصف المنتج" rows="3"></textarea>
+        </div>
+        <div class="lang-panel" data-lang="ja">
+            <input type="text" id="productName_ja" placeholder="製品名">
+            <textarea id="productDesc_ja" placeholder="製品説明" rows="3"></textarea>
+        </div>
+        <div class="lang-panel" data-lang="ko">
+            <input type="text" id="productName_ko" placeholder="제품명">
+            <textarea id="productDesc_ko" placeholder="제품 설명" rows="3"></textarea>
+        </div>
+        
+        <input type="hidden" id="productId">
+        <button id="saveProductBtn" class="btn btn-primary">保存</button>
+        <button id="cancelProductBtn" class="btn">取消</button>
     </div>
+</div>
 
     <!-- 留言详情弹窗 -->
     <div id="messageDetailModal" class="modal">
