@@ -10,20 +10,11 @@ const adminEmail = document.getElementById('adminEmail');
 const adminPassword = document.getElementById('adminPassword');
 const loginError = document.getElementById('loginError');
 
-// 标签页
-const tabMessages = document.getElementById('tabMessages');
-const tabFaq = document.getElementById('tabFaq');
-const tabProducts = document.getElementById('tabProducts');
-const messagesPanel = document.getElementById('messagesPanel');
-const faqPanel = document.getElementById('faqPanel');
-const productsPanel = document.getElementById('productsPanel');
-
 // 多语言标签页切换
 function initLangTabs(container) {
     const modalContent = container || document;
     const tabs = modalContent.querySelectorAll('.lang-tab');
     tabs.forEach(tab => {
-        // 移除旧事件避免重复
         tab.removeEventListener('click', tab._handler);
         const handler = () => {
             const lang = tab.getAttribute('data-lang');
@@ -43,7 +34,6 @@ function initLangTabs(container) {
     });
 }
 
-// 检查登录状态
 async function checkSession() {
     try {
         const { data: { session }, error } = await window.supabaseClient.auth.getSession();
@@ -134,38 +124,43 @@ function initTabs() {
 
 document.getElementById('refreshMessagesBtn')?.addEventListener('click', () => loadMessages());
 
-// ===== 留言管理 =====
+// ===== 留言管理（空状态显示表头）=====
 async function loadMessages() {
     const container = document.getElementById('messagesContainer');
     if (!container) return;
-    container.innerHTML = '<div class="loading">加载留言中...</div>';
+    
     try {
         const { data, error } = await window.supabaseClient
             .from('messages')
             .select('*')
             .order('created_at', { ascending: false });
         if (error) throw error;
-        if (!data || data.length === 0) {
-            container.innerHTML = '<div class="empty-state">暂无留言</div>';
-            return;
-        }
+        
+        // 始终显示表格结构
         let html = `<table class="data-table"><thead><tr>
             <th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th>
         </tr></thead><tbody>`;
-        data.forEach(msg => {
-            const date = new Date(msg.created_at).toLocaleString('zh-CN');
-            html += `<tr>
-                <td>${msg.id}</td>
-                <td>${escapeHtml(msg.name)}</td>
-                <td>${escapeHtml(msg.email || '-')}</td>
-                <td>${escapeHtml(msg.phone || '-')}</td>
-                <td style="white-space: normal; word-break: break-word;">${escapeHtml(msg.message || '')}</td>
-                <td>${date}</td>
-                <td><button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button></td>
-            </tr>`;
-        });
+        
+        if (!data || data.length === 0) {
+            html += `<tr><td colspan="7" style="text-align: center;">暂无留言</td></tr>`;
+        } else {
+            data.forEach(msg => {
+                const date = new Date(msg.created_at).toLocaleString('zh-CN');
+                html += `<tr>
+                    <td>${msg.id}</td>
+                    <td>${escapeHtml(msg.name)}</td>
+                    <td>${escapeHtml(msg.email || '-')}</td>
+                    <td>${escapeHtml(msg.phone || '-')}</td>
+                    <td style="white-space: normal; word-break: break-word;">${escapeHtml(msg.message || '')}</td>
+                    <td>${date}</td>
+                    <td><button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button></td>
+                </tr>`;
+            });
+        }
+        
         html += `</tbody></table>`;
         container.innerHTML = html;
+        
         document.querySelectorAll('.delete-btn[data-type="message"]').forEach(btn => {
             btn.addEventListener('click', async () => {
                 if (confirm('确定删除？')) {
@@ -185,25 +180,29 @@ let currentFaqId = null;
 async function loadFaqs() {
     const container = document.getElementById('faqContainer');
     if (!container) return;
-    container.innerHTML = '<div class="loading">加载 FAQ 中...</div>';
+    
     try {
         const { data, error } = await window.supabaseClient.from('faq').select('*').order('sort_order');
         if (error) throw error;
-        if (!data || data.length === 0) {
-            container.innerHTML = '<div class="empty-state">暂无 FAQ</div>';
-            return;
-        }
+        
         let html = `<table class="data-table"><thead><tr><th>ID</th><th>问题(EN)</th><th>回答(EN)</th><th>操作</th></tr></thead><tbody>`;
-        data.forEach(faq => {
-            html += `<tr>
-                <td>${faq.id}</td>
-                <td>${escapeHtml(faq.question_en || '-')}</td>
-                <td>${escapeHtml((faq.answer_en || '').substring(0, 80))}${(faq.answer_en || '').length > 80 ? '...' : ''}</td>
-                <td><button class="edit-faq-btn" data-id="${faq.id}">编辑</button><button class="delete-faq-btn" data-id="${faq.id}">删除</button></td>
-            </tr>`;
-        });
-        html += `</tbody> licensierad`;
+        
+        if (!data || data.length === 0) {
+            html += `<tr><td colspan="4" style="text-align: center;">暂无 FAQ</td></tr>`;
+        } else {
+            data.forEach(faq => {
+                html += `<tr>
+                    <td>${faq.id}</td>
+                    <td>${escapeHtml(faq.question_en || '-')}</td>
+                    <td>${escapeHtml((faq.answer_en || '').substring(0, 80))}${(faq.answer_en || '').length > 80 ? '...' : ''}</td>
+                    <td><button class="edit-faq-btn" data-id="${faq.id}">编辑</button><button class="delete-faq-btn" data-id="${faq.id}">删除</button></td>
+                </tr>`;
+            });
+        }
+        
+        html += `</tbody></table>`;
         container.innerHTML = html;
+        
         document.querySelectorAll('.edit-faq-btn').forEach(btn => btn.addEventListener('click', () => editFaq(btn.dataset.id)));
         document.querySelectorAll('.delete-faq-btn').forEach(btn => btn.addEventListener('click', () => deleteFaq(btn.dataset.id)));
     } catch (err) {
@@ -314,36 +313,42 @@ document.getElementById('cancelFaqBtn')?.addEventListener('click', () => {
     document.getElementById('faqModal').style.display = 'none';
 });
 
-// ===== 产品管理（多语言）=====
+// ===== 产品管理（多语言，空状态显示表头）=====
 let currentProductId = null;
 
 async function loadProducts() {
     const container = document.getElementById('productsContainer');
     if (!container) return;
-    container.innerHTML = '<div class="loading">加载产品中...</div>';
+    
     try {
         const { data, error } = await window.supabaseClient
             .from('products')
             .select('*')
             .order('category', { ascending: true });
         if (error) throw error;
+        
+        let html = `<table class="data-table"><thead><tr>
+            <th>ID</th><th>分类</th><th>名称(EN)</th><th>标识(slug)</th><th>置顶</th><th>操作</th>
+        </tr></thead><tbody>`;
+        
         if (!data || data.length === 0) {
-            container.innerHTML = '<div class="empty-state">暂无产品</div>';
-            return;
+            html += `<tr><td colspan="6" style="text-align: center;">暂无产品</td></tr>`;
+        } else {
+            data.forEach(p => {
+                html += `<tr>
+                    <td>${p.id}</td>
+                    <td>${p.category}</td>
+                    <td>${escapeHtml(p.name_en || '-')}</td>
+                    <td>${p.slug}</td>
+                    <td>${p.is_featured ? '⭐' : '-'}</td>
+                    <td><button class="edit-product-btn" data-id="${p.id}">编辑</button><button class="delete-product-btn" data-id="${p.id}">删除</button></td>
+                </tr>`;
+            });
         }
-        let html = `<table class="data-table"><thead><tr><th>ID</th><th>分类</th><th>名称(EN)</th><th>标识(slug)</th><th>置顶</th><th>操作</th></tr></thead><tbody>`;
-        data.forEach(p => {
-            html += `<tr>
-                <td>${p.id}</td>
-                <td>${p.category}</td>
-                <td>${escapeHtml(p.name_en || '-')}</td>
-                <td>${p.slug}</td>
-                <td>${p.is_featured ? '⭐' : '-'}</td>
-                <td><button class="edit-product-btn" data-id="${p.id}">编辑</button><button class="delete-product-btn" data-id="${p.id}">删除</button></td>
-            </tr>`;
-        });
+        
         html += `</tbody></table>`;
         container.innerHTML = html;
+        
         document.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', () => editProduct(btn.dataset.id)));
         document.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', () => deleteProduct(btn.dataset.id)));
     } catch (err) {
