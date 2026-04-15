@@ -204,6 +204,7 @@ function truncateText(text, maxLength) {
 // ===== 统一三个表格宽度 =====
 function unifyTableWidth() {
     setTimeout(() => {
+        const fixedWidth = '1200px';
         const tables = [
             document.querySelector('#messagesContainer .data-table'),
             document.querySelector('#faqContainer .data-table'),
