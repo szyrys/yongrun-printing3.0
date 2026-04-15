@@ -19,19 +19,27 @@ const faqPanel = document.getElementById('faqPanel');
 const productsPanel = document.getElementById('productsPanel');
 
 // 多语言标签页切换
-function initLangTabs() {
-    document.querySelectorAll('.lang-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
+function initLangTabs(container) {
+    const modalContent = container || document;
+    const tabs = modalContent.querySelectorAll('.lang-tab');
+    tabs.forEach(tab => {
+        // 移除旧事件避免重复
+        tab.removeEventListener('click', tab._handler);
+        const handler = () => {
             const lang = tab.getAttribute('data-lang');
-            const container = tab.closest('.modal-content');
-            container.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            container.querySelectorAll('.lang-panel').forEach(panel => {
-                panel.classList.remove('active');
-            });
-            const activePanel = container.querySelector(`.lang-panel[data-lang="${lang}"]`);
-            if (activePanel) activePanel.classList.add('active');
-        });
+            const parentContainer = tab.closest('.modal-content');
+            if (parentContainer) {
+                parentContainer.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                parentContainer.querySelectorAll('.lang-panel').forEach(panel => {
+                    panel.classList.remove('active');
+                });
+                const activePanel = parentContainer.querySelector(`.lang-panel[data-lang="${lang}"]`);
+                if (activePanel) activePanel.classList.add('active');
+            }
+        };
+        tab.addEventListener('click', handler);
+        tab._handler = handler;
     });
 }
 
@@ -102,37 +110,26 @@ async function logout() {
     showLoginPanel();
 }
 
+// 标签页切换
 function initTabs() {
-    if (tabMessages) {
-        tabMessages.addEventListener('click', () => {
-            tabMessages.classList.add('active');
-            tabFaq.classList.remove('active');
-            tabProducts.classList.remove('active');
-            messagesPanel.classList.add('active');
-            faqPanel.classList.remove('active');
-            productsPanel.classList.remove('active');
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panels = {
+        messages: document.getElementById('messagesPanel'),
+        faq: document.getElementById('faqPanel'),
+        products: document.getElementById('productsPanel')
+    };
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            Object.keys(panels).forEach(key => {
+                if (panels[key]) panels[key].classList.remove('active');
+            });
+            if (panels[tabId]) panels[tabId].classList.add('active');
         });
-    }
-    if (tabFaq) {
-        tabFaq.addEventListener('click', () => {
-            tabFaq.classList.add('active');
-            tabMessages.classList.remove('active');
-            tabProducts.classList.remove('active');
-            faqPanel.classList.add('active');
-            messagesPanel.classList.remove('active');
-            productsPanel.classList.remove('active');
-        });
-    }
-    if (tabProducts) {
-        tabProducts.addEventListener('click', () => {
-            tabProducts.classList.add('active');
-            tabMessages.classList.remove('active');
-            tabFaq.classList.remove('active');
-            productsPanel.classList.add('active');
-            messagesPanel.classList.remove('active');
-            faqPanel.classList.remove('active');
-        });
-    }
+    });
 }
 
 document.getElementById('refreshMessagesBtn')?.addEventListener('click', () => loadMessages());
@@ -205,7 +202,7 @@ async function loadFaqs() {
                 <td><button class="edit-faq-btn" data-id="${faq.id}">编辑</button><button class="delete-faq-btn" data-id="${faq.id}">删除</button></td>
             </tr>`;
         });
-        html += `</tbody></table>`;
+        html += `</tbody> licensierad`;
         container.innerHTML = html;
         document.querySelectorAll('.edit-faq-btn').forEach(btn => btn.addEventListener('click', () => editFaq(btn.dataset.id)));
         document.querySelectorAll('.delete-faq-btn').forEach(btn => btn.addEventListener('click', () => deleteFaq(btn.dataset.id)));
@@ -240,6 +237,7 @@ async function editFaq(id) {
     document.getElementById('faqModalTitle').innerText = '编辑 FAQ';
     document.getElementById('faqModal').style.display = 'flex';
     currentFaqId = id;
+    initLangTabs(document.getElementById('faqModal'));
 }
 
 async function deleteFaq(id) {
@@ -272,6 +270,7 @@ document.getElementById('addFaqBtn')?.addEventListener('click', () => {
     document.getElementById('faqModalTitle').innerText = '添加 FAQ';
     document.getElementById('faqModal').style.display = 'flex';
     currentFaqId = null;
+    initLangTabs(document.getElementById('faqModal'));
 });
 
 document.getElementById('saveFaqBtn')?.addEventListener('click', async () => {
@@ -383,6 +382,7 @@ async function editProduct(id) {
     document.getElementById('productModalTitle').innerText = '编辑产品';
     document.getElementById('productModal').style.display = 'flex';
     currentProductId = id;
+    initLangTabs(document.getElementById('productModal'));
 }
 
 async function deleteProduct(id) {
@@ -421,6 +421,7 @@ document.getElementById('addProductBtn')?.addEventListener('click', () => {
     document.getElementById('productModalTitle').innerText = '添加产品';
     document.getElementById('productModal').style.display = 'flex';
     currentProductId = null;
+    initLangTabs(document.getElementById('productModal'));
 });
 
 document.getElementById('saveProductBtn')?.addEventListener('click', async () => {
@@ -491,6 +492,5 @@ if (adminEmail) adminEmail.addEventListener('keypress', e => e.key === 'Enter' &
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
-    initLangTabs();
     checkSession();
 });
