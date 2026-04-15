@@ -674,3 +674,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // 初始化按钮状态
     updateActionButton('messages');
 });
+}
