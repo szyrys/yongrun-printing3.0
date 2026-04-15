@@ -460,7 +460,7 @@ async function loadProducts() {
         
         html += `</tbody></table>`;
         container.innerHTML = html;
-        unifyTableWidth();
+        setTimeout(() => { unifyTableWidth(); }, 200);
         
         document.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', () => editProduct(btn.dataset.id)));
         document.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', () => deleteProduct(btn.dataset.id)));
