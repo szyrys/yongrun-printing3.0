@@ -131,34 +131,62 @@
             background: #c0392b;
         }
         
-        /* 表格容器 - 只横向滚动，不限制高度 */
-        .table-wrapper {
-            overflow-x: auto;
-            width: 100%;
-            margin-bottom: 20px;
-            border-radius: 12px;
-            background: white;
-        }
-        
-        .data-table {
-            width: 100%;
-            min-width: 1220px;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        /* 产品管理表格单独限制宽度 */
-#productsContainer .data-table {
-    min-width: 1220px;
-    max-width: 1220px;
+        /* 表格容器 - 支持横向滚动 */
+.table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background: white;
 }
-        .data-table th,
-        .data-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
+
+/* 所有表格统一宽度 */
+.data-table {
+    width: 100%;
+    min-width: 1200px;
+    max-width: 1200px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* 列宽分配 */
+.data-table th:nth-child(1) { width: 5%; }   /* ID */
+.data-table th:nth-child(2) { width: 10%; }  /* 姓名/分类 */
+.data-table th:nth-child(3) { width: 15%; }  /* 邮箱/名称 */
+.data-table th:nth-child(4) { width: 10%; }  /* 电话/标识 */
+.data-table th:nth-child(5) { width: 35%; }  /* 留言内容/描述 */
+.data-table th:nth-child(6) { width: 15%; }  /* 提交时间 */
+.data-table th:nth-child(7) { width: 10%; }  /* 操作 */
+
+/* 留言内容列允许换行 */
+.data-table td:nth-child(5) {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* 其他列不换行 */
+.data-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* FAQ 表格只有4列，覆盖上面的列宽 */
+#faqContainer .data-table th:nth-child(1) { width: 5%; }
+#faqContainer .data-table th:nth-child(2) { width: 40%; }
+#faqContainer .data-table th:nth-child(3) { width: 40%; }
+#faqContainer .data-table th:nth-child(4) { width: 15%; }
+
+/* 产品管理表格列宽 */
+#productsContainer .data-table th:nth-child(1) { width: 5%; }
+#productsContainer .data-table th:nth-child(2) { width: 10%; }
+#productsContainer .data-table th:nth-child(3) { width: 25%; }
+#productsContainer .data-table th:nth-child(4) { width: 15%; }
+#productsContainer .data-table th:nth-child(5) { width: 8%; }
+#productsContainer .data-table th:nth-child(6) { width: 15%; }
         
         .data-table th {
             background: #1a2a4f;
