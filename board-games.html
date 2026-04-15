@@ -6,95 +6,167 @@
     <title>Board Games - Yongrun Printing</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body><main>
-    <!-- 语言切换栏 -->
-    <div class="language-bar">
-        <div class="container">
-            <div class="language-selector" id="languageSelector"></div>
-        </div>
-    </div>
-
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <a href="index.html">YONGRUN<span> Printing</span></a>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="cards.html">Cards</a></li>
-                        <li><a href="books.html">Books</a></li>
-                        <li><a href="board-games.html">Board Games</a></li>
-                        <li><a href="puzzles.html">Puzzles</a></li>
-                    </ul>
-                </li>
-                <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
-                <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
-                <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
-                <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 页面标题 -->
-    <section class="page-header">
-        <div class="container">
-            <h1>Board Games</h1>
-            <p>Custom board game printing - showcase of our work</p>
-        </div>
-    </section>
-
-    <!-- 印刷案例展示（图片占位，后续替换） -->
-    <section class="products-page" style="padding: 60px 0;">
-        <div class="container">
-            <div class="product-grid" id="boardGamesGrid">
-                <!-- 案例卡片会通过JS动态生成 -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Supabase SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- 网站脚本 -->
-    <script src="js/supabase-config.js"></script>
-    <script src="js/common.js"></script>
-    <script>
-        // 桌游类印刷案例（占位图片，后续替换真实封面）
-        const caseStudies = [
-    { name: "Strategy Board Game", desc: "Custom box + cards + rulebook", icon: "fas fa-chess-board", img: "https://picsum.photos/id/104/300/200", link: "product.html?slug=strategy-board-game" },
-    { name: "Family Card Game", desc: "Creative design, premium card stock", icon: "fas fa-users", img: "https://picsum.photos/id/106/300/200", link: "product.html?slug=family-card-game" },
-    { name: "Kickstarter Edition", desc: "Deluxe components, custom packaging", icon: "fas fa-rocket", img: "https://picsum.photos/id/107/300/200", link: "product.html?slug=kickstarter-edition" }
-];
-
-const grid = document.getElementById('boardGamesGrid');
-        if (grid) {
-            caseStudies.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.onclick = () => {
-                    if (item.link) {
-                        window.location.href = item.link;
-                    }
-                };
-                card.innerHTML = `
-                    <div class="product-img" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                        <img src="${item.img}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <h3>${item.name}</h3>
-                    <p>${item.desc}</p>
-                `;
-                grid.appendChild(card);
-            });
+    <style>
+        .products-section-header {
+            text-align: center;
+            margin-bottom: 40px;
         }
-    </script>
+        .products-section-header h1 {
+            font-size: 2.5rem;
+            color: #1a2a4f;
+            margin-bottom: 10px;
+        }
+        .products-section-header p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-card .product-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #1a2a4f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-card .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-card .product-img i {
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .product-card h3 {
+            padding: 15px 15px 5px;
+            color: #1a2a4f;
+            font-size: 1.1rem;
+        }
+        
+        .product-card p {
+            padding: 0 15px 15px;
+            color: #666;
+            font-size: 14px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        
+        .load-more-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .load-more-btn {
+            background: transparent;
+            border: 2px solid #c9a03d;
+            color: #1a2a4f;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .load-more-btn:hover {
+            background: #c9a03d;
+            color: white;
+        }
+        
+        .loading, .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #999;
+        }
+        
+        @media (max-width: 1024px) {
+            .product-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .product-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
+    <main style="flex: 1;">
+        <div class="language-bar">
+            <div class="container">
+                <div class="language-selector" id="languageSelector"></div>
+            </div>
+        </div>
+
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">YONGRUN<span> Printing</span></a>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="cards.html">Cards</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="board-games.html">Board Games</a></li>
+                            <li><a href="puzzles.html">Puzzles</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                    <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
+                    <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                    <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="products-section-header">
+                <h1 data-i18n="nav_boardgames">Board Games</h1>
+                <p data-i18n="category_boardgames_desc">Custom board game printing including cards, rulebooks, game boards, and custom boxes.</p>
+            </div>
+        </div>
+
+        <section class="products-page" style="padding: 0 0 60px 0;">
+            <div class="container">
+                <div class="product-grid" id="boardGamesGrid"></div>
+                <div id="loadMoreContainer" class="load-more-container" style="display: none;">
+                    <button id="loadMoreBtn" class="load-more-btn" data-i18n="load_more">Load More</button>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -102,5 +174,108 @@ const grid = document.getElementById('boardGamesGrid');
             <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        function truncateText(text, maxLength) {
+            if (!text) return '';
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+
+        function getLocalizedField(product, fieldName) {
+            const lang = currentLang || 'en';
+            if (lang === 'zh-CN') return product[`${fieldName}_zh`] || product[`${fieldName}_en`] || '';
+            if (lang === 'zh-TW') return product[`${fieldName}_zh_tw`] || product[`${fieldName}_en`] || '';
+            if (lang === 'es') return product[`${fieldName}_es`] || product[`${fieldName}_en`] || '';
+            if (lang === 'de') return product[`${fieldName}_de`] || product[`${fieldName}_en`] || '';
+            if (lang === 'pt') return product[`${fieldName}_pt`] || product[`${fieldName}_en`] || '';
+            if (lang === 'ar') return product[`${fieldName}_ar`] || product[`${fieldName}_en`] || '';
+            if (lang === 'ja') return product[`${fieldName}_ja`] || product[`${fieldName}_en`] || '';
+            if (lang === 'ko') return product[`${fieldName}_ko`] || product[`${fieldName}_en`] || '';
+            return product[`${fieldName}_en`] || '';
+        }
+
+        let allProducts = [];
+        let currentPage = 1;
+        const pageSize = 12;
+        let isLoading = false;
+
+        function renderProducts(products) {
+            const grid = document.getElementById('boardGamesGrid');
+            if (!grid) return;
+            products.forEach(product => {
+                const name = getLocalizedField(product, 'name');
+                const desc = getLocalizedField(product, 'desc');
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.onclick = () => { window.location.href = `product.html?slug=${product.slug}`; };
+                const imageUrl = product.image_url ? product.image_url.split(',')[0] : null;
+                if (imageUrl) {
+                    card.innerHTML = `<div class="product-img"><img src="${imageUrl}" alt="${name}"></div><h3>${name}</h3><p>${truncateText(desc, 30)}</p>`;
+                } else {
+                    card.innerHTML = `<div class="product-img"><i class="fas fa-image"></i></div><h3>${name}</h3><p>${truncateText(desc, 30)}</p>`;
+                }
+                grid.appendChild(card);
+            });
+        }
+
+        function loadMore() {
+            if (isLoading) return;
+            isLoading = true;
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const nextProducts = allProducts.slice(start, end);
+            if (nextProducts.length > 0) {
+                renderProducts(nextProducts);
+                currentPage++;
+            }
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            if (currentPage * pageSize >= allProducts.length) {
+                loadMoreContainer.style.display = 'none';
+            }
+            isLoading = false;
+        }
+
+        async function loadBoardGamesProducts() {
+            const grid = document.getElementById('boardGamesGrid');
+            if (!grid) return;
+            grid.innerHTML = '<div class="loading">Loading products...</div>';
+            try {
+                const { data, error } = await window.supabaseClient
+                    .from('products')
+                    .select('*')
+                    .eq('category', 'board-games')
+                    .order('sort_order', { ascending: true });
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    grid.innerHTML = '<div class="empty-state">No products found</div>';
+                    return;
+                }
+                allProducts = data;
+                grid.innerHTML = '';
+                renderProducts(allProducts.slice(0, pageSize));
+                currentPage = 2;
+                const loadMoreContainer = document.getElementById('loadMoreContainer');
+                loadMoreContainer.style.display = allProducts.length > pageSize ? 'block' : 'none';
+            } catch (err) {
+                console.error('加载失败:', err);
+                grid.innerHTML = '<div class="empty-state">Failed to load, please refresh</div>';
+            }
+        }
+
+        document.getElementById('loadMoreBtn')?.addEventListener('click', loadMore);
+        document.addEventListener('DOMContentLoaded', loadBoardGamesProducts);
+        
+        const originalLoadLanguage = loadLanguage;
+        window.loadLanguage = async function(langCode) {
+            await originalLoadLanguage(langCode);
+            allProducts = [];
+            currentPage = 1;
+            await loadBoardGamesProducts();
+        };
+    </script>
 </body>
 </html>
