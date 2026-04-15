@@ -197,7 +197,14 @@ function initTabs() {
     });
 }
 
-// ===== 留言管理 =====
+// ===== 截断文本函数（25个字符）=====
+function truncateText(text, maxLength) {
+    if (!text) return '';
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+}
+
+// ===== 留言管理（带预览弹窗）=====
 async function loadMessages() {
     const container = document.getElementById('messagesContainer');
     if (!container) return;
@@ -211,21 +218,26 @@ async function loadMessages() {
         
         let html = `<table class="data-table"><thead><tr>
             <th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th>
-        </table></thead><tbody>`;
+        <tr></thead><tbody>`;
         
         if (!data || data.length === 0) {
             html += `<tr><td colspan="7" style="text-align: center;">暂无留言</td></tr>`;
         } else {
             data.forEach(msg => {
                 const date = new Date(msg.created_at).toLocaleString('zh-CN');
+                const shortMessage = truncateText(msg.message || '', 25);
+                
                 html += `<tr>
                     <td>${msg.id}</td>
                     <td>${escapeHtml(msg.name)}</td>
                     <td>${escapeHtml(msg.email || '-')}</td>
                     <td>${escapeHtml(msg.phone || '-')}</td>
-                    <td style="white-space: normal; word-break: break-word;">${escapeHtml(msg.message || '')}</td>
+                    <td style="max-width: 250px; white-space: normal; word-break: break-word;">${escapeHtml(shortMessage)}</td>
                     <td>${date}</td>
-                    <td><button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button></td>
+                    <td>
+                        <button class="view-btn" data-id="${msg.id}" data-name="${escapeHtml(msg.name)}" data-email="${escapeHtml(msg.email || '-')}" data-phone="${escapeHtml(msg.phone || '-')}" data-message="${escapeHtml(msg.message || '')}" data-time="${date}">👁️ 预览</button>
+                        <button class="delete-btn" data-id="${msg.id}" data-type="message">删除</button>
+                    </td>
                 </tr>`;
             });
         }
@@ -233,18 +245,44 @@ async function loadMessages() {
         html += `</tbody></table>`;
         container.innerHTML = html;
         
+        // 绑定预览按钮事件
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('detailName').innerText = btn.getAttribute('data-name');
+                document.getElementById('detailEmail').innerText = btn.getAttribute('data-email');
+                document.getElementById('detailPhone').innerText = btn.getAttribute('data-phone');
+                document.getElementById('detailMessage').innerText = btn.getAttribute('data-message');
+                document.getElementById('detailTime').innerText = btn.getAttribute('data-time');
+                document.getElementById('messageDetailModal').style.display = 'flex';
+            });
+        });
+        
+        // 绑定删除按钮事件
         document.querySelectorAll('.delete-btn[data-type="message"]').forEach(btn => {
             btn.addEventListener('click', async () => {
-                if (confirm('确定删除？')) {
-                    await window.supabaseClient.from('messages').delete().eq('id', btn.dataset.id);
+                if (confirm('确定删除这条留言吗？')) {
+                    const id = btn.getAttribute('data-id');
+                    await window.supabaseClient.from('messages').delete().eq('id', id);
                     loadMessages();
                 }
             });
         });
+        
     } catch (err) {
-        container.innerHTML = '<div class="empty-state">加载失败</div>';
+        console.error('加载留言失败:', err);
+        container.innerHTML = '<div class="empty-state">加载失败，请刷新重试</div>';
     }
 }
+
+// 关闭留言详情弹窗
+document.getElementById('closeDetailModal')?.addEventListener('click', () => {
+    document.getElementById('messageDetailModal').style.display = 'none';
+});
+document.getElementById('messageDetailModal')?.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('messageDetailModal')) {
+        document.getElementById('messageDetailModal').style.display = 'none';
+    }
+});
 
 // ===== FAQ 管理 =====
 let currentFaqId = null;
@@ -267,7 +305,10 @@ async function loadFaqs() {
                     <td>${faq.id}</td>
                     <td>${escapeHtml(faq.question_en || '-')}</td>
                     <td>${escapeHtml((faq.answer_en || '').substring(0, 80))}${(faq.answer_en || '').length > 80 ? '...' : ''}</td>
-                    <td><button class="edit-faq-btn" data-id="${faq.id}">编辑</button><button class="delete-faq-btn" data-id="${faq.id}">删除</button></td>
+                    <td>
+                        <button class="edit-faq-btn" data-id="${faq.id}">编辑</button>
+                        <button class="delete-faq-btn" data-id="${faq.id}">删除</button>
+                    </td>
                 </tr>`;
             });
         }
@@ -383,11 +424,14 @@ async function loadProducts() {
             data.forEach(p => {
                 html += `<tr>
                     <td>${p.id}</td>
-                    <td>${escapeHtml(p.category)}</td>
+                    <td>${p.category}</td>
                     <td>${escapeHtml(p.name_en || '-')}</td>
                     <td>${p.slug}</td>
                     <td>${p.is_featured ? '⭐' : '-'}</td>
-                    <td><button class="edit-product-btn" data-id="${p.id}">编辑</button><button class="delete-product-btn" data-id="${p.id}">删除</button></td>
+                    <td>
+                        <button class="edit-product-btn" data-id="${p.id}">编辑</button>
+                        <button class="delete-product-btn" data-id="${p.id}">删除</button>
+                    </td>
                 </tr>`;
             });
         }
@@ -497,11 +541,6 @@ document.getElementById('cancelProductBtn')?.addEventListener('click', () => {
     document.getElementById('productModal').style.display = 'none';
 });
 
-function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
-}
-
 // ===== 图片上传功能 =====
 const uploadBtn = document.getElementById('uploadImagesBtn');
 const fileInput = document.getElementById('productImageUpload');
@@ -524,7 +563,6 @@ if (uploadBtn) {
         
         uploadStatus.innerHTML = '<span style="color: #3498db;">上传中...</span>';
         
-        // 获取当前分类已有的最大编号
         let maxNumber = 0;
         try {
             const { data: existingFiles, error } = await window.supabaseClient
@@ -536,7 +574,6 @@ if (uploadBtn) {
                 const prefix = `${category}-`;
                 existingFiles.forEach(file => {
                     if (file.name.startsWith(prefix)) {
-                        // 提取数字部分：cards-123.jpg -> 123
                         const numStr = file.name.replace(prefix, '').split('.')[0];
                         const num = parseInt(numStr);
                         if (!isNaN(num) && num > maxNumber) {
@@ -549,7 +586,6 @@ if (uploadBtn) {
             console.log('无法获取已有文件，从1开始');
         }
         
-        // 从最大编号 + 1 开始
         let currentNumber = maxNumber + 1;
         const uploadedUrls = [];
         
@@ -588,7 +624,6 @@ if (uploadBtn) {
             }
         }
         
-        // 更新图片URL输入框
         const currentUrls = imageUrlInput.value.trim();
         if (currentUrls) {
             imageUrlInput.value = currentUrls + ',' + uploadedUrls.join(',');
@@ -605,6 +640,11 @@ if (uploadBtn) {
             }
         }, 5000);
     });
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
 }
 
 // 绑定登录事件
