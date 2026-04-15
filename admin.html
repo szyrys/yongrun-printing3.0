@@ -519,5 +519,20 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/admin.js"></script>
+    <!-- 留言详情弹窗 -->
+<div id="messageDetailModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <h3>留言详情</h3>
+        <div id="messageDetailContent">
+            <p><strong>姓名：</strong> <span id="detailName"></span></p>
+            <p><strong>邮箱：</strong> <span id="detailEmail"></span></p>
+            <p><strong>电话：</strong> <span id="detailPhone"></span></p>
+            <p><strong>留言内容：</strong></p>
+            <div id="detailMessage" style="background: #f5f5f5; padding: 10px; border-radius: 8px; margin-top: 5px; white-space: pre-wrap; word-break: break-word;"></div>
+            <p style="margin-top: 10px;"><strong>提交时间：</strong> <span id="detailTime"></span></p>
+        </div>
+        <button id="closeDetailModal" class="btn btn-primary" style="margin-top: 15px;">关闭</button>
+    </div>
+</div>
 </body>
 </html>
