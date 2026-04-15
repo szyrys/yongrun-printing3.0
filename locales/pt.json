@@ -2,7 +2,7 @@
   "nav_home": "Início",
   "nav_products": "Produtos",
   "nav_process": "Processo Personalizado",
-  "nav_craft": "Opções de Acabamento",
+  "nav_craft": "Materiais e Acabamentos",
   "nav_about": "Sobre Nós",
   "nav_contact": "Contato",
 
@@ -26,6 +26,8 @@
   "product_advertising_desc": "Baralhos promocionais, cartões de fidelidade. Quantidade mínima baixa, entrega rápida disponível.",
   "product_kids_title": "Kits Educativos para Crianças",
   "product_kids_desc": "Tintas ecológicas, materiais seguros. Quebra-cabeças, flashcards e jogos interativos.",
+  "product_books_title": "Livros de Capa Mole / Capa Dura",
+  "product_books_desc": "Impressão de livros de alta qualidade, tamanhos personalizados, encadernação perfeita, opções de capa dura ou mole.",
 
   "cta_title": "Pronto para começar seu projeto de cartas personalizadas?",
   "cta_subtitle": "Obtenha um orçamento em 24 horas. Sem quantidade mínima de pedido para amostras.",
@@ -37,14 +39,34 @@
 
   "footer_rights": "Todos os direitos reservados",
 
-  "contact_title": "Obter Orçamento",
+  "contact_title": "Contate-nos",
   "contact_desc": "Conte-nos sobre o seu projeto, responderemos em 24 horas",
   "form_name": "Seu Nome *",
-  "form_email": "Endereço de Email *",
-  "form_message": "Mensagem (tipo de cartão, quantidade, requisitos especiais) *",
+  "form_email": "Endereço de Email",
+  "form_message": "Mensagem (tipo de cartão, quantidade, requisitos especiais)",
   "form_submit": "Enviar Mensagem",
   "form_success": "Mensagem enviada! Entraremos em contato em breve.",
   "form_error_empty": "Por favor, preencha todos os campos obrigatórios",
   "form_error_email": "Por favor, insira um endereço de email válido",
-  "form_error_submit": "Falha no envio, por favor tente novamente mais tarde"
+  "form_error_submit": "Falha no envio, por favor tente novamente mais tarde",
+
+  "home_contact_title": "Solicitar Orçamento",
+  "home_contact_subtitle": "Respondemos em 12 horas",
+
+  "form_phone": "Número de Telefone",
+  "form_product": "Selecionar Tipo de Produto",
+  "form_quantity": "Faixa de Quantidade",
+  "form_deadline": "Data de Entrega Prevista",
+
+  "category_cards_desc": "Cartas de baralho personalizadas, tarot, cartas holográficas, flashcards e muito mais. Qualidade premium com vários acabamentos, incluindo brilho, fosco, revestimento UV e estampagem em foil. Perfeito para cassinos, promoções, colecionadores e fins educativos. Quantidade mínima baixa com entrega rápida.",
+  "category_books_desc": "Capa dura, capa mole, pop-up, encadernação perfeita, catálogos de produtos e livros ilustrados. Tamanhos personalizados, papéis premium e encadernação profissional. Ideal para livros de mesa, livros infantis, livros de arte e publicações corporativas. Consultoria de design gratuita disponível.",
+  "category_boardgames_desc": "Impressão de jogos de tabuleiro personalizados, incluindo cartas, livros de regras, tabuleiros e caixas personalizadas. Perfeito para campanhas de crowdfunding, jogos de família e jogos de estratégia. Cuidamos de tudo, desde a prototipagem até a produção em massa com componentes e embalagens de alta qualidade.",
+  "category_puzzles_desc": "Quebra-cabeças personalizados para todas as idades - quebra-cabeças infantis, quebra-cabeças de madeira, quebra-cabeças 3D e quebra-cabeças de chão. Designs educativos e divertidos com materiais ecológicos. Perfeito para presentes, brinquedos educativos e itens promocionais. Formas e tamanhos personalizados disponíveis.",
+  "category_cards_btn": "Ver Todas as Cartas →",
+  "category_books_btn": "Ver Todos os Livros →",
+  "category_boardgames_btn": "Ver Todos os Jogos de Tabuleiro →",
+  "category_puzzles_btn": "Ver Todos os Quebra-cabeças →",
+  "free_sample_title": "Amostra Grátis",
+  "free_sample_desc": "Solicite uma amostra grátis para ver nossa qualidade →",
+  "free_sample_btn": "Solicitar Amostra Grátis"
 }
