@@ -87,7 +87,6 @@
             color: #c9a03d;
         }
         
-        /* 表格样式 - 无横向滚动，留言内容自动换行 */
         .table-wrapper {
             overflow-x: visible;
             width: 100%;
@@ -112,12 +111,10 @@
             border-bottom: 1px solid #eee;
         }
         
-        /* 其他列不换行 */
         .data-table td {
             white-space: nowrap;
         }
         
-        /* 留言内容列自动换行 */
         .data-table td:nth-child(5) {
             white-space: normal !important;
             word-wrap: break-word !important;
@@ -195,7 +192,7 @@
         
         .modal-content {
             background: white;
-            max-width: 600px;
+            max-width: 800px;
             margin: 50px auto;
             padding: 20px;
             border-radius: 12px;
@@ -222,6 +219,27 @@
         }
         
         .panel.active {
+            display: block;
+        }
+        
+        /* 多语言标签页样式 */
+        .lang-tab {
+            padding: 5px 12px;
+            background: #eee;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            margin: 2px;
+        }
+        .lang-tab.active {
+            background: #c9a03d;
+            color: white;
+        }
+        .lang-panel {
+            display: none;
+        }
+        .lang-panel.active {
             display: block;
         }
         
@@ -304,25 +322,101 @@
         </div>
     </div>
 
+    <!-- 产品模态框（多语言版本） -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <h3 id="productModalTitle">添加产品</h3>
+            
+            <!-- 分类 -->
             <select id="productCategory">
                 <option value="cards">Cards</option>
                 <option value="books">Books</option>
                 <option value="board-games">Board Games</option>
                 <option value="puzzles">Puzzles</option>
             </select>
-            <input type="text" id="productName" placeholder="产品名称 *">
+            
+            <!-- URL标识 -->
             <input type="text" id="productSlug" placeholder="URL标识 (slug) * 例如: playingcards">
-            <input type="text" id="productShortDesc" placeholder="简短描述">
-            <textarea id="productFullDesc" placeholder="详细描述" rows="3"></textarea>
-            <input type="text" id="productFeatures" placeholder="特点 (用 | 分隔)">
+            
+            <!-- 图片URL -->
             <input type="text" id="productImageUrl" placeholder="图片URL (多张用逗号分隔)">
+            
             <div style="display: flex; gap: 10px; align-items: center;">
                 <label><input type="checkbox" id="productIsFeatured"> 置顶推荐</label>
             </div>
+            
+            <hr style="margin: 15px 0;">
+            <h4>多语言信息</h4>
+            
+            <!-- 语言标签页 -->
+            <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 15px;">
+                <button type="button" class="lang-tab active" data-lang="en">English</button>
+                <button type="button" class="lang-tab" data-lang="zh">简体中文</button>
+                <button type="button" class="lang-tab" data-lang="zh-TW">繁體中文</button>
+                <button type="button" class="lang-tab" data-lang="es">Español</button>
+                <button type="button" class="lang-tab" data-lang="de">Deutsch</button>
+                <button type="button" class="lang-tab" data-lang="pt">Português</button>
+                <button type="button" class="lang-tab" data-lang="ar">العربية</button>
+                <button type="button" class="lang-tab" data-lang="ja">日本語</button>
+                <button type="button" class="lang-tab" data-lang="ko">한국어</button>
+            </div>
+            
+            <!-- 英文 -->
+            <div class="lang-panel active" data-lang="en">
+                <input type="text" id="productName_en" placeholder="产品名称 (英文) *" style="margin-bottom: 10px;">
+                <textarea id="productDesc_en" placeholder="产品描述 (英文)" rows="3" style="margin-bottom: 10px;"></textarea>
+            </div>
+            
+            <!-- 简体中文 -->
+            <div class="lang-panel" data-lang="zh">
+                <input type="text" id="productName_zh" placeholder="产品名称 (简体中文)">
+                <textarea id="productDesc_zh" placeholder="产品描述 (简体中文)" rows="3"></textarea>
+            </div>
+            
+            <!-- 繁体中文 -->
+            <div class="lang-panel" data-lang="zh-TW">
+                <input type="text" id="productName_zh_TW" placeholder="产品名称 (繁體中文)">
+                <textarea id="productDesc_zh_TW" placeholder="产品描述 (繁體中文)" rows="3"></textarea>
+            </div>
+            
+            <!-- 西班牙语 -->
+            <div class="lang-panel" data-lang="es">
+                <input type="text" id="productName_es" placeholder="Nombre del producto">
+                <textarea id="productDesc_es" placeholder="Descripción del producto" rows="3"></textarea>
+            </div>
+            
+            <!-- 德语 -->
+            <div class="lang-panel" data-lang="de">
+                <input type="text" id="productName_de" placeholder="Produktname">
+                <textarea id="productDesc_de" placeholder="Produktbeschreibung" rows="3"></textarea>
+            </div>
+            
+            <!-- 葡萄牙语 -->
+            <div class="lang-panel" data-lang="pt">
+                <input type="text" id="productName_pt" placeholder="Nome do produto">
+                <textarea id="productDesc_pt" placeholder="Descrição do produto" rows="3"></textarea>
+            </div>
+            
+            <!-- 阿拉伯语 -->
+            <div class="lang-panel" data-lang="ar">
+                <input type="text" id="productName_ar" placeholder="اسم المنتج">
+                <textarea id="productDesc_ar" placeholder="وصف المنتج" rows="3"></textarea>
+            </div>
+            
+            <!-- 日语 -->
+            <div class="lang-panel" data-lang="ja">
+                <input type="text" id="productName_ja" placeholder="製品名">
+                <textarea id="productDesc_ja" placeholder="製品説明" rows="3"></textarea>
+            </div>
+            
+            <!-- 韩语 -->
+            <div class="lang-panel" data-lang="ko">
+                <input type="text" id="productName_ko" placeholder="제품명">
+                <textarea id="productDesc_ko" placeholder="제품 설명" rows="3"></textarea>
+            </div>
+            
             <input type="hidden" id="productId">
+            
             <button id="saveProductBtn" class="btn btn-primary">保存</button>
             <button id="cancelProductBtn" class="btn">取消</button>
         </div>
