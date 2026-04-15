@@ -10,10 +10,8 @@ const adminEmail = document.getElementById('adminEmail');
 const adminPassword = document.getElementById('adminPassword');
 const loginError = document.getElementById('loginError');
 
-// 动态按钮元素
 const actionBtn = document.getElementById('actionBtn');
 
-// 多语言标签页切换
 function initLangTabs(container) {
     const modalContent = container || document;
     const tabs = modalContent.querySelectorAll('.lang-tab');
@@ -197,14 +195,39 @@ function initTabs() {
     });
 }
 
-// ===== 截断文本函数（25个字符）=====
 function truncateText(text, maxLength) {
     if (!text) return '';
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + '...';
 }
 
-// ===== 留言管理（带预览弹窗）=====
+// ===== 统一三个表格宽度 =====
+function unifyTableWidth() {
+    setTimeout(() => {
+        const tables = [
+            document.querySelector('#messagesContainer .data-table'),
+            document.querySelector('#faqContainer .data-table'),
+            document.querySelector('#productsContainer .data-table')
+        ];
+        
+        let maxWidth = 0;
+        tables.forEach(table => {
+            if (table) {
+                const width = table.offsetWidth;
+                if (width > maxWidth) maxWidth = width;
+            }
+        });
+        
+        tables.forEach(table => {
+            if (table) {
+                table.style.width = maxWidth + 'px';
+                table.style.minWidth = maxWidth + 'px';
+            }
+        });
+    }, 100);
+}
+
+// ===== 留言管理 =====
 async function loadMessages() {
     const container = document.getElementById('messagesContainer');
     if (!container) return;
@@ -218,7 +241,7 @@ async function loadMessages() {
         
         let html = `<table class="data-table"><thead><tr>
             <th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th>
-        <tr></thead><tbody>`;
+        </tr></thead><tbody>`;
         
         if (!data || data.length === 0) {
             html += `<tr><td colspan="7" style="text-align: center;">暂无留言</td></tr>`;
@@ -244,8 +267,8 @@ async function loadMessages() {
         
         html += `</tbody></table>`;
         container.innerHTML = html;
+        unifyTableWidth();
         
-        // 绑定预览按钮事件
         document.querySelectorAll('.view-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.getElementById('detailName').innerText = btn.getAttribute('data-name');
@@ -257,7 +280,6 @@ async function loadMessages() {
             });
         });
         
-        // 绑定删除按钮事件
         document.querySelectorAll('.delete-btn[data-type="message"]').forEach(btn => {
             btn.addEventListener('click', async () => {
                 if (confirm('确定删除这条留言吗？')) {
@@ -274,7 +296,6 @@ async function loadMessages() {
     }
 }
 
-// 关闭留言详情弹窗
 document.getElementById('closeDetailModal')?.addEventListener('click', () => {
     document.getElementById('messageDetailModal').style.display = 'none';
 });
@@ -315,6 +336,7 @@ async function loadFaqs() {
         
         html += `</tbody></table>`;
         container.innerHTML = html;
+        unifyTableWidth();
         
         document.querySelectorAll('.edit-faq-btn').forEach(btn => btn.addEventListener('click', () => editFaq(btn.dataset.id)));
         document.querySelectorAll('.delete-faq-btn').forEach(btn => btn.addEventListener('click', () => deleteFaq(btn.dataset.id)));
@@ -438,6 +460,7 @@ async function loadProducts() {
         
         html += `</tbody></table>`;
         container.innerHTML = html;
+        unifyTableWidth();
         
         document.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', () => editProduct(btn.dataset.id)));
         document.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', () => deleteProduct(btn.dataset.id)));
@@ -647,7 +670,6 @@ function escapeHtml(str) {
     return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
 }
 
-// 绑定登录事件
 if (loginBtn) loginBtn.addEventListener('click', login);
 if (logoutBtn) logoutBtn.addEventListener('click', logout);
 if (adminPassword) adminPassword.addEventListener('keypress', e => e.key === 'Enter' && login());
@@ -657,30 +679,6 @@ if (adminEmail) adminEmail.addEventListener('keypress', e => e.key === 'Enter' &
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     checkSession();
-// 统一三个表格的宽度
-function unifyTableWidth() {
-    setTimeout(() => {
-        const tables = [
-            document.querySelector('#messagesContainer .data-table'),
-            document.querySelector('#faqContainer .data-table'),
-            document.querySelector('#productsContainer .data-table')
-        ];
-        
-        let maxWidth = 0;
-        tables.forEach(table => {
-            if (table) {
-                const width = table.offsetWidth;
-                if (width > maxWidth) maxWidth = width;
-            }
-        });
-        
-        tables.forEach(table => {
-            if (table) {
-                table.style.width = maxWidth + 'px';
-                table.style.minWidth = maxWidth + 'px';
-            }
-        });
-    }, 100);
-}
+    unifyTableWidth();
     updateActionButton('messages');
 });
