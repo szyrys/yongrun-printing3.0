@@ -524,79 +524,71 @@ if (uploadBtn) {
         
         uploadStatus.innerHTML = '<span style="color: #3498db;">上传中...</span>';
         
-// 获取当前分类已有图片数量，计算下一个序号
-let nextNumber = 1;
-try {
-    const { data: existingFiles, error } = await window.supabaseClient
-        .storage
-        .from('product-images')
-        .list(category);
-    
-    if (!error && existingFiles && existingFiles.length > 0) {
-        const prefix = `${category}-`;
-        // 提取所有已存在文件的序号
-        const numbers = existingFiles
-            .filter(f => f.name.startsWith(prefix))
-            .map(f => {
-                // 提取数字部分，如 cards-1.jpg -> 1
-                const numStr = f.name.replace(prefix, '').split('.')[0];
-                const num = parseInt(numStr);
-                return isNaN(num) ? 0 : num;
-            })
-            .filter(n => n > 0);
-        
-        if (numbers.length > 0) {
-            // 取最大值 + 1
-            nextNumber = Math.max(...numbers) + 1;
-        } else {
-            nextNumber = 1;
+        // 获取当前分类已有的最大编号
+        let maxNumber = 0;
+        try {
+            const { data: existingFiles, error } = await window.supabaseClient
+                .storage
+                .from('product-images')
+                .list(category);
+            
+            if (!error && existingFiles && existingFiles.length > 0) {
+                const prefix = `${category}-`;
+                existingFiles.forEach(file => {
+                    if (file.name.startsWith(prefix)) {
+                        // 提取数字部分：cards-123.jpg -> 123
+                        const numStr = file.name.replace(prefix, '').split('.')[0];
+                        const num = parseInt(numStr);
+                        if (!isNaN(num) && num > maxNumber) {
+                            maxNumber = num;
+                        }
+                    }
+                });
+            }
+        } catch (err) {
+            console.log('无法获取已有文件，从1开始');
         }
-    }
-} catch (err) {
-    console.log('无法获取已有文件数量，从1开始');
-}
         
+        // 从最大编号 + 1 开始
+        let currentNumber = maxNumber + 1;
         const uploadedUrls = [];
-let currentNumber = nextNumber;
         
-for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${category}-${currentNumber}.${fileExt}`;
-    const filePath = `${category}/${fileName}`;
-    
-    try {
-        const { data, error } = await window.supabaseClient
-            .storage
-            .from('product-images')
-            .upload(filePath, file, {
-                cacheControl: '3600',
-                upsert: false
-            });
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${category}-${currentNumber}.${fileExt}`;
+            const filePath = `${category}/${fileName}`;
+            
+            try {
+                const { data, error } = await window.supabaseClient
+                    .storage
+                    .from('product-images')
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+                
+                if (error) throw error;
+                
+                const { data: publicUrlData } = window.supabaseClient
+                    .storage
+                    .from('product-images')
+                    .getPublicUrl(filePath);
+                
+                const publicUrl = publicUrlData.publicUrl;
+                uploadedUrls.push(publicUrl);
+                
+                uploadStatus.innerHTML = `<span style="color: #3498db;">已上传 ${i + 1}/${files.length} 个文件...</span>`;
+                currentNumber++;
+                
+            } catch (err) {
+                console.error('上传失败:', err);
+                uploadStatus.innerHTML = `<span style="color: #e74c3c;">${fileName} 上传失败: ${err.message}</span>`;
+                return;
+            }
+        }
         
-        if (error) throw error;
-        
-        const { data: publicUrlData } = window.supabaseClient
-            .storage
-            .from('product-images')
-            .getPublicUrl(filePath);
-        
-        const publicUrl = publicUrlData.publicUrl;
-        uploadedUrls.push(publicUrl);
-        
-        uploadStatus.innerHTML = `<span style="color: #3498db;">已上传 ${i + 1}/${files.length} 个文件...</span>`;
-        
-        currentNumber++;
-        
-    } catch (err) {
-        console.error('上传失败:', err);
-        uploadStatus.innerHTML = `<span style="color: #e74c3c;">${fileName} 上传失败: ${err.message}</span>`;
-        return;
-    }
-}
-
-nextNumber = currentNumber;
-        
+        // 更新图片URL输入框
         const currentUrls = imageUrlInput.value.trim();
         if (currentUrls) {
             imageUrlInput.value = currentUrls + ',' + uploadedUrls.join(',');
