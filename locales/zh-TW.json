@@ -2,7 +2,7 @@
   "nav_home": "首頁",
   "nav_products": "產品中心",
   "nav_process": "定制流程",
-  "nav_craft": "工藝選項",
+  "nav_craft": "材質與工藝",
   "nav_about": "關於我們",
   "nav_contact": "聯繫我們",
 
@@ -26,6 +26,8 @@
   "product_advertising_desc": "企業宣傳、活動禮品。支持小批量定制，快速打樣。",
   "product_kids_title": "兒童啟蒙套裝",
   "product_kids_desc": "環保油墨、安全材質。拼圖卡、認知卡、互動遊戲套裝。",
+  "product_books_title": "平裝書 / 精裝書",
+  "product_books_desc": "高品質書籍印刷，定制尺寸，鎖線膠裝，精裝或平裝可選。",
 
   "cta_title": "準備好開始您的定制卡牌項目了嗎？",
   "cta_subtitle": "24小時內獲取報價。樣品無起訂量要求。",
@@ -37,14 +39,34 @@
 
   "footer_rights": "版權所有",
 
-  "contact_title": "獲取報價",
+  "contact_title": "聯繫我們",
   "contact_desc": "告訴我們您的需求，我們將在24小時內回覆您",
   "form_name": "您的姓名 *",
-  "form_email": "電子郵箱 *",
-  "form_message": "留言內容（卡牌類型、數量、特殊要求等）*",
+  "form_email": "電子郵箱",
+  "form_message": "留言內容（卡牌類型、數量、特殊要求等）",
   "form_submit": "提交留言",
   "form_success": "留言已發送，我們會盡快聯繫您！",
   "form_error_empty": "請填寫所有必填項",
   "form_error_email": "請輸入有效的郵箱地址",
-  "form_error_submit": "提交失敗，請稍後重試"
+  "form_error_submit": "提交失敗，請稍後重試",
+
+  "home_contact_title": "獲取報價",
+  "home_contact_subtitle": "我們將在12小時內回覆",
+
+  "form_phone": "聯繫電話",
+  "form_product": "選擇產品類型",
+  "form_quantity": "數量範圍",
+  "form_deadline": "期望交貨時間",
+
+  "category_cards_desc": "定制撲克牌、塔羅牌、鐳射卡、學習卡片等。提供光面、啞光、UV覆膜、燙金等多種表面處理工藝。適用於賭場、促銷活動、收藏品和教育用途。起訂量低，快速交貨。",
+  "category_books_desc": "精裝書、平裝書、立體書、膠裝書、產品目錄和繪本。定制尺寸、優質紙張和專業裝訂。適用於咖啡桌書、兒童書籍、藝術書籍和企業出版物。免費設計諮詢。",
+  "category_boardgames_desc": "定制桌遊印刷，包括卡牌、規則書、遊戲板和定制盒子。適合眾籌項目、家庭遊戲和策略遊戲。從打樣到量產，提供高品質組件和包裝。",
+  "category_puzzles_desc": "定制拼圖，適用於兒童拼圖、木質拼圖、3D拼圖和地板拼圖。環保材料，教育和娛樂兼具。適合禮品、教育玩具和促銷品。定制形狀和尺寸。",
+  "category_cards_btn": "查看卡牌系列 →",
+  "category_books_btn": "查看書籍系列 →",
+  "category_boardgames_btn": "查看桌遊系列 →",
+  "category_puzzles_btn": "查看拼圖系列 →",
+  "free_sample_title": "免費獲取精美樣品",
+  "free_sample_desc": "申請免費樣品，體驗我們的品質 →",
+  "free_sample_btn": "申請免費樣品"
 }
