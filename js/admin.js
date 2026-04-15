@@ -657,5 +657,32 @@ if (adminEmail) adminEmail.addEventListener('keypress', e => e.key === 'Enter' &
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     checkSession();
+    // 统一三个表格的宽度
+function unifyTableWidth() {
+    setTimeout(() => {
+        const tables = [
+            document.querySelector('#messagesContainer .data-table'),
+            document.querySelector('#faqContainer .data-table'),
+            document.querySelector('#productsContainer .data-table')
+        ];
+        
+        // 获取最大宽度
+        let maxWidth = 0;
+        tables.forEach(table => {
+            if (table) {
+                const width = table.offsetWidth;
+                if (width > maxWidth) maxWidth = width;
+            }
+        });
+        
+        // 设置所有表格为最大宽度
+        tables.forEach(table => {
+            if (table) {
+                table.style.width = maxWidth + 'px';
+                table.style.minWidth = maxWidth + 'px';
+            }
+        });
+    }, 100);
+}
     updateActionButton('messages');
 });
