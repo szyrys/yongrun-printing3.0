@@ -42,7 +42,7 @@ ${message}
       },
       body: JSON.stringify({
         from: 'onboarding@resend.dev',
-        to: ['cnyrys@163.com'],
+       to: ['541082529@qq.com'],
         subject: `New message from ${name}`,
         text: emailContent,
       }),
