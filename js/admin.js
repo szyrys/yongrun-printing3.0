@@ -103,7 +103,6 @@ async function logout() {
     showLoginPanel();
 }
 
-// 更新动态按钮
 function updateActionButton(tabId) {
     if (!actionBtn) return;
     
@@ -176,7 +175,6 @@ function updateActionButton(tabId) {
     }
 }
 
-// 标签页切换
 function initTabs() {
     const tabs = document.querySelectorAll('.tab-btn');
     const panels = {
@@ -199,7 +197,7 @@ function initTabs() {
     });
 }
 
-// ===== 留言管理（空状态显示表头）=====
+// ===== 留言管理 =====
 async function loadMessages() {
     const container = document.getElementById('messagesContainer');
     if (!container) return;
@@ -213,7 +211,7 @@ async function loadMessages() {
         
         let html = `<table class="data-table"><thead><tr>
             <th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th>
-        </tr></thead><tbody>`;
+        </table></thead><tbody>`;
         
         if (!data || data.length === 0) {
             html += `<tr><td colspan="7" style="text-align: center;">暂无留言</td></tr>`;
@@ -248,7 +246,7 @@ async function loadMessages() {
     }
 }
 
-// ===== FAQ 管理（多语言）=====
+// ===== FAQ 管理 =====
 let currentFaqId = null;
 
 async function loadFaqs() {
@@ -361,7 +359,7 @@ document.getElementById('cancelFaqBtn')?.addEventListener('click', () => {
     document.getElementById('faqModal').style.display = 'none';
 });
 
-// ===== 产品管理（多语言，空状态显示表头）=====
+// ===== 产品管理 =====
 let currentProductId = null;
 
 async function loadProducts() {
@@ -504,11 +502,6 @@ function escapeHtml(str) {
     return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
 }
 
-// 绑定登录事件
-if (loginBtn) loginBtn.addEventListener('click', login);
-if (logoutBtn) logoutBtn.addEventListener('click', logout);
-if (adminPassword) adminPassword.addEventListener('keypress', e => e.key === 'Enter' && login());
-if (adminEmail) adminEmail.addEventListener('keypress', e => e.key === 'Enter' && login());
 // ===== 图片上传功能 =====
 const uploadBtn = document.getElementById('uploadImagesBtn');
 const fileInput = document.getElementById('productImageUpload');
@@ -558,7 +551,6 @@ if (uploadBtn) {
         
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            // 获取文件扩展名
             const fileExt = file.name.split('.').pop();
             const fileName = `${category}-${nextNumber + i}.${fileExt}`;
             const filePath = `${category}/${fileName}`;
@@ -574,7 +566,6 @@ if (uploadBtn) {
                 
                 if (error) throw error;
                 
-                // 获取公开 URL
                 const { data: publicUrlData } = window.supabaseClient
                     .storage
                     .from('product-images')
@@ -592,7 +583,6 @@ if (uploadBtn) {
             }
         }
         
-        // 更新图片URL输入框
         const currentUrls = imageUrlInput.value.trim();
         if (currentUrls) {
             imageUrlInput.value = currentUrls + ',' + uploadedUrls.join(',');
@@ -603,7 +593,6 @@ if (uploadBtn) {
         uploadStatus.innerHTML = `<span style="color: #27ae60;">✅ 成功上传 ${uploadedUrls.length} 张图片！URL已自动填入上方</span>`;
         fileInput.value = '';
         
-        // 3秒后清除状态
         setTimeout(() => {
             if (uploadStatus.innerHTML.includes('成功')) {
                 uploadStatus.innerHTML = '';
@@ -611,67 +600,16 @@ if (uploadBtn) {
         }, 5000);
     });
 }
-        const uploadedUrls = [];
-        
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${category}-${existingCount + i + 1}.${fileExt}`;
-            const filePath = `${category}/${fileName}`;
-            
-            try {
-                const { data, error } = await window.supabaseClient
-                    .storage
-                    .from('product-images')
-                    .upload(filePath, file, {
-                        cacheControl: '3600',
-                        upsert: false
-                    });
-                
-                if (error) throw error;
-                
-                // 获取公开 URL
-                const { data: publicUrlData } = window.supabaseClient
-                    .storage
-                    .from('product-images')
-                    .getPublicUrl(filePath);
-                
-                const publicUrl = publicUrlData.publicUrl;
-                uploadedUrls.push(publicUrl);
-                
-                uploadStatus.innerHTML = `<span style="color: #3498db;">已上传 ${i + 1}/${files.length} 个文件...</span>`;
-                
-            } catch (err) {
-                console.error('上传失败:', err);
-                uploadStatus.innerHTML = `<span style="color: #e74c3c;">${fileName} 上传失败: ${err.message}</span>`;
-                return;
-            }
-        }
-        
-        // 更新图片URL输入框
-        const currentUrls = imageUrlInput.value.trim();
-        if (currentUrls) {
-            imageUrlInput.value = currentUrls + ',' + uploadedUrls.join(',');
-        } else {
-            imageUrlInput.value = uploadedUrls.join(',');
-        }
-        
-        uploadStatus.innerHTML = `<span style="color: #27ae60;">✅ 成功上传 ${uploadedUrls.length} 张图片！URL已自动填入上方</span>`;
-        fileInput.value = '';
-        
-        // 3秒后清除状态
-        setTimeout(() => {
-            if (uploadStatus.innerHTML.includes('成功')) {
-                uploadStatus.innerHTML = '';
-            }
-        }, 5000);
-    });
-}
+
+// 绑定登录事件
+if (loginBtn) loginBtn.addEventListener('click', login);
+if (logoutBtn) logoutBtn.addEventListener('click', logout);
+if (adminPassword) adminPassword.addEventListener('keypress', e => e.key === 'Enter' && login());
+if (adminEmail) adminEmail.addEventListener('keypress', e => e.key === 'Enter' && login());
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     checkSession();
-    // 初始化按钮状态
     updateActionButton('messages');
 });
-}
