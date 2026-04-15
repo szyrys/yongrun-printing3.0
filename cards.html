@@ -46,8 +46,8 @@
     <!-- 页面标题 -->
     <section class="page-header">
         <div class="container">
-            <h1>Cards</h1>
-            <p>Premium custom playing cards, tarot, holographic cards and more</p>
+            <h1 data-i18n="nav_cards">Cards</h1>
+            <p data-i18n="category_cards_desc">Premium custom playing cards, tarot, holographic cards and more</p>
         </div>
     </section>
 
@@ -74,28 +74,50 @@
     <script src="js/supabase-config.js"></script>
     <script src="js/common.js"></script>
     <script>
-        // 卡牌类产品数据
-        const cardProducts = [
-    { name: "Playing Cards", desc: "Custom poker cards, advertising decks. Multiple finishes.", icon: "fas fa-dice-d6", link: "product.html?slug=playingcards" },
-    { name: "Tarot Cards", desc: "Premium printing, smooth finish. Complete with custom boxes.", icon: "fas fa-moon", link: "product.html?slug=tarot" },
-    { name: "Holographic Cards", desc: "Holographic, foil stamping, UV effects. Premium gifts.", icon: "fas fa-star-of-life", link: "product.html?slug=laser" },
-    { name: "Flashcards", desc: "Round corners, laminated, safe for kids. Educational.", icon: "fas fa-brain", link: "product.html?slug=flashcards" }
-];
-
-        const grid = document.getElementById('cardsGrid');
-        if (grid) {
-            cardProducts.forEach(product => {
+        // 从多语言文件读取产品数据
+        function loadCardProducts() {
+            const grid = document.getElementById('cardsGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            const products = [
+                { key: "playingcards", icon: "fas fa-dice-d6" },
+                { key: "tarot", icon: "fas fa-moon" },
+                { key: "laser", icon: "fas fa-star-of-life" },
+                { key: "flashcards", icon: "fas fa-brain" }
+            ];
+            
+            products.forEach(product => {
+                const nameKey = `product_${product.key}_title`;
+                const descKey = `product_${product.key}_desc`;
+                
+                const name = translations[nameKey] || product.key;
+                const desc = translations[descKey] || '';
+                
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.onclick = () => { window.location.href = product.link; };
+                card.onclick = () => { window.location.href = `product.html?slug=${product.key}`; };
                 card.innerHTML = `
                     <div class="product-img"><i class="${product.icon}"></i></div>
-                    <h3>${product.name}</h3>
-                    <p>${product.desc}</p>
+                    <h3>${name}</h3>
+                    <p>${desc}</p>
                 `;
                 grid.appendChild(card);
             });
         }
+        
+        // 页面加载后执行
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCardProducts();
+        });
+        
+        // 监听语言切换，重新加载产品卡片
+        const originalLoadLanguage = loadLanguage;
+        window.loadLanguage = async function(langCode) {
+            await originalLoadLanguage(langCode);
+            loadCardProducts();
+        };
     </script>
 </body>
 </html>
