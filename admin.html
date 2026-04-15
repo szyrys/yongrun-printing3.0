@@ -140,7 +140,6 @@
             background: #c0392b;
         }
         
-        /* 表格容器 - 只保留横向滚动，移除纵向滚动限制 */
         .table-wrapper {
             overflow-x: auto;
             width: 100%;
@@ -171,16 +170,6 @@
             white-space: nowrap;
         }
         
-        /* 留言内容列允许换行，设置合理宽度 */
-        .data-table td:nth-child(5) {
-            white-space: normal !important;
-            word-wrap: break-word !important;
-            word-break: break-word !important;
-            max-width: 400px;
-            min-width: 200px;
-        }
-        
-        /* 其他列不换行 */
         .data-table td {
             white-space: nowrap;
         }
@@ -189,7 +178,7 @@
             background: #f8f9fa;
         }
         
-        .edit-btn, .delete-btn {
+        .edit-btn, .delete-btn, .view-btn {
             padding: 5px 12px;
             border-radius: 4px;
             cursor: pointer;
@@ -205,6 +194,11 @@
         
         .delete-btn {
             background: #e74c3c;
+            color: white;
+        }
+        
+        .view-btn {
+            background: #27ae60;
             color: white;
         }
         
@@ -241,7 +235,7 @@
         
         .modal-content {
             background: white;
-            max-width: 800px;
+            max-width: 600px;
             margin: 50px auto;
             padding: 20px;
             border-radius: 12px;
@@ -289,6 +283,19 @@
         }
         .lang-panel.active {
             display: block;
+        }
+        
+        /* 留言详情弹窗样式 */
+        #messageDetailModal p {
+            margin: 8px 0;
+        }
+        #detailMessage {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 5px;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
         
         @media (max-width: 768px) {
@@ -368,7 +375,7 @@
         </div>
     </div>
 
-    <!-- FAQ 模态框（多语言版本） -->
+    <!-- FAQ 模态框 -->
     <div id="faqModal" class="modal">
         <div class="modal-content">
             <h3 id="faqModalTitle">添加 FAQ</h3>
@@ -428,7 +435,7 @@
         </div>
     </div>
 
-    <!-- 产品模态框（多语言版本） -->
+    <!-- 产品模态框 -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <h3 id="productModalTitle">添加产品</h3>
@@ -516,23 +523,24 @@
         </div>
     </div>
 
+    <!-- 留言详情弹窗 -->
+    <div id="messageDetailModal" class="modal">
+        <div class="modal-content">
+            <h3>留言详情</h3>
+            <div id="messageDetailContent">
+                <p><strong>姓名：</strong> <span id="detailName"></span></p>
+                <p><strong>邮箱：</strong> <span id="detailEmail"></span></p>
+                <p><strong>电话：</strong> <span id="detailPhone"></span></p>
+                <p><strong>留言内容：</strong></p>
+                <div id="detailMessage"></div>
+                <p><strong>提交时间：</strong> <span id="detailTime"></span></p>
+            </div>
+            <button id="closeDetailModal" class="btn btn-primary" style="margin-top: 15px;">关闭</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/admin.js"></script>
-    <!-- 留言详情弹窗 -->
-<div id="messageDetailModal" class="modal">
-    <div class="modal-content" style="max-width: 500px;">
-        <h3>留言详情</h3>
-        <div id="messageDetailContent">
-            <p><strong>姓名：</strong> <span id="detailName"></span></p>
-            <p><strong>邮箱：</strong> <span id="detailEmail"></span></p>
-            <p><strong>电话：</strong> <span id="detailPhone"></span></p>
-            <p><strong>留言内容：</strong></p>
-            <div id="detailMessage" style="background: #f5f5f5; padding: 10px; border-radius: 8px; margin-top: 5px; white-space: pre-wrap; word-break: break-word;"></div>
-            <p style="margin-top: 10px;"><strong>提交时间：</strong> <span id="detailTime"></span></p>
-        </div>
-        <button id="closeDetailModal" class="btn btn-primary" style="margin-top: 15px;">关闭</button>
-    </div>
-</div>
 </body>
 </html>
