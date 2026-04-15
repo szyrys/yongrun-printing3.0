@@ -74,51 +74,53 @@
         }
     </style>
 </head>
-<body><main>
-    <div class="language-bar">
-        <div class="container">
-            <div class="language-selector" id="languageSelector"></div>
-        </div>
-    </div>
-
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <a href="index.html">YONGRUN<span> Printing</span></a>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="cards.html">Cards</a></li>
-                        <li><a href="books.html">Books</a></li>
-                        <li><a href="board-games.html">Board Games</a></li>
-                        <li><a href="puzzles.html">Puzzles</a></li>
-                    </ul>
-                </li>
-                <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
-                <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
-                <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
-                <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
+    <main style="flex: 1;">
+        <div class="language-bar">
+            <div class="container">
+                <div class="language-selector" id="languageSelector"></div>
             </div>
         </div>
-    </nav>
 
-    <section id="productDetail" style="padding: 60px 0;">
-        <div class="container">
-            <div class="loading" style="text-align: center;">Loading product...</div>
-        </div>
-    </section>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">YONGRUN<span> Printing</span></a>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="cards.html">Cards</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="board-games.html">Board Games</a></li>
+                            <li><a href="puzzles.html">Puzzles</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                    <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
+                    <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                    <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </nav>
+
+        <section id="productDetail" style="padding: 60px 0;">
+            <div class="container">
+                <div class="loading" style="text-align: center;">Loading product...</div>
+            </div>
+        </section>
+    </main>
 
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
         </div>
-    </main></footer>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
@@ -126,6 +128,20 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const slug = urlParams.get('slug');
+
+        // 根据当前语言获取产品名称和描述
+        function getLocalizedField(product, fieldName) {
+            const lang = currentLang || 'en';
+            if (lang === 'zh-CN') return product[`${fieldName}_zh`] || product[`${fieldName}_en`] || '';
+            if (lang === 'zh-TW') return product[`${fieldName}_zh_tw`] || product[`${fieldName}_en`] || '';
+            if (lang === 'es') return product[`${fieldName}_es`] || product[`${fieldName}_en`] || '';
+            if (lang === 'de') return product[`${fieldName}_de`] || product[`${fieldName}_en`] || '';
+            if (lang === 'pt') return product[`${fieldName}_pt`] || product[`${fieldName}_en`] || '';
+            if (lang === 'ar') return product[`${fieldName}_ar`] || product[`${fieldName}_en`] || '';
+            if (lang === 'ja') return product[`${fieldName}_ja`] || product[`${fieldName}_en`] || '';
+            if (lang === 'ko') return product[`${fieldName}_ko`] || product[`${fieldName}_en`] || '';
+            return product[`${fieldName}_en`] || '';
+        }
 
         async function loadProduct() {
             const container = document.getElementById('productDetail');
@@ -147,10 +163,11 @@
                     return;
                 }
 
-                document.title = `${data.name} - Yongrun Printing`;
-                document.getElementById('pageTitle').innerText = `${data.name} - Yongrun Printing`;
-
-                const featuresList = data.features ? data.features.split('|').map(f => `<li><i class="fas fa-check-circle" style="color: #c9a03d;"></i> ${f}</li>`).join('') : '';
+                const productName = getLocalizedField(data, 'name');
+                const productDesc = getLocalizedField(data, 'desc');
+                
+                document.title = `${productName} - Yongrun Printing`;
+                document.getElementById('pageTitle').innerText = `${productName} - Yongrun Printing`;
 
                 // 处理图片列表
                 let images = [];
@@ -182,7 +199,7 @@
                                 <div class="product-gallery">
                                     <button class="nav-arrow prev-arrow" id="prevArrow">❮</button>
                                     <div class="main-image">
-                                        <img id="mainProductImage" src="${images[0]}" alt="${data.name}">
+                                        <img id="mainProductImage" src="${images[0]}" alt="${productName}">
                                     </div>
                                     <button class="nav-arrow next-arrow" id="nextArrow">❯</button>
                                     <div class="thumbnail-list">
@@ -191,12 +208,8 @@
                                 </div>
                             </div>
                             <div>
-                                <h1 style="color: #1a2a4f; margin-bottom: 20px;">${data.name}</h1>
-                                <p style="margin-bottom: 15px;">${data.full_desc || data.short_desc}</p>
-                                <h3 style="color: #1a2a4f; margin: 20px 0 10px;">Features</h3>
-                                <ul style="list-style: none; padding: 0;">
-                                    ${featuresList}
-                                </ul>
+                                <h1 style="color: #1a2a4f; margin-bottom: 20px;">${productName}</h1>
+                                <p style="margin-bottom: 15px;">${productDesc}</p>
                                 <a href="contact.html" class="btn btn-primary" style="margin-top: 30px;">Request a Quote →</a>
                             </div>
                         </div>
@@ -231,7 +244,6 @@
                     }, 3000);
                 }
 
-                // 缩略图点击
                 thumbImgs.forEach((thumb, idx) => {
                     thumb.addEventListener('click', () => {
                         stopAutoPlay();
@@ -243,7 +255,6 @@
                     });
                 });
 
-                // 左箭头点击
                 prevBtn.addEventListener('click', () => {
                     stopAutoPlay();
                     currentIndex = (currentIndex - 1 + images.length) % images.length;
@@ -256,7 +267,6 @@
                     startAutoPlay();
                 });
 
-                // 右箭头点击
                 nextBtn.addEventListener('click', () => {
                     stopAutoPlay();
                     currentIndex = (currentIndex + 1) % images.length;
