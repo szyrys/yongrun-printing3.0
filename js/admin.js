@@ -10,6 +10,9 @@ const adminEmail = document.getElementById('adminEmail');
 const adminPassword = document.getElementById('adminPassword');
 const loginError = document.getElementById('loginError');
 
+// 动态按钮元素
+const actionBtn = document.getElementById('actionBtn');
+
 // 多语言标签页切换
 function initLangTabs(container) {
     const modalContent = container || document;
@@ -100,6 +103,79 @@ async function logout() {
     showLoginPanel();
 }
 
+// 更新动态按钮
+function updateActionButton(tabId) {
+    if (!actionBtn) return;
+    
+    if (tabId === 'messages') {
+        actionBtn.textContent = '🔄 刷新留言';
+        actionBtn.className = 'action-btn action-btn-red';
+        actionBtn.onclick = () => loadMessages();
+    } else if (tabId === 'faq') {
+        actionBtn.textContent = '+ 添加 FAQ';
+        actionBtn.className = 'action-btn action-btn-blue';
+        actionBtn.onclick = () => {
+            document.getElementById('faqQuestion_en').value = '';
+            document.getElementById('faqAnswer_en').value = '';
+            document.getElementById('faqQuestion_zh').value = '';
+            document.getElementById('faqAnswer_zh').value = '';
+            document.getElementById('faqQuestion_zh_tw').value = '';
+            document.getElementById('faqAnswer_zh_tw').value = '';
+            document.getElementById('faqQuestion_es').value = '';
+            document.getElementById('faqAnswer_es').value = '';
+            document.getElementById('faqQuestion_de').value = '';
+            document.getElementById('faqAnswer_de').value = '';
+            document.getElementById('faqQuestion_pt').value = '';
+            document.getElementById('faqAnswer_pt').value = '';
+            document.getElementById('faqQuestion_ar').value = '';
+            document.getElementById('faqAnswer_ar').value = '';
+            document.getElementById('faqQuestion_ja').value = '';
+            document.getElementById('faqAnswer_ja').value = '';
+            document.getElementById('faqQuestion_ko').value = '';
+            document.getElementById('faqAnswer_ko').value = '';
+            document.getElementById('faqId').value = '';
+            document.getElementById('faqModalTitle').innerText = '添加 FAQ';
+            document.getElementById('faqModal').style.display = 'flex';
+            currentFaqId = null;
+            initLangTabs(document.getElementById('faqModal'));
+        };
+    } else if (tabId === 'products') {
+        actionBtn.textContent = '+ 添加产品';
+        actionBtn.className = 'action-btn action-btn-green';
+        actionBtn.onclick = () => {
+            document.getElementById('productCategory').value = 'cards';
+            document.getElementById('productSlug').value = '';
+            document.getElementById('productImageUrl').value = '';
+            document.getElementById('productIsFeatured').checked = false;
+            document.getElementById('productId').value = '';
+            
+            document.getElementById('productName_en').value = '';
+            document.getElementById('productDesc_en').value = '';
+            document.getElementById('productName_zh').value = '';
+            document.getElementById('productDesc_zh').value = '';
+            document.getElementById('productName_zh_TW').value = '';
+            document.getElementById('productDesc_zh_TW').value = '';
+            document.getElementById('productName_es').value = '';
+            document.getElementById('productDesc_es').value = '';
+            document.getElementById('productName_de').value = '';
+            document.getElementById('productDesc_de').value = '';
+            document.getElementById('productName_pt').value = '';
+            document.getElementById('productDesc_pt').value = '';
+            document.getElementById('productName_ar').value = '';
+            document.getElementById('productDesc_ar').value = '';
+            document.getElementById('productName_ja').value = '';
+            document.getElementById('productDesc_ja').value = '';
+            document.getElementById('productName_ko').value = '';
+            document.getElementById('productDesc_ko').value = '';
+            
+            document.getElementById('productModalTitle').innerText = '添加产品';
+            document.getElementById('productModal').style.display = 'flex';
+            currentProductId = null;
+            initLangTabs(document.getElementById('productModal'));
+        };
+    }
+}
+
 // 标签页切换
 function initTabs() {
     const tabs = document.querySelectorAll('.tab-btn');
@@ -118,11 +194,10 @@ function initTabs() {
                 if (panels[key]) panels[key].classList.remove('active');
             });
             if (panels[tabId]) panels[tabId].classList.add('active');
+            updateActionButton(tabId);
         });
     });
 }
-
-document.getElementById('refreshMessagesBtn')?.addEventListener('click', () => loadMessages());
 
 // ===== 留言管理（空状态显示表头）=====
 async function loadMessages() {
@@ -136,7 +211,6 @@ async function loadMessages() {
             .order('created_at', { ascending: false });
         if (error) throw error;
         
-        // 始终显示表格结构
         let html = `<table class="data-table"><thead><tr>
             <th>ID</th><th>姓名</th><th>邮箱</th><th>电话</th><th>留言内容</th><th>提交时间</th><th>操作</th>
         </tr></thead><tbody>`;
@@ -246,32 +320,6 @@ async function deleteFaq(id) {
     }
 }
 
-document.getElementById('addFaqBtn')?.addEventListener('click', () => {
-    document.getElementById('faqQuestion_en').value = '';
-    document.getElementById('faqAnswer_en').value = '';
-    document.getElementById('faqQuestion_zh').value = '';
-    document.getElementById('faqAnswer_zh').value = '';
-    document.getElementById('faqQuestion_zh_tw').value = '';
-    document.getElementById('faqAnswer_zh_tw').value = '';
-    document.getElementById('faqQuestion_es').value = '';
-    document.getElementById('faqAnswer_es').value = '';
-    document.getElementById('faqQuestion_de').value = '';
-    document.getElementById('faqAnswer_de').value = '';
-    document.getElementById('faqQuestion_pt').value = '';
-    document.getElementById('faqAnswer_pt').value = '';
-    document.getElementById('faqQuestion_ar').value = '';
-    document.getElementById('faqAnswer_ar').value = '';
-    document.getElementById('faqQuestion_ja').value = '';
-    document.getElementById('faqAnswer_ja').value = '';
-    document.getElementById('faqQuestion_ko').value = '';
-    document.getElementById('faqAnswer_ko').value = '';
-    document.getElementById('faqId').value = '';
-    document.getElementById('faqModalTitle').innerText = '添加 FAQ';
-    document.getElementById('faqModal').style.display = 'flex';
-    currentFaqId = null;
-    initLangTabs(document.getElementById('faqModal'));
-});
-
 document.getElementById('saveFaqBtn')?.addEventListener('click', async () => {
     const question_en = document.getElementById('faqQuestion_en').value.trim();
     if (!question_en) {
@@ -337,7 +385,7 @@ async function loadProducts() {
             data.forEach(p => {
                 html += `<tr>
                     <td>${p.id}</td>
-                    <td>${p.category}</td>
+                    <td>${escapeHtml(p.category)}</td>
                     <td>${escapeHtml(p.name_en || '-')}</td>
                     <td>${p.slug}</td>
                     <td>${p.is_featured ? '⭐' : '-'}</td>
@@ -396,38 +444,6 @@ async function deleteProduct(id) {
         loadProducts();
     }
 }
-
-document.getElementById('addProductBtn')?.addEventListener('click', () => {
-    document.getElementById('productCategory').value = 'cards';
-    document.getElementById('productSlug').value = '';
-    document.getElementById('productImageUrl').value = '';
-    document.getElementById('productIsFeatured').checked = false;
-    document.getElementById('productId').value = '';
-    
-    document.getElementById('productName_en').value = '';
-    document.getElementById('productDesc_en').value = '';
-    document.getElementById('productName_zh').value = '';
-    document.getElementById('productDesc_zh').value = '';
-    document.getElementById('productName_zh_TW').value = '';
-    document.getElementById('productDesc_zh_TW').value = '';
-    document.getElementById('productName_es').value = '';
-    document.getElementById('productDesc_es').value = '';
-    document.getElementById('productName_de').value = '';
-    document.getElementById('productDesc_de').value = '';
-    document.getElementById('productName_pt').value = '';
-    document.getElementById('productDesc_pt').value = '';
-    document.getElementById('productName_ar').value = '';
-    document.getElementById('productDesc_ar').value = '';
-    document.getElementById('productName_ja').value = '';
-    document.getElementById('productDesc_ja').value = '';
-    document.getElementById('productName_ko').value = '';
-    document.getElementById('productDesc_ko').value = '';
-    
-    document.getElementById('productModalTitle').innerText = '添加产品';
-    document.getElementById('productModal').style.display = 'flex';
-    currentProductId = null;
-    initLangTabs(document.getElementById('productModal'));
-});
 
 document.getElementById('saveProductBtn')?.addEventListener('click', async () => {
     const category = document.getElementById('productCategory').value;
@@ -498,4 +514,6 @@ if (adminEmail) adminEmail.addEventListener('keypress', e => e.key === 'Enter' &
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     checkSession();
+    // 初始化按钮状态
+    updateActionButton('messages');
 });

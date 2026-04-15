@@ -43,7 +43,7 @@
             margin-top: 15px;
         }
         
-        /* 管理面板头部 - 标签页在标题右侧，登出在最右侧 */
+        /* 管理面板头部 */
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -92,6 +92,40 @@
         .tab-btn.active {
             background: #c9a03d;
             color: white;
+        }
+        
+        .admin-header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        /* 动态操作按钮 */
+        .action-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            transition: opacity 0.2s;
+        }
+        
+        .action-btn:hover {
+            opacity: 0.85;
+        }
+        
+        .action-btn-red {
+            background: #e74c3c;
+        }
+        
+        .action-btn-blue {
+            background: #3498db;
+        }
+        
+        .action-btn-green {
+            background: #27ae60;
         }
         
         .logout-btn {
@@ -164,7 +198,7 @@
             background: #f8f9fa;
         }
         
-        .edit-btn, .delete-btn, .add-btn {
+        .edit-btn, .delete-btn {
             padding: 5px 12px;
             border-radius: 4px;
             cursor: pointer;
@@ -181,14 +215,6 @@
         .delete-btn {
             background: #e74c3c;
             color: white;
-        }
-        
-        .add-btn {
-            background: #27ae60;
-            color: white;
-            padding: 8px 16px;
-            font-size: 14px;
-            margin-bottom: 15px;
         }
         
         .empty-state {
@@ -284,6 +310,9 @@
             .tab-bar {
                 flex-wrap: wrap;
             }
+            .admin-header-right {
+                flex-wrap: wrap;
+            }
             .data-table {
                 font-size: 12px;
             }
@@ -306,7 +335,7 @@
             <button id="loginBtn" class="btn btn-primary">登录</button>
             <div id="loginError" class="error-msg" style="display: none;"></div>
             <p style="margin-top: 20px; font-size: 12px; color: #999; text-align: center;">
-            兔子不吃胡萝卜
+                提示：请在 Supabase Authentication 中创建管理员账户
             </p>
         </div>
     </div>
@@ -321,11 +350,13 @@
                     <button class="tab-btn" data-tab="products">📦 产品管理</button>
                 </div>
             </div>
-            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> 登出</button>
+            <div class="admin-header-right">
+                <button id="actionBtn" class="action-btn action-btn-red">🔄 刷新留言</button>
+                <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> 登出</button>
+            </div>
         </div>
         
         <div id="messagesPanel" class="panel active">
-            <button id="refreshMessagesBtn" class="add-btn" style="background: #3498db;">🔄 刷新留言</button>
             <div class="table-wrapper">
                 <div id="messagesContainer">
                     <div class="loading"><i class="fas fa-spinner fa-spin"></i> 加载留言中...</div>
@@ -334,7 +365,6 @@
         </div>
 
         <div id="faqPanel" class="panel">
-            <button id="addFaqBtn" class="add-btn">+ 添加 FAQ</button>
             <div class="table-wrapper">
                 <div id="faqContainer">
                     <div class="loading">加载 FAQ 中...</div>
@@ -343,7 +373,6 @@
         </div>
 
         <div id="productsPanel" class="panel">
-            <button id="addProductBtn" class="add-btn">+ 添加产品</button>
             <div class="table-wrapper">
                 <div id="productsContainer">
                     <div class="loading">加载产品中...</div>
