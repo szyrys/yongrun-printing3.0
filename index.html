@@ -58,15 +58,23 @@
         </div>
     </nav>
 
-    <!-- Hero Banner 区域 -->
-    <section class="hero">
+        <!-- Hero Banner 轮播区域 -->
+    <section class="hero-carousel">
+        <div class="hero-bg-wrapper">
+            <div class="hero-bg-slide active" style="background-image: url('https://picsum.photos/id/104/1920/800');"></div>
+            <div class="hero-bg-slide" style="background-image: url('https://picsum.photos/id/106/1920/800');"></div>
+            <div class="hero-bg-slide" style="background-image: url('https://picsum.photos/id/107/1920/800');"></div>
+        </div>
         <div class="container">
             <div class="hero-content">
                 <h1 data-i18n="hero_title">Premium Custom Printing<br>For Cards & Games</h1>
                 <p data-i18n="hero_subtitle">20+ Years Experience | ISO9002 | FSC Certified | Global Shipping</p>
-                <a href="contact.html" class="btn btn-primary" data-i18n="hero_btn">Get Free Quote →</a>
+                <a href="#homeMessageForm" class="btn btn-primary" data-i18n="hero_btn" onclick="event.preventDefault(); document.getElementById('homeMessageForm').scrollIntoView({ behavior: 'smooth', block: 'start' });">Get Free Quote →</a>
             </div>
         </div>
+        <button class="hero-prev">❮</button>
+        <button class="hero-next">❯</button>
+        <div class="hero-dots"></div>
     </section>
 
      <!-- 产品展示区域 - 分类轮播 -->
