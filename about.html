@@ -469,52 +469,90 @@
     <script src="js/supabase-config.js"></script>
     <script src="js/common.js"></script>
     <script>
-        // 设备轮播图
-        const slides = document.querySelectorAll('#equipmentSlider .slide');
-        const prevBtn = document.getElementById('sliderPrev');
-        const nextBtn = document.getElementById('sliderNext');
-        const dotsContainer = document.getElementById('sliderDots');
-        let currentSlide = 0;
-        let slideInterval;
+        <script>
+    // 设备轮播图
+    const slides = document.querySelectorAll('#equipmentSlider .slide');
+    const prevBtn = document.getElementById('sliderPrev');
+    const nextBtn = document.getElementById('sliderNext');
+    const dotsContainer = document.getElementById('sliderDots');
+    let currentSlide = 0;
+    let slideInterval;
 
-        if (slides.length > 0) {
-            slides.forEach((_, i) => {
-                const dot = document.createElement('span');
-                dot.classList.add('dot');
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => goToSlide(i));
-                dotsContainer.appendChild(dot);
-            });
+    if (slides.length > 0) {
+        slides.forEach((_, i) => {
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
 
-            function goToSlide(index) {
-                slides[currentSlide].classList.remove('active');
-                dotsContainer.children[currentSlide].classList.remove('active');
-                currentSlide = (index + slides.length) % slides.length;
-                slides[currentSlide].classList.add('active');
-                dotsContainer.children[currentSlide].classList.add('active');
-            }
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dotsContainer.children[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            dotsContainer.children[currentSlide].classList.add('active');
+        }
 
-            function nextSlide() { goToSlide(currentSlide + 1); }
-            function prevSlide() { goToSlide(currentSlide - 1); }
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
 
-            nextBtn.addEventListener('click', () => {
-                nextSlide();
-                resetInterval();
-            });
-            prevBtn.addEventListener('click', () => {
-                prevSlide();
-                resetInterval();
-            });
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetInterval();
+        });
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetInterval();
+        });
 
-            function startInterval() {
-                slideInterval = setInterval(nextSlide, 4000);
-            }
-            function resetInterval() {
-                clearInterval(slideInterval);
-                startInterval();
-            }
+        function startInterval() {
+            slideInterval = setInterval(nextSlide, 4000);
+        }
+        function resetInterval() {
+            clearInterval(slideInterval);
             startInterval();
         }
-    </script>
+        startInterval();
+    }
+
+    // 关于我们轮播图
+    const aboutSlides = document.querySelectorAll('#aboutSlider .slide');
+    const aboutPrev = document.querySelector('#aboutSlider .slider-prev');
+    const aboutNext = document.querySelector('#aboutSlider .slider-next');
+    const aboutDots = document.querySelector('#aboutSlider .slider-dots');
+    let aboutCurrent = 0;
+    let aboutInterval;
+
+    if (aboutSlides.length > 0) {
+        aboutSlides.forEach((_, i) => {
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            dot.style.cssText = 'width:10px;height:10px;background:rgba(255,255,255,0.5);border-radius:50%;cursor:pointer;';
+            if (i === 0) dot.style.background = 'white';
+            dot.addEventListener('click', () => goToAboutSlide(i));
+            aboutDots.appendChild(dot);
+        });
+
+        function goToAboutSlide(index) {
+            aboutSlides[aboutCurrent].classList.remove('active');
+            aboutDots.children[aboutCurrent].style.background = 'rgba(255,255,255,0.5)';
+            aboutCurrent = (index + aboutSlides.length) % aboutSlides.length;
+            aboutSlides[aboutCurrent].classList.add('active');
+            aboutDots.children[aboutCurrent].style.background = 'white';
+        }
+
+        function nextAboutSlide() { goToAboutSlide(aboutCurrent + 1); }
+        function prevAboutSlide() { goToAboutSlide(aboutCurrent - 1); }
+
+        aboutPrev.addEventListener('click', () => { prevAboutSlide(); resetAboutInterval(); });
+        aboutNext.addEventListener('click', () => { nextAboutSlide(); resetAboutInterval(); });
+
+        function startAboutInterval() { aboutInterval = setInterval(nextAboutSlide, 4000); }
+        function resetAboutInterval() { clearInterval(aboutInterval); startAboutInterval(); }
+        startAboutInterval();
+    }
+</script>
 </body>
 </html>
