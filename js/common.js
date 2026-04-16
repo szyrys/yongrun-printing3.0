@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.appendChild(backToTopBtn);
     
     // 样式
-    const backToTopStyle = document.createElement('style');
+        const backToTopStyle = document.createElement('style');
     backToTopStyle.textContent = `
         #backToTopBtn {
             position: fixed;
@@ -336,22 +336,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             right: 30px;
             width: 50px;
             height: 50px;
-            background: #1a2a4f;
-            color: white;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            color: #1a2a4f;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             font-size: 22px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: all 0.3s;
             z-index: 999;
             opacity: 0;
             visibility: hidden;
+            border: 1px solid rgba(255,255,255,0.3);
         }
         #backToTopBtn:hover {
-            background: #c9a03d;
+            background: rgba(255,255,255,0.35);
             transform: translateY(-3px);
         }
         #backToTopBtn.show {
