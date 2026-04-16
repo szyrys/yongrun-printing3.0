@@ -93,7 +93,7 @@
   "form_error_submit": "Submission failed, please try again later",
 
   "home_contact_title": "Request a Quote",
-  "home_contact_subtitle": "We'll reply within 12 hours",
+  "home_contact_subtitle": "We'll reply within 24 hours",
 
   "form_phone": "Phone Number",
   "form_deadline": "Expected Delivery Date",
@@ -110,7 +110,7 @@
   "free_sample_desc": "Request a free sample to see our quality →",
   "free_sample_btn": "Request Free Sample",
   "features_title": "Certifications & Standards",
-  "process_reply": "We'll reply within 12 hours",
+  "process_reply": "We'll reply within 24 hours",
   "process_file_link": "File Sharing Link (Google Drive / Dropbox / WeTransfer)",
   "process_file_link_small": "Please upload your design files (AI/PDF) to Google Drive, Dropbox or WeTransfer, then paste the sharing link here.",
   "process_contact_hint": "Contact Info Required: Please provide either Phone or Email so we can reach you.",
