@@ -96,5 +96,11 @@
   "process_contact_hint": "联系信息必填：请提供电话或邮箱，以便我们联系您",
   "process_contact_title": "获取报价",
   "process_contact_hint": "请提供电话或邮箱，以便我们联系您",
-  "direct_email": "联系邮箱：cnyrys@163.com"
+  "direct_email": "联系邮箱：cnyrys@163.com",
+  "product_type_placeholder": "类型",
+"product_option_cards": "卡牌类",
+"product_option_books": "书籍类",
+"product_option_boardgames": "桌游类",
+"product_option_puzzles": "拼图类",
+"product_option_other": "其他"
 }
