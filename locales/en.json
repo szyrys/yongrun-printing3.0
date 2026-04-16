@@ -6,9 +6,9 @@
   "nav_about": "About Us",
   "nav_contact": "Contact",
   "nav_cards": "Cards",
-"nav_books": "Books",
-"nav_boardgames": "Board Games",
-"nav_puzzles": "Puzzles",
+  "nav_books": "Books",
+  "nav_boardgames": "Board Games",
+  "nav_puzzles": "Puzzles",
 
   "hero_title": "Professional Printing · Custom Solutions · Global Delivery",
   "hero_subtitle": "20+ Years Experience | ISO9002 | FSC Certified | Global Shipping",
@@ -35,10 +35,50 @@
   "cta_subtitle": "Get a quote within 24 hours. No minimum order quantity for samples.",
   "cta_btn": "Request a Quote →",
 
+  "about_hero_title": "Shenzhen Yongrun Printing Co., Ltd.",
+  "about_hero_subtitle": "Focus on Printing · Service with Heart · Create Brilliance",
   "about_title": "Shenzhen Yongrun Printing Co., Ltd.",
   "about_text1": "Founded in 2003 and based in Shenzhen, we have been serving the printing industry for over 20 years. We are a comprehensive printing service provider integrating development, prototyping, design, printing, processing, and packaging.",
   "about_text2": "Specialized in custom printing of cards, books, board games, puzzles and other paper products. Our product range includes:\n- Playing Cards (advertising decks, custom poker cards, casino-grade cards)\n- Tarot Cards (Waite Tarot, Thoth Tarot, Marseilles Tarot, art collector's edition)\n- Holographic Cards (full holographic, spot holographic, foil-stamped)\n- Learning Cards (flashcards, cognitive cards, word cards, early education cards)\n- Board Game Cards (strategy cards, character cards, item cards, event cards, etc.)\n- Hardcover Books, paperback books, kids' puzzles, and more\n\nWith an annual production capacity exceeding 3 million sets, we serve customers in over 50 countries and regions, and have worked with more than 1,000 clients worldwide.",
   "about_text3": "Located in Shenzhen, we have easy access to Yantian International Port, Shekou Port, and Bao'an International Airport, giving us a complete sea-air-land logistics network. This ensures fast, efficient shipping and reliable delivery times. We are certified with ISO9001, ISO9002, ISO14001, FSC, SEDEX, G7 and other international quality and environmental management standards. From raw material sourcing to finished product delivery, every step is strictly controlled to guarantee quality. You can trust us with your printing needs.",
+
+  "stats_title": "Yongrun by the Numbers",
+  "stats_subtitle": "20+ years of excellence in printing",
+  "stat1": "Years Experience",
+  "stat2": "Countries Served",
+  "stat3": "Sets Annual Capacity",
+  "stat4": "Happy Clients",
+
+  "cert_title": "Certifications & Quality",
+  "cert_subtitle": "International standards for quality assurance",
+  "cert_desc1": "Quality Management",
+  "cert_desc2": "Forest Stewardship Council",
+  "cert_desc3": "Social Compliance",
+  "cert_desc4": "Consistent Color Accuracy",
+
+  "values_title": "Our Core Values",
+  "values_subtitle": "Customer First · Quality Focus · Integrity & Trust · Innovation & Growth",
+  "value1_title": "Customer First",
+  "value1_desc": "We put customer needs at the center of everything we do.",
+  "value2_title": "Quality Focus",
+  "value2_desc": "Commitment to premium quality in every product.",
+  "value3_title": "Integrity & Trust",
+  "value3_desc": "Build long-term trust and mutual success.",
+  "value4_title": "Innovation & Growth",
+  "value4_desc": "Continuous improvement and creative solutions.",
+
+  "equipment_title": "Equipment & Technology",
+  "equipment_subtitle": "State-of-the-art production facilities",
+  "equipment_item1": "Multiple automated card production lines",
+  "equipment_item2": "Digital color management system",
+  "equipment_item3": "High-speed printing presses",
+  "equipment_item4": "Foil stamping & embossing equipment",
+  "equipment_item5": "Efficient prototyping and fast delivery system",
+
+  "about_cta_title": "Partner with Yongrun Printing",
+  "about_cta_subtitle": "Let's bring your custom card projects to life",
+  "about_cta_btn": "Contact Us Today →",
+
   "footer_rights": "All Rights Reserved",
 
   "contact_title": "Get a Quote",
@@ -84,13 +124,6 @@
   "product_option_other": "Other",
   "faq_title": "Frequently Asked Questions",
 
-  "stat4": "Happy Clients",
-  "equipment_item1": "Multiple automated card production lines",
-  "equipment_item2": "Digital color management system",
-  "equipment_item3": "High-speed printing presses",
-  "equipment_item4": "Foil stamping & embossing equipment",
-  "equipment_item5": "Efficient prototyping and fast delivery system",
-
   "contact_direct_email_label": "Direct Email:",
   "contact_file_link_label": "File Sharing Link (Google Drive / Dropbox / WeTransfer)",
   "contact_file_link_hint": "Upload your design files to cloud storage and paste the link here.",
@@ -104,4 +137,3 @@
   "contact_whatsapp_label": "WhatsApp:",
   "contact_reply_24h": "<i class=\"fas fa-clock\" style=\"margin-right: 8px;\"></i> We reply within 24 hours"
 }
-
