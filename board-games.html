@@ -105,45 +105,8 @@
             </div>
         </div>
 
-        <nav class="navbar">
-            <div class="container">
-                <div class="logo">
-                    <a href="index.html">YONGRUN<span> Printing</span></a>
-                </div>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="cards.html">Cards</a></li>
-                            <li><a href="books.html">Books</a></li>
-                            <li><a href="board-games.html">Board Games</a></li>
-                            <li><a href="puzzles.html">Puzzles</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
-                    <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
-                    <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
-                    <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
-                    <li class="lang-item">
-                        <select id="navLanguageSelect" class="nav-language-select">
-                            <option value="en">English</option>
-                            <option value="zh-CN">简体中文</option>
-                            <option value="zh-TW">繁體中文</option>
-                            <option value="de">Deutsch</option>
-                            <option value="es">Español</option>
-                            <option value="pt">Português</option>
-                            <option value="ar">العربية</option>
-                            <option value="ja">日本語</option>
-                            <option value="ko">한국어</option>
-                        </select>
-                    </li>
-                </ul>
-                <div class="hamburger" id="hamburger">
-                    <span></span><span></span><span></span>
-                </div>
-            </div>
-        </nav>
+<!-- 全局导航（由 nav.js 动态生成） -->
+<div id="globalNav"></div>
 
         <div class="container">
             <div class="products-section-header">
@@ -168,6 +131,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/nav.js"></script> 
     <script>
         function truncateText(text, maxLength) {
             if (!text) return '';
