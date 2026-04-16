@@ -847,3 +847,10 @@ html[dir="rtl"] .language-selector button {
     border-bottom: 2px solid #c9a03d;
     color: #c9a03d;
 }
+#navLanguageSelect {
+    width: 110px;
+    text-align: center;
+}
+.nav-menu .dropdown + li {
+    min-width: 120px;
+}
