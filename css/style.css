@@ -868,7 +868,7 @@ html[dir="rtl"] .language-selector button {
 .lang-item {
     margin-left: 15px;
 }
-/* Hero 轮播样式 */
+/* Hero 轮播样式-高度在这里改 */
 .hero-carousel {
     position: relative;
     height: 600px;
