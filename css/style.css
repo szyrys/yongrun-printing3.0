@@ -227,6 +227,7 @@ main {
 
 .hero h1 {
     font-size: 3rem;
+    line-height: 2;
     margin-bottom: 20px;
 }
 
