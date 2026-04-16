@@ -142,12 +142,44 @@ async function loadFaqs() {
             container.innerHTML = '<p class="empty-state">暂无 FAQ，请稍后再来。</p>';
             return;
         }
+        
+        // 根据当前语言选择字段
+        const lang = currentLang || 'en';
         let html = '';
         data.forEach((faq, index) => {
+            let question = faq.question_en;
+            let answer = faq.answer_en;
+            
+            if (lang === 'zh-CN') {
+                question = faq.question_zh || faq.question_en;
+                answer = faq.answer_zh || faq.answer_en;
+            } else if (lang === 'zh-TW') {
+                question = faq.question_zh_tw || faq.question_en;
+                answer = faq.answer_zh_tw || faq.answer_en;
+            } else if (lang === 'es') {
+                question = faq.question_es || faq.question_en;
+                answer = faq.answer_es || faq.answer_en;
+            } else if (lang === 'de') {
+                question = faq.question_de || faq.question_en;
+                answer = faq.answer_de || faq.answer_en;
+            } else if (lang === 'pt') {
+                question = faq.question_pt || faq.question_en;
+                answer = faq.answer_pt || faq.answer_en;
+            } else if (lang === 'ar') {
+                question = faq.question_ar || faq.question_en;
+                answer = faq.answer_ar || faq.answer_en;
+            } else if (lang === 'ja') {
+                question = faq.question_ja || faq.question_en;
+                answer = faq.answer_ja || faq.answer_en;
+            } else if (lang === 'ko') {
+                question = faq.question_ko || faq.question_en;
+                answer = faq.answer_ko || faq.answer_en;
+            }
+            
             html += `
                 <div class="faq-item">
-                    <div class="faq-question" data-idx="${index}">${escapeHtml(faq.question)}</div>
-                    <div class="faq-answer" id="faq-answer-${index}">${escapeHtml(faq.answer)}</div>
+                    <div class="faq-question" data-idx="${index}">${escapeHtml(question)}</div>
+                    <div class="faq-answer" id="faq-answer-${index}">${escapeHtml(answer)}</div>
                 </div>
             `;
         });
