@@ -109,9 +109,17 @@
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-                <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="cards.html">Cards</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="board-games.html">Board Games</a></li>
+                        <li><a href="puzzles.html">Puzzles</a></li>
+                    </ul>
+                </li>
                 <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
-                <li><a href="craft-options.html" data-i18n="nav_craft">Craft Options</a></li>
+                <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
                 <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
                 <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
                             <li class="lang-item">
@@ -258,7 +266,7 @@
         <div class="container">
             <h2 data-i18n="craft_cta_title">Need Help Choosing the Right Options?</h2>
             <p data-i18n="craft_cta_subtitle">Our experts are here to guide you through the selection process.</p>
-            <a href="contact.html" class="btn btn-primary" style="background: #1a2a4f; color: white;">Contact Our Team →</a>
+            <a href="contact.html" class="btn btn-primary" style="background: #1a2a4f; color: white;" data-i18n="craft_cta_btn">Contact Our Team →</a>
         </div>
     </section>
 
@@ -267,7 +275,8 @@
         <div class="container">
             <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
         </div>
-    </main></footer>
+    </footer>
+</main>
 
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
