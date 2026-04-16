@@ -189,6 +189,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     else if (languages.some(l => l.code === browserLang)) initLang = browserLang;
     
     await loadLanguage(initLang);
+        // 绑定语言下拉框事件
+    const langSelect = document.getElementById('navLanguageSelect');
+    if (langSelect) {
+        langSelect.addEventListener('change', (e) => {
+            loadLanguage(e.target.value);
+        });
+    }
     loadFaqs();
     
     // 七图画廊
