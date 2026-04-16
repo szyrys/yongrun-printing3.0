@@ -296,48 +296,81 @@
             isLoading = false;
         }
         
-        async function loadCardProducts() {
-            const grid = document.getElementById('cardsGrid');
-            if (!grid) return;
-            
-            const loadingText = (window.translations && window.translations.loading_text) || 'Loading products...';
-            grid.innerHTML = `<div class="loading">${loadingText}</div>`;
-            
-            try {
-                const { data, error } = await window.supabaseClient
-                    .from('products')
-                    .select('*')
-                    .eq('category', 'cards')
-                    .order('sort_order', { ascending: true });
-                
-                if (error) throw error;
-                
-                if (!data || data.length === 0) {
-                    const emptyText = (window.translations && window.translations.no_products) || 'No products found';
-                    grid.innerHTML = `<div class="empty-state">${emptyText}</div>`;
-                    return;
-                }
-                
-                allProducts = data;
-                grid.innerHTML = '';
-                
-                const firstPageProducts = allProducts.slice(0, pageSize);
-                renderProducts(firstPageProducts);
-                currentPage = 2;
-                
-                const loadMoreContainer = document.getElementById('loadMoreContainer');
-                if (allProducts.length > pageSize) {
-                    loadMoreContainer.style.display = 'block';
-                } else {
-                    loadMoreContainer.style.display = 'none';
-                }
-                
-            } catch (err) {
-                console.error('加载产品失败:', err);
-                const errorText = (window.translations && window.translations.load_error) || 'Failed to load, please refresh';
-                grid.innerHTML = `<div class="empty-state">${errorText}</div>`;
-            }
+       async function loadCardProducts() {
+    const grid = document.getElementById('cardsGrid');
+    if (!grid) return;
+    
+    grid.innerHTML = '<div class="loading">Loading products...</div>';
+    
+    try {
+        // 获取所有卡牌类产品
+        const { data: products, error } = await window.supabaseClient
+            .from('products')
+            .select('*')
+            .eq('category', 'cards');
+        
+        if (error) throw error;
+        
+        if (!products || products.length === 0) {
+            grid.innerHTML = '<div class="empty-state">No products found</div>';
+            return;
         }
+        
+        // 获取点击统计数据
+        const { data: clicks } = await window.supabaseClient
+            .from('product_clicks')
+            .select('slug, click_count');
+        
+        // 创建点击映射
+        const clickMap = new Map();
+        if (clicks) {
+            clicks.forEach(c => clickMap.set(c.slug, c.click_count));
+        }
+        
+        // 分离置顶和非置顶产品
+        const featuredProducts = products.filter(p => p.is_featured === true);
+        const normalProducts = products.filter(p => p.is_featured !== true);
+        
+        // 置顶产品按 sort_order 排序
+        featuredProducts.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+        
+        // 非置顶产品按点击热度降序排序
+        normalProducts.sort((a, b) => {
+            const aClicks = clickMap.get(a.slug) || 0;
+            const bClicks = clickMap.get(b.slug) || 0;
+            if (aClicks !== bClicks) return bClicks - aClicks;
+            return (a.sort_order || 0) - (b.sort_order || 0);
+        });
+        
+        // 合并：只取前4个置顶，其余按热度
+        const finalProducts = [...featuredProducts.slice(0, 4), ...normalProducts];
+        
+        grid.innerHTML = '';
+        
+        finalProducts.forEach(product => {
+            const name = getLocalizedField(product, 'name');
+            const desc = getLocalizedField(product, 'desc');
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.onclick = () => { window.location.href = `product.html?slug=${product.slug}`; };
+            const imageUrl = product.image_url ? product.image_url.split(',')[0] : null;
+            if (imageUrl) {
+                card.innerHTML = `<div class="product-img"><img src="${imageUrl}" alt="${name}"></div><h3>${name}</h3><p>${truncateText(desc, 30)}</p>`;
+            } else {
+                card.innerHTML = `<div class="product-img"><i class="fas fa-image"></i></div><h3>${name}</h3><p>${truncateText(desc, 30)}</p>`;
+            }
+            grid.appendChild(card);
+        });
+        
+        // 隐藏加载更多按钮（因为全部显示）
+        const loadMoreContainer = document.getElementById('loadMoreContainer');
+        if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+        
+    } catch (err) {
+        console.error('加载失败:', err);
+        grid.innerHTML = '<div class="empty-state">Failed to load, please refresh</div>';
+    }
+}
         
         document.getElementById('loadMoreBtn')?.addEventListener('click', loadMore);
         
