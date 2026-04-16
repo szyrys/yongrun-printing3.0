@@ -54,7 +54,10 @@ async function loadLanguage(langCode) {
 function updatePageText() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[key]) el.innerHTML = translations[key];
+        // 如果翻译存在则使用翻译内容，否则保留元素原有的 HTML 内容（英文 fallback）
+        if (translations[key] !== undefined) {
+            el.innerHTML = translations[key];
+        }
     });
 }
 
