@@ -297,12 +297,12 @@
         }
         
        async function loadCardProducts() {
-    const grid = document.getElementById('cardsGrid');
-    if (!grid) return;
+            const grid = document.getElementById('cardsGrid');
+            if (!grid) return;
     
-    grid.innerHTML = '<div class="loading">Loading products...</div>';
+            grid.innerHTML = '<div class="loading">Loading products...</div>';
     
-    try {
+            try {
         // 获取所有卡牌类产品
         const { data: products, error } = await window.supabaseClient
             .from('products')
