@@ -80,26 +80,6 @@
             text-overflow: ellipsis;
         }
         
-        .load-more-container {
-            text-align: center;
-            margin-top: 40px;
-        }
-        .load-more-btn {
-            background: transparent;
-            border: 2px solid #c9a03d;
-            color: #1a2a4f;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .load-more-btn:hover {
-            background: #c9a03d;
-            color: white;
-        }
-        
         .loading, .empty-state {
             text-align: center;
             padding: 50px;
@@ -145,19 +125,19 @@
                     <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
                     <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
                     <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
-                                <li class="lang-item">
-                <select id="navLanguageSelect" class="nav-language-select">
-                    <option value="en">English</option>
-                    <option value="zh-CN">简体中文</option>
-                    <option value="zh-TW">繁體中文</option>
-                    <option value="de">Deutsch</option>
-                    <option value="es">Español</option>
-                    <option value="pt">Português</option>
-                    <option value="ar">العربية</option>
-                    <option value="ja">日本語</option>
-                    <option value="ko">한국어</option>
-                </select>
-            </li>
+                    <li class="lang-item">
+                        <select id="navLanguageSelect" class="nav-language-select">
+                            <option value="en">English</option>
+                            <option value="zh-CN">简体中文</option>
+                            <option value="zh-TW">繁體中文</option>
+                            <option value="de">Deutsch</option>
+                            <option value="es">Español</option>
+                            <option value="pt">Português</option>
+                            <option value="ar">العربية</option>
+                            <option value="ja">日本語</option>
+                            <option value="ko">한국어</option>
+                        </select>
+                    </li>
                 </ul>
                 <div class="hamburger" id="hamburger">
                     <span></span><span></span><span></span>
@@ -168,15 +148,13 @@
         <div class="container">
             <div class="products-section-header">
                 <h1 data-i18n="nav_puzzles">Puzzles</h1>
-                <p data-i18n="category_puzzles_desc">"category_puzzles_desc": "Custom paper puzzles for all ages - children's puzzles, educational puzzles, and floor puzzles. High-quality offset printing with eco-friendly materials. Perfect for gifts, educational toys, and promotional items."</p>            </div>
+                <p data-i18n="category_puzzles_desc">Custom paper puzzles for all ages - children's puzzles, educational puzzles, and floor puzzles. High-quality offset printing with eco-friendly materials. Perfect for gifts, educational toys, and promotional items.</p>
+            </div>
         </div>
 
         <section class="products-page" style="padding: 0 0 60px 0;">
             <div class="container">
                 <div class="product-grid" id="puzzlesGrid"></div>
-                <div id="loadMoreContainer" class="load-more-container" style="display: none;">
-                    <button id="loadMoreBtn" class="load-more-btn" data-i18n="load_more">Load More</button>
-                </div>
             </div>
         </section>
     </main>
@@ -210,82 +188,81 @@
             return product[`${fieldName}_en`] || '';
         }
 
-        let allProducts = [];
-        let currentPage = 1;
-        const pageSize = 12;
-        let isLoading = false;
-
-        function renderProducts(products) {
-            const grid = document.getElementById('puzzlesGrid');
-            if (!grid) return;
-            products.forEach(product => {
-                const name = getLocalizedField(product, 'name');
-                const desc = getLocalizedField(product, 'desc');
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.onclick = () => { window.location.href = `product.html?slug=${product.slug}`; };
-                const imageUrl = product.image_url ? product.image_url.split(',')[0] : null;
-                if (imageUrl) {
-                    card.innerHTML = `<div class="product-img"><img src="${imageUrl}" alt="${name}"></div><h3>${name}</h3><p>${truncateText(desc, 30)}</p>`;
-                } else {
-                    card.innerHTML = `<div class="product-img"><i class="fas fa-image"></i></div><h3>${name}</h3><p>${truncateText(desc, 30)}</p>`;
-                }
-                grid.appendChild(card);
-            });
-        }
-
-        function loadMore() {
-            if (isLoading) return;
-            isLoading = true;
-            const start = (currentPage - 1) * pageSize;
-            const end = start + pageSize;
-            const nextProducts = allProducts.slice(start, end);
-            if (nextProducts.length > 0) {
-                renderProducts(nextProducts);
-                currentPage++;
-            }
-            const loadMoreContainer = document.getElementById('loadMoreContainer');
-            if (currentPage * pageSize >= allProducts.length) {
-                loadMoreContainer.style.display = 'none';
-            }
-            isLoading = false;
-        }
-
         async function loadPuzzlesProducts() {
             const grid = document.getElementById('puzzlesGrid');
             if (!grid) return;
+            
             grid.innerHTML = '<div class="loading">Loading products...</div>';
+            
             try {
-                const { data, error } = await window.supabaseClient
+                const { data: products, error } = await window.supabaseClient
                     .from('products')
                     .select('*')
-                    .eq('category', 'puzzles')
-                    .order('sort_order', { ascending: true });
+                    .eq('category', 'puzzles');
+                
                 if (error) throw error;
-                if (!data || data.length === 0) {
+                
+                if (!products || products.length === 0) {
                     grid.innerHTML = '<div class="empty-state">No products found</div>';
                     return;
                 }
-                allProducts = data;
+                
+                // 获取点击统计数据
+                const { data: clicks } = await window.supabaseClient
+                    .from('product_clicks')
+                    .select('slug, click_count');
+                
+                const clickMap = new Map();
+                if (clicks) {
+                    clicks.forEach(c => clickMap.set(c.slug, c.click_count));
+                }
+                
+                // 分离置顶和非置顶
+                const featuredProducts = products.filter(p => p.is_featured === true);
+                const normalProducts = products.filter(p => p.is_featured !== true);
+                
+                // 置顶按 sort_order 排序
+                featuredProducts.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+                
+                // 非置顶按热度排序
+                normalProducts.sort((a, b) => {
+                    const aClicks = clickMap.get(a.slug) || 0;
+                    const bClicks = clickMap.get(b.slug) || 0;
+                    if (aClicks !== bClicks) return bClicks - aClicks;
+                    return (a.sort_order || 0) - (b.sort_order || 0);
+                });
+                
+                // 合并：只取前4个置顶
+                const finalProducts = [...featuredProducts.slice(0, 4), ...normalProducts];
+                
                 grid.innerHTML = '';
-                renderProducts(allProducts.slice(0, pageSize));
-                currentPage = 2;
-                const loadMoreContainer = document.getElementById('loadMoreContainer');
-                loadMoreContainer.style.display = allProducts.length > pageSize ? 'block' : 'none';
+                
+                finalProducts.forEach(product => {
+                    const name = getLocalizedField(product, 'name');
+                    const desc = getLocalizedField(product, 'desc');
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.onclick = () => { window.location.href = `product.html?slug=${product.slug}`; };
+                    const imageUrl = product.image_url ? product.image_url.split(',')[0] : null;
+                    if (imageUrl) {
+                        card.innerHTML = `<div class="product-img"><img src="${imageUrl}" alt="${name}"></div><h3>${name}</h3><p>${truncateText(desc, 30)}</p>`;
+                    } else {
+                        card.innerHTML = `<div class="product-img"><i class="fas fa-image"></i></div><h3>${name}</h3><p>${truncateText(desc, 30)}</p>`;
+                    }
+                    grid.appendChild(card);
+                });
+                
             } catch (err) {
                 console.error('加载失败:', err);
                 grid.innerHTML = '<div class="empty-state">Failed to load, please refresh</div>';
             }
         }
 
-        document.getElementById('loadMoreBtn')?.addEventListener('click', loadMore);
         document.addEventListener('DOMContentLoaded', loadPuzzlesProducts);
         
         const originalLoadLanguage = loadLanguage;
         window.loadLanguage = async function(langCode) {
             await originalLoadLanguage(langCode);
-            allProducts = [];
-            currentPage = 1;
             await loadPuzzlesProducts();
         };
     </script>
