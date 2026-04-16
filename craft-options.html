@@ -314,49 +314,49 @@
         </div>
     </section>
 
-    <!-- 印刷工艺（保持原样，不弹窗） -->
-    <section class="craft-section">
-        <div class="container">
-            <div class="craft-title">
-                <h2 data-i18n="process_title">Printing Processes</h2>
-                <p data-i18n="process_desc">Advanced printing technologies for stunning results</p>
+<!-- 印刷工艺（支持弹窗） -->
+<section class="craft-section">
+    <div class="container">
+        <div class="craft-title">
+            <h2 data-i18n="process_title">Printing Processes</h2>
+            <p data-i18n="process_desc">Advanced printing technologies for stunning results</p>
+        </div>
+        <div class="craft-grid">
+            <div class="craft-card" data-gallery="process1">
+                <div class="craft-icon"><i class="fas fa-print"></i></div>
+                <h3 data-i18n="process1_title">Offset Printing</h3>
+                <p data-i18n="process1_desc">High quality, cost-effective for large quantities, Pantone color matching.</p>
             </div>
-            <div class="craft-grid">
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-print"></i></div>
-                    <h3 data-i18n="process1_title">Offset Printing</h3>
-                    <p data-i18n="process1_desc">High quality, cost-effective for large quantities, Pantone color matching.</p>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-desktop"></i></div>
-                    <h3 data-i18n="process2_title">Digital Printing</h3>
-                    <p data-i18n="process2_desc">Fast turnaround, no minimum order, perfect for prototypes and small batches.</p>
-                    <div class="badge-list"><span class="badge">No MOQ</span><span class="badge">Fast sample</span></div>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-star"></i></div>
-                    <h3 data-i18n="process3_title">Foil Stamping</h3>
-                    <p data-i18n="process3_desc">Gold, silver, holographic, and custom color foils.</p>
-                    <div class="badge-list"><span class="badge">Gold</span><span class="badge">Silver</span><span class="badge">Holographic</span></div>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-magic"></i></div>
-                    <h3 data-i18n="process4_title">Embossing & Debossing</h3>
-                    <p data-i18n="process4_desc">Raised or indented textures for premium tactile experience.</p>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-cut"></i></div>
-                    <h3 data-i18n="process5_title">Die Cutting</h3>
-                    <p data-i18n="process5_desc">Custom shapes and sizes, round corners, perforations.</p>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-qrcode"></i></div>
-                    <h3 data-i18n="process6_title">Variable Data Printing</h3>
-                    <p data-i18n="process6_desc">Unique codes, QR codes, or text on each card.</p>
-                </div>
+            <div class="craft-card" data-gallery="process2">
+                <div class="craft-icon"><i class="fas fa-desktop"></i></div>
+                <h3 data-i18n="process2_title">Digital Printing</h3>
+                <p data-i18n="process2_desc">Fast turnaround, no minimum order, perfect for prototypes and small batches.</p>
+                <div class="badge-list"><span class="badge">No MOQ</span><span class="badge">Fast sample</span></div>
+            </div>
+            <div class="craft-card" data-gallery="process3">
+                <div class="craft-icon"><i class="fas fa-star"></i></div>
+                <h3 data-i18n="process3_title">Foil Stamping</h3>
+                <p data-i18n="process3_desc">Gold, silver, holographic, and custom color foils.</p>
+                <div class="badge-list"><span class="badge">Gold</span><span class="badge">Silver</span><span class="badge">Holographic</span></div>
+            </div>
+            <div class="craft-card" data-gallery="process4">
+                <div class="craft-icon"><i class="fas fa-magic"></i></div>
+                <h3 data-i18n="process4_title">Embossing & Debossing</h3>
+                <p data-i18n="process4_desc">Raised or indented textures for premium tactile experience.</p>
+            </div>
+            <div class="craft-card" data-gallery="process5">
+                <div class="craft-icon"><i class="fas fa-cut"></i></div>
+                <h3 data-i18n="process5_title">Die Cutting</h3>
+                <p data-i18n="process5_desc">Custom shapes and sizes, round corners, perforations.</p>
+            </div>
+            <div class="craft-card" data-gallery="process6">
+                <div class="craft-icon"><i class="fas fa-qrcode"></i></div>
+                <h3 data-i18n="process6_title">Variable Data Printing</h3>
+                <p data-i18n="process6_desc">Unique codes, QR codes, or text on each card.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- CTA 区域 -->
     <section class="cta-section" style="background: #c9a03d; color: #1a2a4f;">
@@ -487,6 +487,39 @@
                     'https://picsum.photos/id/130/800/450',
                     'https://picsum.photos/id/131/800/450'
                 ]
+                // 在 imageGalleries 对象内添加以下内容（确保 JSON 格式正确，注意逗号）
+                process1: [
+                    'https://picsum.photos/id/140/800/450',
+                    'https://picsum.photos/id/141/800/450',
+                    'https://picsum.photos/id/142/800/450'
+                ],
+                process2: [
+                    'https://picsum.photos/id/150/800/450',
+    'https://picsum.photos/id/151/800/450',
+    'https://picsum.photos/id/152/800/450',
+    'https://picsum.photos/id/153/800/450'
+],
+process3: [
+    'https://picsum.photos/id/160/800/450',
+    'https://picsum.photos/id/161/800/450',
+    'https://picsum.photos/id/162/800/450'
+],
+process4: [
+    'https://picsum.photos/id/170/800/450',
+    'https://picsum.photos/id/171/800/450'
+],
+process5: [
+    'https://picsum.photos/id/180/800/450',
+    'https://picsum.photos/id/181/800/450',
+    'https://picsum.photos/id/182/800/450'
+],
+process6: [
+    'https://picsum.photos/id/190/800/450',
+    'https://picsum.photos/id/191/800/450',
+    'https://picsum.photos/id/192/800/450',
+    'https://picsum.photos/id/193/800/450',
+    'https://picsum.photos/id/194/800/450'
+]
             };
             
             // 渲染卡片
