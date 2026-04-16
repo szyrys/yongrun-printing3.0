@@ -51,7 +51,7 @@
   "form_error_submit": "提交失败，请稍后重试",
 
   "home_contact_title": "获取报价",
-  "home_contact_subtitle": "我们将在12小时内回复",
+  "home_contact_subtitle": "我们将在24小时内回复",
 
   "form_phone": "联系电话",
   "form_product": "选择产品类型",
@@ -88,7 +88,7 @@
   "step5_desc": "开始大规模生产。自动化生产线确保品质稳定和快速交货。",
   "step6_title": "包装与发货",
   "step6_desc": "专业包装保护您的卡牌。全球空运或海运配送。",
-  "process_reply": "我们将在12小时内回复",
+  "process_reply": "我们将在24小时内回复",
   "process_file_link": "文件分享链接（Google Drive / Dropbox / WeTransfer）",
   "process_file_link_small": "请将设计文件上传至云存储，然后粘贴链接",
   "process_contact_hint": "联系信息必填：请提供电话或邮箱，以便我们联系您",
