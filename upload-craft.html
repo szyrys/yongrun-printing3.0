@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工艺图片批量上传 · 永润印刷</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        h1 { color: #1a2a4f; }
+        .password-panel {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 80px auto;
+            text-align: center;
+        }
+        .password-panel input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .password-panel button {
+            background: #c9a03d;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .main-panel { display: none; }
+        .craft-group {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .group-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .group-header h3 {
+            margin: 0;
+            color: #1a2a4f;
+            min-width: 200px;
+        }
+        .file-input-wrapper {
+            flex: 1;
+        }
+        .preview-grid {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .preview-item {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #eee;
+        }
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .preview-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .status-badge {
+            font-size: 12px;
+            margin-left: 10px;
+            color: #27ae60;
+        }
+        .action-bar {
+            margin: 30px 0;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-success { background: #27ae60; }
+        .btn-warning { background: #e67e22; }
+        .code-output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-family: monospace;
+            margin-top: 20px;
+        }
+        .note {
+            color: #666;
+            margin: 10px 0;
+        }
+        .error {
+            color: #e74c3c;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 密码面板 -->
+<div id="passwordPanel" class="password-panel">
+    <h2>🔒 需要密码</h2>
+    <input type="password" id="passwordInput" placeholder="请输入访问密码" autofocus>
+    <button id="passwordBtn">验证</button>
+    <div id="passwordError" class="error"></div>
+</div>
+
+<!-- 主面板 -->
+<div id="mainPanel" class="main-panel">
+    <h1>📸 工艺图片批量上传</h1>
+    <p class="note">每组最多6张图片，上传后将自动生成代码，复制替换到 craft-options.html 中的 imageGalleries 对象即可。</p>
+    
+    <div id="groupsContainer"></div>
+    
+    <div class="action-bar">
+        <button class="btn btn-success" id="uploadAllBtn">🚀 上传所有图片</button>
+        <button class="btn btn-warning" id="generateCodeBtn">📋 生成代码（不上传）</button>
+        <span id="globalStatus"></span>
+    </div>
+    
+    <h3>📄 生成的代码（复制替换 craft-options.html 中的 imageGalleries）</h3>
+    <div class="code-output" id="codeOutput">点击「生成代码」或上传后自动生成</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script>
+    // ========== 配置 ==========
+    const ACCESS_PASSWORD = 'yongrun2025';  // 可自行修改
+    
+    // 所有工艺项定义（与页面一致）
+    const CRAFT_ITEMS = [
+        // 材质
+        { key: 'material1', label: '材质1 · 标准扑克牌纸' },
+        { key: 'material2', label: '材质2 · 高级艺术纸' },
+        { key: 'material3', label: '材质3 · 塑料卡 (PVC)' },
+        { key: 'material4', label: '材质4 · 环保纸' },
+        { key: 'material5', label: '材质5 · 丽芙纹理纸' },
+        { key: 'material6', label: '材质6 · 牛皮纸' },
+        // 表面处理
+        { key: 'finish1', label: '表面1 · 亮面覆膜' },
+        { key: 'finish2', label: '表面2 · 哑面覆膜' },
+        { key: 'finish3', label: '表面3 · 水性光油' },
+        { key: 'finish4', label: '表面4 · UV光油' },
+        { key: 'finish5', label: '表面5 · 触感膜' },
+        { key: 'finish6', label: '表面6 · 局部UV' },
+        // 印刷工艺
+        { key: 'process1', label: '工艺1 · 胶版印刷' },
+        { key: 'process2', label: '工艺2 · 数码印刷' },
+        { key: 'process3', label: '工艺3 · 烫金/烫银' },
+        { key: 'process4', label: '工艺4 · 击凸/压凹' },
+        { key: 'process5', label: '工艺5 · 模切' },
+        { key: 'process6', label: '工艺6 · 可变数据印刷' }
+    ];
+    
+    // 存储桶
+    const BUCKET_NAME = 'product-images';
+    const CRAFT_FOLDER = 'craft';  // 所有工艺图片放在 craft/ 文件夹下
+    
+    // 全局状态
+    let groupFiles = {}; // key -> File[]
+    let uploadedUrls = {}; // key -> string[] (最终生成的URL数组)
+    
+    // ========== 密码验证 ==========
+    document.getElementById('passwordBtn').addEventListener('click', () => {
+        const pwd = document.getElementById('passwordInput').value;
+        if (pwd === ACCESS_PASSWORD) {
+            document.getElementById('passwordPanel').style.display = 'none';
+            document.getElementById('mainPanel').style.display = 'block';
+            initGroups();
+        } else {
+            document.getElementById('passwordError').innerText = '密码错误';
+        }
+    });
+    document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') document.getElementById('passwordBtn').click();
+    });
+    
+    // ========== 初始化分组界面 ==========
+    function initGroups() {
+        const container = document.getElementById('groupsContainer');
+        let html = '';
+        CRAFT_ITEMS.forEach(item => {
+            html += `
+                <div class="craft-group" data-key="${item.key}">
+                    <div class="group-header">
+                        <h3>${item.label}</h3>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="file_${item.key}" accept="image/*" multiple style="width:100%;">
+                        </div>
+                        <span class="status-badge" id="status_${item.key}"></span>
+                    </div>
+                    <div class="preview-grid" id="preview_${item.key}"></div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        
+        // 绑定文件选择事件
+        CRAFT_ITEMS.forEach(item => {
+            const input = document.getElementById(`file_${item.key}`);
+            input.addEventListener('change', (e) => handleFileSelect(item.key, e.target.files));
+        });
+    }
+    
+    function handleFileSelect(key, files) {
+        const fileArray = Array.from(files).slice(0, 6); // 最多6张
+        groupFiles[key] = fileArray;
+        renderPreview(key);
+        document.getElementById(`status_${key}`).innerText = `已选 ${fileArray.length} 张`;
+    }
+    
+    function renderPreview(key) {
+        const previewDiv = document.getElementById(`preview_${key}`);
+        const files = groupFiles[key] || [];
+        let html = '';
+        files.forEach((file, idx) => {
+            const url = URL.createObjectURL(file);
+            html += `
+                <div class="preview-item">
+                    <img src="${url}" alt="">
+                    <button class="remove-btn" data-key="${key}" data-idx="${idx}">×</button>
+                </div>
+            `;
+        });
+        previewDiv.innerHTML = html;
+        
+        // 绑定删除按钮
+        previewDiv.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const k = btn.dataset.key;
+                const idx = parseInt(btn.dataset.idx);
+                if (groupFiles[k]) {
+                    groupFiles[k].splice(idx, 1);
+                    renderPreview(k);
+                    document.getElementById(`status_${k}`).innerText = `已选 ${groupFiles[k].length} 张`;
+                }
+            });
+        });
+    }
+    
+    // ========== 上传逻辑 ==========
+    async function uploadAll() {
+        const statusSpan = document.getElementById('globalStatus');
+        statusSpan.innerHTML = '⏳ 上传中...';
+        uploadedUrls = {};
+        
+        for (const item of CRAFT_ITEMS) {
+            const key = item.key;
+            const files = groupFiles[key] || [];
+            if (files.length === 0) {
+                uploadedUrls[key] = [];
+                continue;
+            }
+            
+            const urls = [];
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const ext = file.name.split('.').pop();
+                // 命名规则：craft/材质1-序号.扩展名
+                const fileName = `${CRAFT_FOLDER}/${key}-${i+1}.${ext}`;
+                
+                try {
+                    // 上传（覆盖同名文件）
+                    const { error } = await window.supabaseClient.storage
+                        .from(BUCKET_NAME)
+                        .upload(fileName, file, { upsert: true });
+                    
+                    if (error) throw error;
+                    
+                    // 获取公开URL
+                    const { data: publicUrlData } = window.supabaseClient.storage
+                        .from(BUCKET_NAME)
+                        .getPublicUrl(fileName);
+                    
+                    urls.push(publicUrlData.publicUrl);
+                    
+                } catch (err) {
+                    console.error(`上传 ${key} 第${i+1}张失败:`, err);
+                    statusSpan.innerHTML = `❌ ${key} 上传失败: ${err.message}`;
+                    return;
+                }
+            }
+            uploadedUrls[key] = urls;
+            document.getElementById(`status_${key}`).innerHTML = `✅ 已上传 ${urls.length} 张`;
+        }
+        
+        statusSpan.innerHTML = '✅ 全部上传完成！';
+        generateCode(); // 自动生成代码
+    }
+    
+    // ========== 生成代码 ==========
+    function generateCode() {
+        let code = 'const imageGalleries = {\n';
+        
+        // 先收集所有已上传或已选的 URL（优先使用上传后的，否则生成占位提示）
+        for (const item of CRAFT_ITEMS) {
+            const key = item.key;
+            let urls = uploadedUrls[key] || [];
+            
+            // 如果还没上传，但有选择的文件，提醒用户先上传
+            if (urls.length === 0 && groupFiles[key] && groupFiles[key].length > 0) {
+                console.warn(`${key} 有未上传的图片，将使用占位提示`);
+            }
+            
+            if (urls.length === 0) {
+                // 没有图片时，给一个占位数组（可手动修改）
+                code += `  ${key}: [], // 暂无图片\n`;
+            } else {
+                code += `  ${key}: [\n`;
+                urls.forEach((url, idx) => {
+                    code += `    '${url}'${idx < urls.length - 1 ? ',' : ''}\n`;
+                });
+                code += `  ],\n`;
+            }
+        }
+        code += '};';
+        
+        document.getElementById('codeOutput').innerText = code;
+    }
+    
+    // ========== 事件绑定 ==========
+    document.getElementById('uploadAllBtn').addEventListener('click', uploadAll);
+    document.getElementById('generateCodeBtn').addEventListener('click', () => {
+        // 直接基于已选文件生成占位代码（提醒用户上传）
+        if (Object.keys(uploadedUrls).length === 0) {
+            alert('尚未上传任何图片，将生成空数组或占位代码，请先上传或手动填写 URL。');
+        }
+        generateCode();
+    });
+    
+    // 初始化 Supabase（复用全局 supabaseClient）
+    if (!window.supabaseClient) {
+        console.error('supabaseClient 未定义，请确保 js/supabase-config.js 已加载');
+        alert('Supabase 配置加载失败，请刷新重试。');
+    }
+</script>
+</body>
+</html>
