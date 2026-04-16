@@ -74,5 +74,6 @@
   "process_file_link": "File Sharing Link (Google Drive / Dropbox / WeTransfer)",
   "process_file_link_small": "Please upload your design files (AI/PDF) to Google Drive, Dropbox or WeTransfer, then paste the sharing link here.",
   "process_contact_hint": "Contact Info Required: Please provide either Phone or Email so we can reach you.",
-  "process_contact_title": "Request a Quote"
+  "process_contact_title": "Request a Quote",
+  "direct_email": "Direct Email: cnyrys@163.com"
 }
