@@ -320,3 +320,189 @@ document.addEventListener('DOMContentLoaded', async () => {
         startInterval();
     }
 });
+// ===== 全局浮动咨询按钮 =====
+(function() {
+    // 创建浮动按钮
+    const floatBtn = document.createElement('div');
+    floatBtn.id = 'floatConsultBtn';
+    floatBtn.innerHTML = '<i class="fas fa-comment-dots"></i>';
+    floatBtn.title = 'Get a Quote';
+    document.body.appendChild(floatBtn);
+    
+    // 创建弹窗
+    const modal = document.createElement('div');
+    modal.id = 'consultModal';
+    modal.innerHTML = `
+        <div class="consult-modal-content">
+            <span class="consult-close">&times;</span>
+            <h3>Get a Free Quote</h3>
+            <p>Fill out the form below and we'll reply within 24 hours</p>
+            <form id="consultForm">
+                <input type="text" id="consult_name" placeholder="Your Name *" required>
+                <input type="tel" id="consult_phone" placeholder="Phone Number">
+                <input type="email" id="consult_email" placeholder="Email Address">
+                <select id="consult_product">
+                    <option value="" disabled selected>Select Product Type</option>
+                    <option value="cards">Cards</option>
+                    <option value="books">Books</option>
+                    <option value="board-games">Board Games</option>
+                    <option value="puzzles">Puzzles</option>
+                    <option value="other">Other</option>
+                </select>
+                <textarea id="consult_message" rows="4" placeholder="Tell us about your project..."></textarea>
+                <div style="font-size: 12px; color: #666; margin: 10px 0;">Please provide either Phone or Email</div>
+                <button type="submit">Send Message</button>
+            </form>
+            <div id="consultStatus"></div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // 样式
+    const style = document.createElement('style');
+    style.textContent = `
+        #floatConsultBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #c9a03d;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+        #floatConsultBtn:hover {
+            transform: scale(1.1);
+            background: #b08a2c;
+        }
+        #consultModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .consult-modal-content {
+            background: white;
+            max-width: 500px;
+            width: 90%;
+            padding: 25px;
+            border-radius: 12px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .consult-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+        .consult-close:hover {
+            color: #333;
+        }
+        .consult-modal-content h3 {
+            color: #1a2a4f;
+            margin-bottom: 10px;
+        }
+        .consult-modal-content input,
+        .consult-modal-content select,
+        .consult-modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .consult-modal-content button {
+            width: 100%;
+            padding: 12px;
+            background: #c9a03d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .consult-modal-content button:hover {
+            background: #b08a2c;
+        }
+        #consultStatus {
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // 打开弹窗
+    floatBtn.onclick = () => {
+        modal.style.display = 'flex';
+    };
+    
+    // 关闭弹窗
+    modal.querySelector('.consult-close').onclick = () => {
+        modal.style.display = 'none';
+    };
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    };
+    
+    // 表单提交
+    const consultForm = document.getElementById('consultForm');
+    consultForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('consult_name').value.trim();
+        const phone = document.getElementById('consult_phone').value.trim();
+        const email = document.getElementById('consult_email').value.trim();
+        const product = document.getElementById('consult_product').value;
+        const message = document.getElementById('consult_message').value.trim();
+        const statusDiv = document.getElementById('consultStatus');
+        
+        if (!name) {
+            statusDiv.innerHTML = '<span style="color: #e74c3c;">Please enter your name</span>';
+            return;
+        }
+        if (!phone && !email) {
+            statusDiv.innerHTML = '<span style="color: #e74c3c;">Please provide either phone or email</span>';
+            return;
+        }
+        
+        statusDiv.innerHTML = '<span style="color: #3498db;">Sending...</span>';
+        
+        try {
+            const fullMessage = `Product: ${product}\nPhone: ${phone || 'Not provided'}\n\nMessage:\n${message || 'No message'}`;
+            const { error } = await window.supabaseClient
+                .from('messages')
+                .insert([{ name, email: email || 'Not provided', message: fullMessage, phone: phone || 'Not provided' }]);
+            
+            if (error) throw error;
+            
+            statusDiv.innerHTML = '<span style="color: #27ae60;">Message sent! We will contact you soon.</span>';
+            consultForm.reset();
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+                modal.style.display = 'none';
+            }, 3000);
+        } catch (err) {
+            statusDiv.innerHTML = '<span style="color: #e74c3c;">Failed to send, please try again</span>';
+        }
+    };
+})();
