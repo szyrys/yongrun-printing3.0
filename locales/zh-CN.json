@@ -102,5 +102,8 @@
 "product_option_books": "书籍类",
 "product_option_boardgames": "桌游类",
 "product_option_puzzles": "拼图类",
-"product_option_other": "其他"
+"product_option_other": "其他",
+"process_file_link": "文件分享链接（Google Drive / Dropbox / WeTransfer）",
+"process_file_link_small": "请将设计文件上传至云存储，然后粘贴链接",
+"process_contact_hint": "联系信息必填：请提供电话或邮箱，以便我们联系您"
 }
