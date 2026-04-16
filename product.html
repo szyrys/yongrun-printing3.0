@@ -314,6 +314,30 @@
         }
 
         loadProduct();
+                // 记录产品点击
+        if (slug) {
+            try {
+                // 先查询是否存在
+                const { data: existing } = await window.supabaseClient
+                    .from('product_clicks')
+                    .select('click_count')
+                    .eq('slug', slug)
+                    .single();
+                
+                if (existing) {
+                    await window.supabaseClient
+                        .from('product_clicks')
+                        .update({ click_count: existing.click_count + 1, last_clicked: new Date() })
+                        .eq('slug', slug);
+                } else {
+                    await window.supabaseClient
+                        .from('product_clicks')
+                        .insert({ slug: slug, click_count: 1 });
+                }
+            } catch (err) {
+                console.log('记录点击失败:', err);
+            }
+        }
     </script>
 </body>
 </html>
