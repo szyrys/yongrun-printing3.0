@@ -185,7 +185,9 @@
                 <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
                     <!-- 表单区域 -->
                     <div>
-                        <h3 style="color: #1a2a4f; margin-bottom: 10px;">Direct Email: cnyrys@163.com</h3>
+                        <h3 style="color: #1a2a4f; margin-bottom: 10px;">
+                            <span data-i18n="contact_direct_email_label">Direct Email:</span> cnyrys@163.com
+                        </h3>
                         <p class="contact-desc" style="margin-bottom: 20px; color: #666;" data-i18n="contact_desc">Tell us about your project, we'll reply within 24 hours</p>
                         
                         <form id="contactMessageForm" class="contact-form">
@@ -232,13 +234,13 @@
                                 <textarea id="contact_message" rows="4" data-i18n-placeholder="form_message" placeholder="Tell us about your project (size, material, special requirements...)"></textarea>
                             </div>
                             <div class="form-group full-width">
-                                <label for="contact_file_link">File Sharing Link (Google Drive / Dropbox / WeTransfer)</label>
+                                <label data-i18n="contact_file_link_label">File Sharing Link (Google Drive / Dropbox / WeTransfer)</label>
                                 <input type="url" id="contact_file_link" placeholder="https://drive.google.com/...">
-                                <small>Upload your design files to cloud storage and paste the link here.</small>
+                                <small data-i18n="contact_file_link_hint">Upload your design files to cloud storage and paste the link here.</small>
                             </div>
                             <div class="form-group full-width">
                                 <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
-                                    <p style="margin: 0; font-size: 13px; color: #666;">
+                                    <p style="margin: 0; font-size: 13px; color: #666;" data-i18n="contact_required_info_hint">
                                         <strong>Contact Info Required:</strong> Please provide either <strong>Phone</strong> or <strong>Email</strong> so we can reach you.
                                     </p>
                                 </div>
@@ -250,35 +252,42 @@
 
                     <!-- 公司联系信息 -->
                     <div>
-                        <h3 style="color: #1a2a4f; margin-bottom: 20px;">Shenzhen Yongrun Printing Co., Ltd.</h3>
+                        <h3 style="color: #1a2a4f; margin-bottom: 20px;" data-i18n="contact_company_name">Shenzhen Yongrun Printing Co., Ltd.</h3>
                         
                         <div class="contact-info-item">
                             <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div class="contact-info-text">
-                                <strong>Address:</strong><br>
-                                Building 3, No. 24 Xinfadong Road, Xiangshan Community,<br>
-                                Xinqiao Street, Bao'an District, Shenzhen, China
+                                <strong data-i18n="contact_address_label">Address:</strong><br>
+                                <span data-i18n="contact_address_full">Building 3, No. 24 Xinfadong Road, Xiangshan Community, Xinqiao Street, Bao'an District, Shenzhen, China</span>
                             </div>
                         </div>
                         
                         <div class="contact-info-item">
                             <div class="contact-info-icon"><i class="fas fa-phone"></i></div>
-                            <div class="contact-info-text"><strong>Phone:</strong> +86 185 6569 8935</div>
+                            <div class="contact-info-text">
+                                <strong data-i18n="contact_phone_label">Phone:</strong> +86 185 6569 8935
+                            </div>
                         </div>
                         
                         <div class="contact-info-item">
                             <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="contact-info-text"><strong>Email:</strong> cnyrys@163.com</div>
+                            <div class="contact-info-text">
+                                <strong data-i18n="contact_email_label">Email:</strong> cnyrys@163.com
+                            </div>
                         </div>
                         
                         <div class="contact-info-item">
                             <div class="contact-info-icon"><i class="fab fa-weixin"></i></div>
-                            <div class="contact-info-text"><strong>WeChat:</strong> +86 185 6569 8935</div>
+                            <div class="contact-info-text">
+                                <strong data-i18n="contact_wechat_label">WeChat:</strong> +86 185 6569 8935
+                            </div>
                         </div>
                         
                         <div class="contact-info-item">
                             <div class="contact-info-icon"><i class="fab fa-whatsapp"></i></div>
-                            <div class="contact-info-text"><strong>WhatsApp:</strong> +86 185 6569 8935</div>
+                            <div class="contact-info-text">
+                                <strong data-i18n="contact_whatsapp_label">WhatsApp:</strong> +86 185 6569 8935
+                            </div>
                         </div>
                         
                         <div class="social-row">
@@ -289,7 +298,7 @@
                             <span class="social-item"><i class="fab fa-tiktok"></i> CNyongrun-tk</span>
                         </div>
                         
-                        <div class="reply-badge">
+                        <div class="reply-badge" data-i18n="contact_reply_24h">
                             <i class="fas fa-clock" style="margin-right: 8px;"></i> We reply within 24 hours
                         </div>
                     </div>
