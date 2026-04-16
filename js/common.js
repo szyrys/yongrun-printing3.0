@@ -325,8 +325,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 创建浮动按钮
     const floatBtn = document.createElement('div');
     floatBtn.id = 'floatConsultBtn';
-    floatBtn.innerHTML = '<i class="fas fa-comment-dots"></i>';
-    floatBtn.title = 'Get a Quote';
+    floatBtn.innerHTML = '<i class="fas fa-envelope"></i><span>Get a Quote</span>';
+    floatBtn.title = 'Get a Free Quote';
     document.body.appendChild(floatBtn);
     
     // 创建弹窗
@@ -335,23 +335,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     modal.innerHTML = `
         <div class="consult-modal-content">
             <span class="consult-close">&times;</span>
-            <h3>Get a Free Quote</h3>
-            <p>Fill out the form below and we'll reply within 24 hours</p>
+            <div class="consult-header">
+                <i class="fas fa-gift"></i>
+                <h3>Free Quote Request</h3>
+                <p>We'll reply within 12 hours</p>
+            </div>
             <form id="consultForm">
-                <input type="text" id="consult_name" placeholder="Your Name *" required>
-                <input type="tel" id="consult_phone" placeholder="Phone Number">
-                <input type="email" id="consult_email" placeholder="Email Address">
-                <select id="consult_product">
-                    <option value="" disabled selected>Select Product Type</option>
-                    <option value="cards">Cards</option>
-                    <option value="books">Books</option>
-                    <option value="board-games">Board Games</option>
-                    <option value="puzzles">Puzzles</option>
-                    <option value="other">Other</option>
-                </select>
-                <textarea id="consult_message" rows="4" placeholder="Tell us about your project..."></textarea>
-                <div style="font-size: 12px; color: #666; margin: 10px 0;">Please provide either Phone or Email</div>
-                <button type="submit">Send Message</button>
+                <div class="consult-form-group">
+                    <input type="text" id="consult_name" placeholder="Your Name / Company Name *" required>
+                </div>
+                <div class="consult-row">
+                    <div class="consult-form-group half">
+                        <input type="tel" id="consult_phone" placeholder="Phone Number">
+                    </div>
+                    <div class="consult-form-group half">
+                        <input type="email" id="consult_email" placeholder="Email Address">
+                    </div>
+                </div>
+                <div class="consult-form-group">
+                    <input type="url" id="consult_file_link" placeholder="File Sharing Link (Google Drive / Dropbox / WeTransfer)">
+                    <small>Upload your design files to cloud storage and paste the link here</small>
+                </div>
+                <div class="consult-form-group">
+                    <input type="text" id="consult_quantity" placeholder="Planned Quantity (e.g., 1000 sets)">
+                </div>
+                <div class="consult-form-group">
+                    <textarea id="consult_message" rows="4" placeholder="Other Information (size, material, special requirements...)"></textarea>
+                </div>
+                <div class="consult-contact-hint">
+                    <i class="fas fa-info-circle"></i> Please provide either Phone or Email so we can reach you
+                </div>
+                <button type="submit" id="consultSubmitBtn">Send Request →</button>
             </form>
             <div id="consultStatus"></div>
         </div>
@@ -365,23 +379,38 @@ document.addEventListener('DOMContentLoaded', async () => {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 60px;
-            height: 60px;
-            background: #c9a03d;
+            background: linear-gradient(135deg, #c9a03d, #b08a2c);
             color: white;
-            border-radius: 50%;
+            border-radius: 50px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
             cursor: pointer;
-            font-size: 28px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
             transition: all 0.3s;
             z-index: 999;
+            border: none;
+            animation: floatPulse 2s infinite;
+        }
+        #floatConsultBtn i {
+            font-size: 20px;
         }
         #floatConsultBtn:hover {
-            transform: scale(1.1);
-            background: #b08a2c;
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #b08a2c, #9a7525);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        @keyframes floatPulse {
+            0% { transform: scale(1); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+            50% { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
+            100% { transform: scale(1); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+        }
+        @media (max-width: 768px) {
+            #floatConsultBtn { padding: 10px 18px; font-size: 14px; }
+            #floatConsultBtn span { display: inline; }
         }
         #consultModal {
             display: none;
@@ -390,20 +419,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(3px);
         }
         .consult-modal-content {
             background: white;
-            max-width: 500px;
+            max-width: 550px;
             width: 90%;
-            padding: 25px;
-            border-radius: 12px;
+            border-radius: 20px;
             position: relative;
             max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
         .consult-close {
             position: absolute;
@@ -412,42 +442,108 @@ document.addEventListener('DOMContentLoaded', async () => {
             font-size: 28px;
             cursor: pointer;
             color: #999;
+            z-index: 10;
         }
         .consult-close:hover {
             color: #333;
         }
-        .consult-modal-content h3 {
-            color: #1a2a4f;
-            margin-bottom: 10px;
+        .consult-header {
+            background: linear-gradient(135deg, #1a2a4f, #2a3a5f);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
         }
-        .consult-modal-content input,
-        .consult-modal-content select,
-        .consult-modal-content textarea {
+        .consult-header i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #c9a03d;
+        }
+        .consult-header h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.5rem;
+        }
+        .consult-header p {
+            margin: 0;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        .consult-form-group {
+            margin-bottom: 15px;
+            padding: 0 20px;
+        }
+        .consult-row {
+            display: flex;
+            gap: 15px;
+            padding: 0 20px;
+        }
+        .consult-form-group.half {
+            flex: 1;
+            padding: 0;
+        }
+        .consult-form-group input,
+        .consult-form-group textarea,
+        .consult-form-group select {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
             font-size: 14px;
+            transition: all 0.3s;
+            box-sizing: border-box;
         }
-        .consult-modal-content button {
-            width: 100%;
-            padding: 12px;
-            background: #c9a03d;
+        .consult-form-group input:focus,
+        .consult-form-group textarea:focus {
+            outline: none;
+            border-color: #c9a03d;
+            box-shadow: 0 0 0 3px rgba(201,160,61,0.1);
+        }
+        .consult-form-group small {
+            display: block;
+            color: #999;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+        .consult-contact-hint {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            margin: 10px 20px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .consult-contact-hint i {
+            color: #c9a03d;
+        }
+        #consultSubmitBtn {
+            width: calc(100% - 40px);
+            margin: 10px 20px 25px 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, #c9a03d, #b08a2c);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 50px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 10px;
+            transition: all 0.3s;
         }
-        .consult-modal-content button:hover {
-            background: #b08a2c;
+        #consultSubmitBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201,160,61,0.4);
         }
-        #consultStatus {
-            margin-top: 10px;
-            font-size: 14px;
-            text-align: center;
+        @media (max-width: 550px) {
+            .consult-row {
+                flex-direction: column;
+                gap: 0;
+                padding: 0;
+            }
+            .consult-form-group {
+                padding: 0 20px;
+            }
         }
     `;
     document.head.appendChild(style);
@@ -472,30 +568,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         const name = document.getElementById('consult_name').value.trim();
         const phone = document.getElementById('consult_phone').value.trim();
         const email = document.getElementById('consult_email').value.trim();
-        const product = document.getElementById('consult_product').value;
+        const fileLink = document.getElementById('consult_file_link').value.trim();
+        const quantity = document.getElementById('consult_quantity').value.trim();
         const message = document.getElementById('consult_message').value.trim();
         const statusDiv = document.getElementById('consultStatus');
         
         if (!name) {
-            statusDiv.innerHTML = '<span style="color: #e74c3c;">Please enter your name</span>';
+            statusDiv.innerHTML = '<span style="color: #e74c3c;">Please enter your name or company name</span>';
             return;
         }
         if (!phone && !email) {
-            statusDiv.innerHTML = '<span style="color: #e74c3c;">Please provide either phone or email</span>';
+            statusDiv.innerHTML = '<span style="color: #e74c3c;">Please provide either phone number or email address</span>';
             return;
         }
         
         statusDiv.innerHTML = '<span style="color: #3498db;">Sending...</span>';
         
         try {
-            const fullMessage = `Product: ${product}\nPhone: ${phone || 'Not provided'}\n\nMessage:\n${message || 'No message'}`;
+            const fullMessage = `Quantity: ${quantity || 'Not specified'}\nFile Link: ${fileLink || 'Not provided'}\n\nOther Information:\n${message || 'Not specified'}`;
             const { error } = await window.supabaseClient
                 .from('messages')
                 .insert([{ name, email: email || 'Not provided', message: fullMessage, phone: phone || 'Not provided' }]);
             
             if (error) throw error;
             
-            statusDiv.innerHTML = '<span style="color: #27ae60;">Message sent! We will contact you soon.</span>';
+            statusDiv.innerHTML = '<span style="color: #27ae60;">✓ Message sent! We will contact you soon.</span>';
             consultForm.reset();
             setTimeout(() => {
                 statusDiv.innerHTML = '';
