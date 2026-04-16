@@ -76,4 +76,10 @@
   "process_contact_hint": "Contact Info Required: Please provide either Phone or Email so we can reach you.",
   "process_contact_title": "Request a Quote",
   "direct_email": "Direct Email: cnyrys@163.com"
+  "product_type_placeholder": "Type",
+  "product_option_cards": "Cards",
+  "product_option_books": "Books",
+  "product_option_boardgames": "Board Games",
+  "product_option_puzzles": "Puzzles",
+  "product_option_other": "Other"
 }
