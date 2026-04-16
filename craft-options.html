@@ -46,11 +46,13 @@
             padding: 30px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
         
         .craft-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         
         .craft-icon {
@@ -86,9 +88,145 @@
             color: #1a2a4f;
         }
         
+        /* 图片弹窗 */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .gallery-content {
+            background: white;
+            max-width: 900px;
+            width: 90%;
+            border-radius: 20px;
+            position: relative;
+            padding: 30px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .gallery-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #999;
+            z-index: 10;
+        }
+        
+        .gallery-close:hover {
+            color: #333;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-header h3 {
+            color: #1a2a4f;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-header p {
+            color: #666;
+        }
+        
+        .main-image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #f5f5f5;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a2a4f;
+            transition: all 0.3s;
+        }
+        
+        .gallery-nav:hover {
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-prev {
+            left: 15px;
+        }
+        
+        .gallery-next {
+            right: 15px;
+        }
+        
+        .thumbnail-list {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .thumbnail.active {
+            border-color: #c9a03d;
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
         @media (max-width: 768px) {
             .craft-grid {
                 grid-template-columns: 1fr;
+            }
+            .gallery-content {
+                padding: 20px;
+            }
+            .thumbnail {
+                width: 60px;
+                height: 60px;
             }
         }
     </style>
@@ -150,74 +288,33 @@
         </div>
     </section>
 
-    <!-- 材质选项 -->
+    <!-- 材质选项（扩展为6项） -->
     <section class="craft-section">
         <div class="container">
             <div class="craft-title">
                 <h2 data-i18n="material_title">Paper & Materials</h2>
                 <p data-i18n="material_desc">Choose from a variety of high-quality paper stocks</p>
             </div>
-            <div class="craft-grid">
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-file-alt"></i></div>
-                    <h3 data-i18n="material1_title">Standard Playing Card Paper</h3>
-                    <p data-i18n="material1_desc">310gsm-330gsm, black core or blue core, excellent snap and durability.</p>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-gem"></i></div>
-                    <h3 data-i18n="material2_title">Premium Art Paper</h3>
-                    <p data-i18n="material2_desc">300gsm-350gsm, coated or uncoated, ideal for tarot and collectible cards.</p>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-water"></i></div>
-                    <h3 data-i18n="material3_title">Plastic Cards (PVC)</h3>
-                    <p data-i18n="material3_desc">Waterproof, tear-resistant, available in various thicknesses (0.3mm-0.8mm).</p>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-leaf"></i></div>
-                    <h3 data-i18n="material4_title">Eco-Friendly Paper</h3>
-                    <p data-i18n="material4_desc">FSC certified, recycled paper options for environmentally conscious brands.</p>
-                </div>
+            <div class="craft-grid" id="materialGrid">
+                <!-- 卡片将通过 JS 动态生成，以支持点击弹窗 -->
             </div>
         </div>
     </section>
 
-    <!-- 表面处理 -->
+    <!-- 表面处理（扩展为6项） -->
     <section class="craft-section" style="background: #f8f9fa;">
         <div class="container">
             <div class="craft-title">
                 <h2 data-i18n="finish_title">Surface Finishes</h2>
                 <p data-i18n="finish_desc">Protective coatings and textures for the perfect feel</p>
             </div>
-            <div class="craft-grid">
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-sun"></i></div>
-                    <h3 data-i18n="finish1_title">Gloss Lamination</h3>
-                    <p data-i18n="finish1_desc">High shine, vibrant colors, scratch resistant.</p>
-                    <div class="badge-list"><span class="badge">Recommended for playing cards</span></div>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-moon"></i></div>
-                    <h3 data-i18n="finish2_title">Matte Lamination</h3>
-                    <p data-i18n="finish2_desc">Non-glare, elegant look, smooth to touch.</p>
-                    <div class="badge-list"><span class="badge">Recommended for tarot cards</span></div>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-hand-paper"></i></div>
-                    <h3 data-i18n="finish3_title">Aqueous Coating</h3>
-                    <p data-i18n="finish3_desc">Quick-drying, eco-friendly, good protection.</p>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-icon"><i class="fas fa-palette"></i></div>
-                    <h3 data-i18n="finish4_title">UV Coating</h3>
-                    <p data-i18n="finish4_desc">High gloss, ultra durable, spot UV available.</p>
-                    <div class="badge-list"><span class="badge">Spot UV effect</span></div>
-                </div>
+            <div class="craft-grid" id="finishGrid">
+                <!-- 卡片将通过 JS 动态生成 -->
             </div>
         </div>
     </section>
 
-    <!-- 印刷工艺 -->
+    <!-- 印刷工艺（保持原样，不弹窗） -->
     <section class="craft-section">
         <div class="container">
             <div class="craft-title">
@@ -278,11 +375,254 @@
     </footer>
 </main>
 
+    <!-- 图片弹窗 -->
+    <div class="gallery-modal" id="galleryModal">
+        <div class="gallery-content">
+            <span class="gallery-close" id="galleryClose">&times;</span>
+            <div class="gallery-header">
+                <h3 id="galleryTitle">Material Name</h3>
+                <p id="galleryDesc">Description</p>
+            </div>
+            <div class="main-image-container">
+                <img id="mainImage" class="main-image" src="" alt="">
+                <button class="gallery-nav gallery-prev" id="galleryPrev">❮</button>
+                <button class="gallery-nav gallery-next" id="galleryNext">❯</button>
+            </div>
+            <div class="thumbnail-list" id="thumbnailList"></div>
+        </div>
+    </div>
+
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <!-- 网站脚本 -->
     <script src="js/supabase-config.js"></script>
     <script src="js/common.js"></script>
+    <script>
+        (function() {
+            // 材质数据（6项）
+            const materials = [
+                { key: 'material1', icon: 'fa-file-alt' },
+                { key: 'material2', icon: 'fa-gem' },
+                { key: 'material3', icon: 'fa-water' },
+                { key: 'material4', icon: 'fa-leaf' },
+                { key: 'material5', icon: 'fa-pagelines' },
+                { key: 'material6', icon: 'fa-certificate' }
+            ];
+            
+            // 表面处理数据（6项）
+            const finishes = [
+                { key: 'finish1', icon: 'fa-sun' },
+                { key: 'finish2', icon: 'fa-moon' },
+                { key: 'finish3', icon: 'fa-hand-paper' },
+                { key: 'finish4', icon: 'fa-palette' },
+                { key: 'finish5', icon: 'fa-adjust' },
+                { key: 'finish6', icon: 'fa-brush' }
+            ];
+            
+            // 图片库（占位图，每个选项最多6张）
+            const imageGalleries = {
+                // 材质
+                material1: [
+                    'https://picsum.photos/id/20/800/450',
+                    'https://picsum.photos/id/21/800/450',
+                    'https://picsum.photos/id/22/800/450'
+                ],
+                material2: [
+                    'https://picsum.photos/id/30/800/450',
+                    'https://picsum.photos/id/31/800/450',
+                    'https://picsum.photos/id/32/800/450',
+                    'https://picsum.photos/id/33/800/450'
+                ],
+                material3: [
+                    'https://picsum.photos/id/40/800/450',
+                    'https://picsum.photos/id/41/800/450'
+                ],
+                material4: [
+                    'https://picsum.photos/id/50/800/450',
+                    'https://picsum.photos/id/51/800/450',
+                    'https://picsum.photos/id/52/800/450',
+                    'https://picsum.photos/id/53/800/450',
+                    'https://picsum.photos/id/54/800/450'
+                ],
+                material5: [
+                    'https://picsum.photos/id/60/800/450',
+                    'https://picsum.photos/id/61/800/450'
+                ],
+                material6: [
+                    'https://picsum.photos/id/70/800/450',
+                    'https://picsum.photos/id/71/800/450',
+                    'https://picsum.photos/id/72/800/450'
+                ],
+                // 表面处理
+                finish1: [
+                    'https://picsum.photos/id/80/800/450',
+                    'https://picsum.photos/id/81/800/450',
+                    'https://picsum.photos/id/82/800/450'
+                ],
+                finish2: [
+                    'https://picsum.photos/id/90/800/450',
+                    'https://picsum.photos/id/91/800/450',
+                    'https://picsum.photos/id/92/800/450',
+                    'https://picsum.photos/id/93/800/450'
+                ],
+                finish3: [
+                    'https://picsum.photos/id/100/800/450',
+                    'https://picsum.photos/id/101/800/450'
+                ],
+                finish4: [
+                    'https://picsum.photos/id/110/800/450',
+                    'https://picsum.photos/id/111/800/450',
+                    'https://picsum.photos/id/112/800/450'
+                ],
+                finish5: [
+                    'https://picsum.photos/id/120/800/450',
+                    'https://picsum.photos/id/121/800/450',
+                    'https://picsum.photos/id/122/800/450',
+                    'https://picsum.photos/id/123/800/450',
+                    'https://picsum.photos/id/124/800/450',
+                    'https://picsum.photos/id/125/800/450'
+                ],
+                finish6: [
+                    'https://picsum.photos/id/130/800/450',
+                    'https://picsum.photos/id/131/800/450'
+                ]
+            };
+            
+            // 渲染卡片
+            function renderCards(containerId, items, type) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                
+                let html = '';
+                items.forEach(item => {
+                    const key = item.key;
+                    html += `
+                        <div class="craft-card" data-gallery="${key}">
+                            <div class="craft-icon"><i class="fas ${item.icon}"></i></div>
+                            <h3 data-i18n="${key}_title">Loading...</h3>
+                            <p data-i18n="${key}_desc">Loading...</p>
+                            <div class="badge-list" data-i18n-badge="${key}_badge"></div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+            
+            renderCards('materialGrid', materials, 'material');
+            renderCards('finishGrid', finishes, 'finish');
+            
+            // 弹窗逻辑
+            const modal = document.getElementById('galleryModal');
+            const modalTitle = document.getElementById('galleryTitle');
+            const modalDesc = document.getElementById('galleryDesc');
+            const mainImage = document.getElementById('mainImage');
+            const thumbnailList = document.getElementById('thumbnailList');
+            const prevBtn = document.getElementById('galleryPrev');
+            const nextBtn = document.getElementById('galleryNext');
+            const closeBtn = document.getElementById('galleryClose');
+            
+            let currentImages = [];
+            let currentIndex = 0;
+            
+            function openGallery(key) {
+                const images = imageGalleries[key] || ['https://picsum.photos/800/450?random=1'];
+                currentImages = images;
+                currentIndex = 0;
+                
+                // 获取翻译后的标题和描述
+                const titleKey = key + '_title';
+                const descKey = key + '_desc';
+                const title = window.translations?.[titleKey] || document.querySelector(`[data-i18n="${titleKey}"]`)?.textContent || key;
+                const desc = window.translations?.[descKey] || document.querySelector(`[data-i18n="${descKey}"]`)?.textContent || '';
+                
+                modalTitle.textContent = title;
+                modalDesc.textContent = desc;
+                
+                updateMainImage();
+                renderThumbnails();
+                
+                modal.style.display = 'flex';
+            }
+            
+            function updateMainImage() {
+                if (currentImages.length > 0) {
+                    mainImage.src = currentImages[currentIndex];
+                }
+            }
+            
+            function renderThumbnails() {
+                let html = '';
+                currentImages.forEach((img, idx) => {
+                    html += `
+                        <div class="thumbnail ${idx === currentIndex ? 'active' : ''}" data-index="${idx}">
+                            <img src="${img}" alt="">
+                        </div>
+                    `;
+                });
+                thumbnailList.innerHTML = html;
+                
+                document.querySelectorAll('.thumbnail').forEach(thumb => {
+                    thumb.addEventListener('click', () => {
+                        currentIndex = parseInt(thumb.dataset.index);
+                        updateMainImage();
+                        document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                        thumb.classList.add('active');
+                    });
+                });
+            }
+            
+            function nextImage() {
+                if (currentImages.length === 0) return;
+                currentIndex = (currentIndex + 1) % currentImages.length;
+                updateMainImage();
+                renderThumbnails();
+            }
+            
+            function prevImage() {
+                if (currentImages.length === 0) return;
+                currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+                updateMainImage();
+                renderThumbnails();
+            }
+            
+            // 事件绑定（使用事件委托）
+            document.addEventListener('click', (e) => {
+                const card = e.target.closest('.craft-card');
+                if (card && card.dataset.gallery) {
+                    openGallery(card.dataset.gallery);
+                }
+            });
+            
+            prevBtn.addEventListener('click', prevImage);
+            nextBtn.addEventListener('click', nextImage);
+            
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // 键盘支持
+            document.addEventListener('keydown', (e) => {
+                if (modal.style.display === 'flex') {
+                    if (e.key === 'ArrowLeft') prevImage();
+                    if (e.key === 'ArrowRight') nextImage();
+                    if (e.key === 'Escape') modal.style.display = 'none';
+                }
+            });
+            
+            // 将 translations 暴露给全局以便弹窗使用
+            if (typeof translations !== 'undefined') {
+                window.translations = translations;
+            }
+            
+            // 监听语言切换后重新渲染（common.js 中的 updatePageText 会更新 data-i18n 内容，弹窗内文本会随翻译改变）
+        })();
+    </script>
 </body>
 </html>
