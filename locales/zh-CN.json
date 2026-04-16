@@ -30,8 +30,6 @@
   "product_advertising_desc": "企业宣传、活动礼品。支持小批量定制，快速打样。",
   "product_kids_title": "儿童启蒙套装",
   "product_kids_desc": "环保油墨、安全材质。拼图卡、认知卡、互动游戏套装。",
-  "product_books_title": "精装书/平装书",
-  "product_books_desc": "高品质书籍印刷，定制尺寸，锁线胶装，精装或平装可选。",
 
   "cta_title": "准备好开始您的定制卡牌项目了吗？",
   "cta_subtitle": "24小时内获取报价。样品无起订量要求。",
@@ -46,8 +44,8 @@
   "contact_title": "获取报价",
   "contact_desc": "告诉我们您的需求，我们将在24小时内回复您",
   "form_name": "您的姓名 *",
-  "form_email": "电子邮箱",
-  "form_message": "留言内容（卡牌类型、数量、特殊要求等）",
+  "form_email": "电子邮箱 *",
+  "form_message": "留言内容（卡牌类型、数量、特殊要求等）*",
   "form_submit": "提交留言",
   "form_success": "留言已发送，我们会尽快联系您！",
   "form_error_empty": "请填写所有必填项",
@@ -70,14 +68,8 @@
   "category_books_btn": "查看书籍系列 →",
   "category_boardgames_btn": "查看桌游系列 →",
   "category_puzzles_btn": "查看拼图系列 →",
-
   "free_sample_title": "免费获取精美样品",
   "free_sample_desc": "申请免费样品，体验我们的品质 →",
   "free_sample_btn": "申请免费样品",
-
-  "features_title": "认证与标准",
-  "faq_title": "常见问题",
-  "reply_text": "我们将在12小时内回复",
-  "load_more": "加载更多",
-  "category_puzzles_desc": "适用于所有年龄段的定制纸质拼图 - 儿童拼图、教育拼图、地板拼图。高品质胶版印刷，环保材料。适合礼品、教育玩具和促销品。"
+  "features_title": "认证与标准"
 }
