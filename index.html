@@ -480,5 +480,54 @@
             loadCategoryImages();
         });
     </script>
+    <script>
+    // Hero 轮播
+    const heroSlides = document.querySelectorAll('.hero-bg-slide');
+    const heroPrev = document.querySelector('.hero-prev');
+    const heroNext = document.querySelector('.hero-next');
+    const heroDotsContainer = document.querySelector('.hero-dots');
+    let heroCurrent = 0;
+    let heroInterval;
+
+    if (heroSlides.length > 0) {
+        // 创建圆点
+        heroSlides.forEach((_, i) => {
+            const dot = document.createElement('span');
+            dot.classList.add('hero-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToHeroSlide(i));
+            heroDotsContainer.appendChild(dot);
+        });
+
+        function goToHeroSlide(index) {
+            heroSlides[heroCurrent].classList.remove('active');
+            heroDotsContainer.children[heroCurrent].classList.remove('active');
+            heroCurrent = (index + heroSlides.length) % heroSlides.length;
+            heroSlides[heroCurrent].classList.add('active');
+            heroDotsContainer.children[heroCurrent].classList.add('active');
+        }
+
+        function nextHeroSlide() { goToHeroSlide(heroCurrent + 1); }
+        function prevHeroSlide() { goToHeroSlide(heroCurrent - 1); }
+
+        heroNext.addEventListener('click', () => {
+            nextHeroSlide();
+            resetHeroInterval();
+        });
+        heroPrev.addEventListener('click', () => {
+            prevHeroSlide();
+            resetHeroInterval();
+        });
+
+        function startHeroInterval() {
+            heroInterval = setInterval(nextHeroSlide, 5000);
+        }
+        function resetHeroInterval() {
+            clearInterval(heroInterval);
+            startHeroInterval();
+        }
+        startHeroInterval();
+    }
+</script>
 </body>
 </html>
