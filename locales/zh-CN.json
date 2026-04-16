@@ -143,6 +143,19 @@
   "cert_desc1": "质量管理",
   "cert_desc2": "森林管理委员会认证",
   "cert_desc3": "社会责任合规",
-  "cert_desc4": "色彩一致性精准"
+  "cert_desc4": "色彩一致性精准",
+  "contact_direct_email_label": "联系邮箱：",
+  "contact_file_link_label": "文件分享链接 (Google Drive / Dropbox / WeTransfer)",
+  "contact_file_link_hint": "将设计文件上传至云盘后，将链接粘贴于此。",
+  "contact_required_info_hint": "<strong>联系方式必填：</strong>请至少提供<strong>电话</strong>或<strong>邮箱</strong>以便我们与您取得联系。",
+  "contact_company_name": "深圳市永润印刷有限公司",
+  "contact_address_label": "地址：",
+  "contact_address_full": "中国深圳市宝安区新桥街道象山社区新发东路24号3栋",
+  "contact_phone_label": "电话：",
+  "contact_email_label": "邮箱：",
+  "contact_wechat_label": "微信：",
+  "contact_whatsapp_label": "WhatsApp：",
+  "contact_reply_24h": "<i class=\"fas fa-clock\" style=\"margin-right: 8px;\"></i> 我们将在24小时内回复"
+}
 }
 
