@@ -353,11 +353,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                 </div>
                 <div class="consult-form-group">
-                    <input type="url" id="consult_file_link" placeholder="File Sharing Link (Google Drive / Dropbox / WeTransfer)">
-                    <small>Upload your design files to cloud storage and paste the link here</small>
+                    <input type="text" id="consult_quantity" placeholder="Planned Quantity (e.g., 1000 sets)">
                 </div>
                 <div class="consult-form-group">
-                    <input type="text" id="consult_quantity" placeholder="Planned Quantity (e.g., 1000 sets)">
+                    <input type="url" id="consult_file_link" placeholder="File Sharing Link (Google Drive / Dropbox / WeTransfer)">
+                    <small>Upload your design files to cloud storage and paste the link here</small>
                 </div>
                 <div class="consult-form-group">
                     <textarea id="consult_message" rows="4" placeholder="Other Information (size, material, special requirements...)"></textarea>
@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
     document.body.appendChild(modal);
     
-    // 样式
+    // 样式（保持不变）
     const style = document.createElement('style');
     style.textContent = `
         #floatConsultBtn {
@@ -568,8 +568,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const name = document.getElementById('consult_name').value.trim();
         const phone = document.getElementById('consult_phone').value.trim();
         const email = document.getElementById('consult_email').value.trim();
-        const fileLink = document.getElementById('consult_file_link').value.trim();
         const quantity = document.getElementById('consult_quantity').value.trim();
+        const fileLink = document.getElementById('consult_file_link').value.trim();
         const message = document.getElementById('consult_message').value.trim();
         const statusDiv = document.getElementById('consultStatus');
         
