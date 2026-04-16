@@ -320,6 +320,69 @@ document.addEventListener('DOMContentLoaded', async () => {
         startInterval();
     }
 });
+    // ===== 回到顶部按钮 =====
+    const backToTopBtn = document.createElement('div');
+    backToTopBtn.id = 'backToTopBtn';
+    backToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    backToTopBtn.title = 'Back to Top';
+    document.body.appendChild(backToTopBtn);
+    
+    // 样式
+    const backToTopStyle = document.createElement('style');
+    backToTopStyle.textContent = `
+        #backToTopBtn {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #1a2a4f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 22px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+        }
+        #backToTopBtn:hover {
+            background: #c9a03d;
+            transform: translateY(-3px);
+        }
+        #backToTopBtn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        @media (max-width: 768px) {
+            #backToTopBtn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+                bottom: 100px;
+                right: 20px;
+            }
+        }
+    `;
+    document.head.appendChild(backToTopStyle);
+    
+    // 滚动监听
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    
+    // 点击回到顶部
+    backToTopBtn.onclick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 // ===== 全局浮动咨询按钮 =====
 (function() {
     // 创建浮动按钮
