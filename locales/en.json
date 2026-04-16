@@ -89,5 +89,19 @@
   "equipment_item2": "Digital color management system",
   "equipment_item3": "High-speed printing presses",
   "equipment_item4": "Foil stamping & embossing equipment",
-  "equipment_item5": "Efficient prototyping and fast delivery system"
+  "equipment_item5": "Efficient prototyping and fast delivery system",
+
+  "contact_direct_email_label": "Direct Email:",
+  "contact_file_link_label": "File Sharing Link (Google Drive / Dropbox / WeTransfer)",
+  "contact_file_link_hint": "Upload your design files to cloud storage and paste the link here.",
+  "contact_required_info_hint": "<strong>Contact Info Required:</strong> Please provide either <strong>Phone</strong> or <strong>Email</strong> so we can reach you.",
+  "contact_company_name": "Shenzhen Yongrun Printing Co., Ltd.",
+  "contact_address_label": "Address:",
+  "contact_address_full": "Building 3, No. 24 Xinfadong Road, Xiangshan Community, Xinqiao Street, Bao'an District, Shenzhen, China",
+  "contact_phone_label": "Phone:",
+  "contact_email_label": "Email:",
+  "contact_wechat_label": "WeChat:",
+  "contact_whatsapp_label": "WhatsApp:",
+  "contact_reply_24h": "<i class=\"fas fa-clock\" style=\"margin-right: 8px;\"></i> We reply within 24 hours"
 }
+
