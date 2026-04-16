@@ -854,3 +854,17 @@ html[dir="rtl"] .language-selector button {
 .nav-menu .dropdown + li {
     min-width: 120px;
 }
+/* 导航栏语言下拉框样式 */
+.nav-language-select {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #1a2a4f;
+    color: white;
+    border: 1px solid #c9a03d;
+    cursor: pointer;
+    font-size: 14px;
+    width: 110px;
+}
+.lang-item {
+    margin-left: 15px;
+}

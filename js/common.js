@@ -128,33 +128,6 @@ function initMobileMenu() {
     });
 }
 
-function addLanguageSelectorToNavbar() {
-    const navMenu = document.getElementById('navMenu');
-    if (!navMenu) return;
-    const contactItem = Array.from(navMenu.children).find(li => {
-        const link = li.querySelector('a');
-        return link && link.getAttribute('data-i18n') === 'nav_contact';
-    });
-    if (!contactItem) return;
-    if (document.getElementById('navLanguageSelect')) return;
-    
-    const newLi = document.createElement('li');
-    newLi.style.marginLeft = '10px';
-    const select = document.createElement('select');
-    select.id = 'navLanguageSelect';
-    select.style.cssText = 'padding: 6px 12px; border-radius: 6px; background: #1a2a4f; color: white; border: 1px solid #c9a03d; cursor: pointer; font-size: 14px;';
-    languages.forEach(lang => {
-        const option = document.createElement('option');
-        option.value = lang.code;
-        option.textContent = lang.name;
-        if (lang.code === currentLang) option.selected = true;
-        select.appendChild(option);
-    });
-    select.onchange = (e) => loadLanguage(e.target.value);
-    newLi.appendChild(select);
-    contactItem.insertAdjacentElement('afterend', newLi);
-}
-
 async function loadFaqs() {
     const container = document.getElementById('faqList');
     if (!container) return;
@@ -216,7 +189,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     else if (languages.some(l => l.code === browserLang)) initLang = browserLang;
     
     await loadLanguage(initLang);
-    addLanguageSelectorToNavbar();
     loadFaqs();
     
     // 七图画廊
