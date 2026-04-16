@@ -53,9 +53,11 @@ main {
 .navbar {
     background: white;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    .navbar {
     position: sticky;
     top: 0;
     z-index: 1000;
+    /* 保留原有背景、内边距等属性 */
 }
     position: sticky;
     top: 0;
@@ -67,6 +69,14 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
+    flex-wrap: wrap;        /* 允许小屏幕换行，但大屏幕保持一行 */
+}
+
+/* 大屏幕下强制不换行 */
+@media (min-width: 769px) {
+    .navbar .container {
+        flex-wrap: nowrap;
+    }
 }
 
 .logo a {
