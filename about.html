@@ -282,22 +282,38 @@
         </div>
     </section>
 
-    <!-- 公司简介 -->
-    <section class="about-section">
-        <div class="container">
-            <div class="about-grid">
-            <div class="about-text">
-                <h3 data-i18n="about_title">Shenzhen Yongrun Printing Co., Ltd.</h3>
+<!-- 公司简介 -->
+<section class="about-section">
+    <div class="container">
+        <div style="overflow: hidden;">
+            <!-- 右侧轮播图（float: right） -->
+            <div style="float: right; width: 48%; margin-left: 30px; border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 9;">
+                <div class="about-slider" id="aboutSlider" style="position: relative; width: 100%; height: 100%;">
+                    <div class="slider-container" style="position: relative; width: 100%; height: 100%;">
+                        <div class="slide active">
+                            <img src="https://picsum.photos/id/20/800/450" alt="Factory" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="slide">
+                            <img src="https://picsum.photos/id/40/800/450" alt="Equipment" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="slide">
+                            <img src="https://picsum.photos/id/42/800/450" alt="Printing Press" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                    <button class="slider-prev" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px; cursor: pointer; font-size: 18px; border-radius: 50%; z-index: 10;">❮</button>
+                    <button class="slider-next" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px; cursor: pointer; font-size: 18px; border-radius: 50%; z-index: 10;">❯</button>
+                    <div class="slider-dots" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10;"></div>
+                </div>
+            </div>
+            <!-- 左侧文字 -->
+            <div class="about-text" style="overflow: hidden;">
                 <p data-i18n="about_text1">Founded in 2003, we have over 20 years of professional printing experience...</p>
                 <p data-i18n="about_text2">Specialized in children's enlightenment, intelligence development, games, and custom card sets...</p>
                 <p data-i18n="about_text3">Certified with ISO9001, ISO14001, FSC, SEDEX, G7 and other international quality standards...</p>
             </div>
-                <div class="about-image">
-                    <img src="https://picsum.photos/id/20/800/450" alt="Yongrun Printing Facility" style="width:100%; border-radius:12px;">
-                </div>
-            </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- 统计数据 -->
     <section class="about-section" style="background: #f8f9fa;">
