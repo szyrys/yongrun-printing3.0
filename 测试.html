@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流程方案演示 - 四套流程切换</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #1a2a4f;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        /* 标签栏 */
+        .process-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-radius: 40px 40px 0 0;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn i {
+            font-size: 1.2rem;
+        }
+        .tab-btn:hover {
+            background: #f0f0f0;
+            color: #1a2a4f;
+        }
+        .tab-btn.active {
+            background: #1a2a4f;
+            color: white;
+        }
+
+        /* RTL 开关（演示用） */
+        .rtl-switch {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .rtl-btn {
+            background: #eee;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rtl-btn.active {
+            background: #c9a03d;
+            color: white;
+        }
+
+        /* 时间线 */
+        .process-timeline {
+            position: relative;
+            padding: 20px 0 40px 0;
+        }
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, #c9a03d, #1a2a4f, #c9a03d);
+        }
+        .step-card {
+            position: relative;
+            margin-left: 80px;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 16px;
+            padding: 20px 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+        .step-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        .step-number {
+            position: absolute;
+            left: -55px;
+            top: 20px;
+            width: 40px;
+            height: 40px;
+            background: #c9a03d;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+        .step-icon {
+            font-size: 2rem;
+            color: #c9a03d;
+            margin-bottom: 12px;
+        }
+        .step-card h3 {
+            color: #1a2a4f;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .step-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* RTL 适配 */
+        html[dir="rtl"] .process-timeline::before {
+            left: auto;
+            right: 40px;
+        }
+        html[dir="rtl"] .step-card {
+            margin-left: 0;
+            margin-right: 80px;
+        }
+        html[dir="rtl"] .step-number {
+            left: auto;
+            right: -55px;
+        }
+        html[dir="rtl"] .step-card:hover {
+            transform: translateX(-5px);
+        }
+        html[dir="rtl"] .process-tabs {
+            justify-content: flex-start;
+        }
+
+        @media (max-width: 600px) {
+            .process-timeline::before {
+                left: 20px;
+            }
+            .step-card {
+                margin-left: 50px;
+                padding: 15px;
+            }
+            .step-number {
+                left: -35px;
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+            html[dir="rtl"] .process-timeline::before {
+                right: 20px;
+                left: auto;
+            }
+            html[dir="rtl"] .step-card {
+                margin-right: 50px;
+            }
+            html[dir="rtl"] .step-number {
+                right: -35px;
+            }
+            .tab-btn {
+                padding: 10px 16px;
+                font-size: 1rem;
+            }
+        }
+
+        /* 流程面板切换 */
+        .process-panel {
+            display: none;
+        }
+        .process-panel.active {
+            display: block;
+        }
+
+        .note {
+            margin-top: 30px;
+            padding: 15px;
+            background: #f0f7ff;
+            border-radius: 12px;
+            color: #1a2a4f;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="demo-container">
+    <h1>📋 四套流程方案演示</h1>
+    <div class="subtitle">点击标签切换不同产品线的定制流程（支持RTL）</div>
+
+    <!-- RTL 演示开关 -->
+    <div class="rtl-switch">
+        <button class="rtl-btn" id="rtlToggle">
+            <i class="fas fa-language"></i>
+            <span>切换到阿拉伯语模式 (RTL)</span>
+        </button>
+    </div>
+
+    <!-- 标签栏 -->
+    <div class="process-tabs">
+        <button class="tab-btn active" data-process="cards">
+            <i class="fas fa-dice-d6"></i> 卡片流程
+        </button>
+        <button class="tab-btn" data-process="books">
+            <i class="fas fa-book"></i> 书籍流程
+        </button>
+        <button class="tab-btn" data-process="boardgames">
+            <i class="fas fa-gamepad"></i> 桌游流程
+        </button>
+        <button class="tab-btn" data-process="puzzles">
+            <i class="fas fa-puzzle-piece"></i> 拼图流程
+        </button>
+    </div>
+
+    <!-- 流程面板容器 -->
+    <!-- 卡片流程 -->
+    <div id="process-cards" class="process-panel active">
+        <div class="process-timeline">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
+                <h3>咨询与沟通</h3>
+                <p>分享您的创意、设计稿或参考样品，讨论数量、预算和交期。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon"><i class="fas fa-paint-brush"></i></div>
+                <h3>设计与定稿</h3>
+                <p>优化设计稿，确保符合印刷标准，提供免费设计咨询。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon"><i class="fas fa-flask"></i></div>
+                <h3>打样确认</h3>
+                <p>制作实物样品供您确认，通常3-5个工作日完成。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-icon"><i class="fas fa-print"></i></div>
+                <h3>批量印刷</h3>
+                <p>自动化生产线保证品质一致，快速交付。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <div class="step-icon"><i class="fas fa-spray-can"></i></div>
+                <h3>表面处理</h3>
+                <p>覆膜、UV、烫金等工艺提升质感和耐用性。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">6</div>
+                <div class="step-icon"><i class="fas fa-box"></i></div>
+                <h3>包装发货</h3>
+                <p>专业包装，全球空运/海运配送。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 书籍流程 -->
+    <div id="process-books" class="process-panel">
+        <div class="process-timeline">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon"><i class="fas fa-comments"></i></div>
+                <h3>咨询与沟通</h3>
+                <p>确定书籍类型、尺寸、页数、装订方式及预算。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                <h3>排版与封面设计</h3>
+                <p>内页排版、封面设计，提供数码打样预览。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon"><i class="fas fa-book-open"></i></div>
+                <h3>打样确认</h3>
+                <p>制作精装/平装实物样品，确认装订效果。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-icon"><i class="fas fa-print"></i></div>
+                <h3>批量印刷与装订</h3>
+                <p>高品质印刷，胶装/锁线/精装等多种装订方式。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <div class="step-icon"><i class="fas fa-gem"></i></div>
+                <h3>封面工艺</h3>
+                <p>烫金、压凹、UV等特殊工艺提升质感。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">6</div>
+                <div class="step-icon"><i class="fas fa-box-open"></i></div>
+                <h3>包装发货</h3>
+                <p>加固包装，确保书籍完好送达。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 桌游流程 -->
+    <div id="process-boardgames" class="process-panel">
+        <div class="process-timeline">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
+                <h3>咨询与组件规划</h3>
+                <p>梳理卡牌、版图、规则书、配件清单及数量。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon"><i class="fas fa-cubes"></i></div>
+                <h3>结构设计与测试</h3>
+                <p>游戏平衡性测试，组件结构设计优化。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon"><i class="fas fa-puzzle-piece"></i></div>
+                <h3>全套样品确认</h3>
+                <p>制作包含所有组件的完整样品，进行最终确认。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-icon"><i class="fas fa-industry"></i></div>
+                <h3>分组件生产</h3>
+                <p>卡片、版图、配件、包装盒同步生产。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <div class="step-icon"><i class="fas fa-clipboard-check"></i></div>
+                <h3>配件组装与质检</h3>
+                <p>人工或自动化组装，全检确保不缺件。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">6</div>
+                <div class="step-icon"><i class="fas fa-shipping-fast"></i></div>
+                <h3>包装发货</h3>
+                <p>统一包装，支持全球物流。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 拼图流程 -->
+    <div id="process-puzzles" class="process-panel">
+        <div class="process-timeline">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon"><i class="fas fa-comments"></i></div>
+                <h3>咨询与沟通</h3>
+                <p>确定拼图片数、尺寸、图案及包装形式。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon"><i class="fas fa-draw-polygon"></i></div>
+                <h3>图案设计</h3>
+                <p>高分辨率图案适配，确保切割后图案完整。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon"><i class="fas fa-cut"></i></div>
+                <h3>刀模制作与打样</h3>
+                <p>定制刀模，制作实物拼图样品测试咬合度。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-icon"><i class="fas fa-layer-group"></i></div>
+                <h3>批量模切与印刷</h3>
+                <p>精准模切，高品质印刷保证色彩。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <div class="step-icon"><i class="fas fa-arrows-alt"></i></div>
+                <h3>拼块分拣与质检</h3>
+                <p>确保无缺片、边缘光滑，装入内袋。</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">6</div>
+                <div class="step-icon"><i class="fas fa-gift"></i></div>
+                <h3>包装发货</h3>
+                <p>精美包装盒，安全送达。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="note">
+        <i class="fas fa-info-circle"></i> 
+        <strong>RTL适配说明：</strong>点击上方按钮可切换页面文字方向。实际项目中通过 <code>html[dir="rtl"]</code> 选择器自动适应阿拉伯语等RTL语言，无需额外代码。
+    </div>
+</div>
+
+<script>
+    (function() {
+        // 标签切换逻辑
+        const tabs = document.querySelectorAll('.tab-btn');
+        const panels = {
+            cards: document.getElementById('process-cards'),
+            books: document.getElementById('process-books'),
+            boardgames: document.getElementById('process-boardgames'),
+            puzzles: document.getElementById('process-puzzles')
+        };
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const processKey = tab.dataset.process;
+                
+                // 切换标签激活状态
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // 切换面板显示
+                Object.keys(panels).forEach(key => {
+                    panels[key].classList.remove('active');
+                });
+                panels[processKey].classList.add('active');
+            });
+        });
+
+        // RTL 演示开关
+        const rtlToggle = document.getElementById('rtlToggle');
+        let isRTL = false;
+        rtlToggle.addEventListener('click', () => {
+            isRTL = !isRTL;
+            document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', isRTL ? 'ar' : 'en');
+            rtlToggle.innerHTML = isRTL ? 
+                '<i class="fas fa-language"></i> 切换回正常模式 (LTR)' : 
+                '<i class="fas fa-language"></i> 切换到阿拉伯语模式 (RTL)';
+            rtlToggle.classList.toggle('active', isRTL);
+        });
+    })();
+</script>
+
+</body>
+</html>
