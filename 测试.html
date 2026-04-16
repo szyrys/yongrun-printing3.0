@@ -3,43 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>流程方案演示 - 四套流程切换</title>
+    <title>Custom Process - Yongrun Printing</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background: #f5f7fa;
-            padding: 40px 20px;
-        }
-        .demo-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 30px;
-        }
-        h1 {
-            color: #1a2a4f;
-            margin-bottom: 10px;
-            font-size: 2rem;
-        }
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-
-        /* 标签栏 */
+        /* 定制流程页面专用样式 */
         .process-tabs {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            justify-content: center;
             margin-bottom: 40px;
             border-bottom: 2px solid #eee;
             padding-bottom: 5px;
@@ -70,32 +43,18 @@
             color: white;
         }
 
-        /* RTL 开关（演示用） */
-        .rtl-switch {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px;
+        .process-panel {
+            display: none;
         }
-        .rtl-btn {
-            background: #eee;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .rtl-btn.active {
-            background: #c9a03d;
-            color: white;
+        .process-panel.active {
+            display: block;
         }
 
-        /* 时间线 */
         .process-timeline {
-            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px 0 40px 0;
+            position: relative;
         }
         .process-timeline::before {
             content: '';
@@ -113,13 +72,15 @@
             background: white;
             border-radius: 16px;
             padding: 20px 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: all 0.3s;
-            border: 1px solid #f0f0f0;
         }
         .step-card:hover {
             transform: translateX(5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+        .step-card:last-child {
+            margin-bottom: 0;
         }
         .step-number {
             position: absolute;
@@ -150,6 +111,7 @@
         .step-card p {
             color: #555;
             line-height: 1.6;
+            margin-bottom: 0;
         }
 
         /* RTL 适配 */
@@ -168,32 +130,38 @@
         html[dir="rtl"] .step-card:hover {
             transform: translateX(-5px);
         }
-        html[dir="rtl"] .process-tabs {
-            justify-content: flex-start;
-        }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .process-timeline::before {
                 left: 20px;
             }
             .step-card {
                 margin-left: 50px;
-                padding: 15px;
+                padding: 15px 20px;
             }
             .step-number {
                 left: -35px;
                 width: 32px;
                 height: 32px;
                 font-size: 1rem;
+                top: 15px;
+            }
+            .step-icon {
+                font-size: 1.5rem;
+            }
+            .step-card h3 {
+                font-size: 1.1rem;
             }
             html[dir="rtl"] .process-timeline::before {
-                right: 20px;
                 left: auto;
+                right: 20px;
             }
             html[dir="rtl"] .step-card {
+                margin-left: 0;
                 margin-right: 50px;
             }
             html[dir="rtl"] .step-number {
+                left: auto;
                 right: -35px;
             }
             .tab-btn {
@@ -202,270 +170,459 @@
             }
         }
 
-        /* 流程面板切换 */
-        .process-panel {
-            display: none;
+        .process-contact-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+            margin-top: 20px;
         }
-        .process-panel.active {
+        .process-contact-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .process-contact-form .form-group {
+            margin-bottom: 20px;
+        }
+        .process-contact-form input,
+        .process-contact-form textarea,
+        .process-contact-form select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        .process-contact-form input:focus,
+        .process-contact-form textarea:focus,
+        .process-contact-form select:focus {
+            outline: none;
+            border-color: #c9a03d;
+        }
+        .process-contact-form button {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.1rem;
+        }
+        .process-contact-form label {
+            font-weight: 500;
+            margin-bottom: 8px;
             display: block;
         }
-
-        .note {
-            margin-top: 30px;
-            padding: 15px;
-            background: #f0f7ff;
-            border-radius: 12px;
-            color: #1a2a4f;
-            font-size: 14px;
+        .process-contact-form small {
+            color: #666;
+            font-size: 12px;
+        }
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
         }
     </style>
 </head>
-<body>
-
-<div class="demo-container">
-    <h1>📋 四套流程方案演示</h1>
-    <div class="subtitle">点击标签切换不同产品线的定制流程（支持RTL）</div>
-
-    <!-- RTL 演示开关 -->
-    <div class="rtl-switch">
-        <button class="rtl-btn" id="rtlToggle">
-            <i class="fas fa-language"></i>
-            <span>切换到阿拉伯语模式 (RTL)</span>
-        </button>
-    </div>
-
-    <!-- 标签栏 -->
-    <div class="process-tabs">
-        <button class="tab-btn active" data-process="cards">
-            <i class="fas fa-dice-d6"></i> 卡片流程
-        </button>
-        <button class="tab-btn" data-process="books">
-            <i class="fas fa-book"></i> 书籍流程
-        </button>
-        <button class="tab-btn" data-process="boardgames">
-            <i class="fas fa-gamepad"></i> 桌游流程
-        </button>
-        <button class="tab-btn" data-process="puzzles">
-            <i class="fas fa-puzzle-piece"></i> 拼图流程
-        </button>
-    </div>
-
-    <!-- 流程面板容器 -->
-    <!-- 卡片流程 -->
-    <div id="process-cards" class="process-panel active">
-        <div class="process-timeline">
-            <div class="step-card">
-                <div class="step-number">1</div>
-                <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
-                <h3>咨询与沟通</h3>
-                <p>分享您的创意、设计稿或参考样品，讨论数量、预算和交期。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">2</div>
-                <div class="step-icon"><i class="fas fa-paint-brush"></i></div>
-                <h3>设计与定稿</h3>
-                <p>优化设计稿，确保符合印刷标准，提供免费设计咨询。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">3</div>
-                <div class="step-icon"><i class="fas fa-flask"></i></div>
-                <h3>打样确认</h3>
-                <p>制作实物样品供您确认，通常3-5个工作日完成。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">4</div>
-                <div class="step-icon"><i class="fas fa-print"></i></div>
-                <h3>批量印刷</h3>
-                <p>自动化生产线保证品质一致，快速交付。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">5</div>
-                <div class="step-icon"><i class="fas fa-spray-can"></i></div>
-                <h3>表面处理</h3>
-                <p>覆膜、UV、烫金等工艺提升质感和耐用性。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">6</div>
-                <div class="step-icon"><i class="fas fa-box"></i></div>
-                <h3>包装发货</h3>
-                <p>专业包装，全球空运/海运配送。</p>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
+    <main style="flex: 1;">
+        <!-- 语言切换栏 -->
+        <div class="language-bar">
+            <div class="container">
+                <div class="language-selector" id="languageSelector"></div>
             </div>
         </div>
-    </div>
 
-    <!-- 书籍流程 -->
-    <div id="process-books" class="process-panel">
-        <div class="process-timeline">
-            <div class="step-card">
-                <div class="step-number">1</div>
-                <div class="step-icon"><i class="fas fa-comments"></i></div>
-                <h3>咨询与沟通</h3>
-                <p>确定书籍类型、尺寸、页数、装订方式及预算。</p>
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">YONGRUN<span> Printing</span></a>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="cards.html">Cards</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="board-games.html">Board Games</a></li>
+                            <li><a href="puzzles.html">Puzzles</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                    <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
+                    <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                    <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+                    <li class="lang-item">
+                        <select id="navLanguageSelect" class="nav-language-select">
+                            <option value="en">English</option>
+                            <option value="zh-CN">简体中文</option>
+                            <option value="zh-TW">繁體中文</option>
+                            <option value="de">Deutsch</option>
+                            <option value="es">Español</option>
+                            <option value="pt">Português</option>
+                            <option value="ar">العربية</option>
+                            <option value="ja">日本語</option>
+                            <option value="ko">한국어</option>
+                        </select>
+                    </li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
             </div>
-            <div class="step-card">
-                <div class="step-number">2</div>
-                <div class="step-icon"><i class="fas fa-file-alt"></i></div>
-                <h3>排版与封面设计</h3>
-                <p>内页排版、封面设计，提供数码打样预览。</p>
+        </nav>
+
+        <!-- 页面标题 -->
+        <section class="page-header">
+            <div class="container">
+                <h1 data-i18n="process_title">Custom Process</h1>
+                <p data-i18n="process_subtitle">Choose your product type to see the tailored workflow</p>
             </div>
-            <div class="step-card">
-                <div class="step-number">3</div>
-                <div class="step-icon"><i class="fas fa-book-open"></i></div>
-                <h3>打样确认</h3>
-                <p>制作精装/平装实物样品，确认装订效果。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">4</div>
-                <div class="step-icon"><i class="fas fa-print"></i></div>
-                <h3>批量印刷与装订</h3>
-                <p>高品质印刷，胶装/锁线/精装等多种装订方式。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">5</div>
-                <div class="step-icon"><i class="fas fa-gem"></i></div>
-                <h3>封面工艺</h3>
-                <p>烫金、压凹、UV等特殊工艺提升质感。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">6</div>
-                <div class="step-icon"><i class="fas fa-box-open"></i></div>
-                <h3>包装发货</h3>
-                <p>加固包装，确保书籍完好送达。</p>
+        </section>
+
+        <!-- 流程标签栏 -->
+        <div class="container">
+            <div class="process-tabs">
+                <button class="tab-btn active" data-process="cards"><i class="fas fa-dice-d6"></i> <span data-i18n="process_tab_cards">Cards</span></button>
+                <button class="tab-btn" data-process="books"><i class="fas fa-book"></i> <span data-i18n="process_tab_books">Books</span></button>
+                <button class="tab-btn" data-process="boardgames"><i class="fas fa-gamepad"></i> <span data-i18n="process_tab_boardgames">Board Games</span></button>
+                <button class="tab-btn" data-process="puzzles"><i class="fas fa-puzzle-piece"></i> <span data-i18n="process_tab_puzzles">Puzzles</span></button>
             </div>
         </div>
-    </div>
 
-    <!-- 桌游流程 -->
-    <div id="process-boardgames" class="process-panel">
-        <div class="process-timeline">
-            <div class="step-card">
-                <div class="step-number">1</div>
-                <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
-                <h3>咨询与组件规划</h3>
-                <p>梳理卡牌、版图、规则书、配件清单及数量。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">2</div>
-                <div class="step-icon"><i class="fas fa-cubes"></i></div>
-                <h3>结构设计与测试</h3>
-                <p>游戏平衡性测试，组件结构设计优化。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">3</div>
-                <div class="step-icon"><i class="fas fa-puzzle-piece"></i></div>
-                <h3>全套样品确认</h3>
-                <p>制作包含所有组件的完整样品，进行最终确认。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">4</div>
-                <div class="step-icon"><i class="fas fa-industry"></i></div>
-                <h3>分组件生产</h3>
-                <p>卡片、版图、配件、包装盒同步生产。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">5</div>
-                <div class="step-icon"><i class="fas fa-clipboard-check"></i></div>
-                <h3>配件组装与质检</h3>
-                <p>人工或自动化组装，全检确保不缺件。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">6</div>
-                <div class="step-icon"><i class="fas fa-shipping-fast"></i></div>
-                <h3>包装发货</h3>
-                <p>统一包装，支持全球物流。</p>
+        <!-- 卡牌流程面板 -->
+        <div id="process-cards" class="process-panel active">
+            <div class="process-timeline">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
+                    <h3 data-i18n="cards_step1_title">Inquiry & Consultation</h3>
+                    <p data-i18n="cards_step1_desc">Share your ideas, artwork, or reference samples. We'll discuss requirements, quantity, budget, and timeline.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3 data-i18n="cards_step2_title">Design & Artwork</h3>
+                    <p data-i18n="cards_step2_desc">Our design team helps optimize your artwork for printing. Free design consultation and proofing.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-flask"></i></div>
+                    <h3 data-i18n="cards_step3_title">Sample Production</h3>
+                    <p data-i18n="cards_step3_desc">Physical samples for your approval, typically ready in 3-5 business days.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-print"></i></div>
+                    <h3 data-i18n="cards_step4_title">Mass Printing</h3>
+                    <p data-i18n="cards_step4_desc">Automated production lines ensure consistent quality and fast turnaround.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <div class="step-icon"><i class="fas fa-spray-can"></i></div>
+                    <h3 data-i18n="cards_step5_title">Surface Finishing</h3>
+                    <p data-i18n="cards_step5_desc">Lamination, UV coating, foil stamping, and other premium finishes.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <div class="step-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3 data-i18n="cards_step6_title">QC, Packaging & Shipping</h3>
+                    <p data-i18n="cards_step6_desc">Strict quality control, professional packaging, and global delivery.</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 拼图流程 -->
-    <div id="process-puzzles" class="process-panel">
-        <div class="process-timeline">
-            <div class="step-card">
-                <div class="step-number">1</div>
-                <div class="step-icon"><i class="fas fa-comments"></i></div>
-                <h3>咨询与沟通</h3>
-                <p>确定拼图片数、尺寸、图案及包装形式。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">2</div>
-                <div class="step-icon"><i class="fas fa-draw-polygon"></i></div>
-                <h3>图案设计</h3>
-                <p>高分辨率图案适配，确保切割后图案完整。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">3</div>
-                <div class="step-icon"><i class="fas fa-cut"></i></div>
-                <h3>刀模制作与打样</h3>
-                <p>定制刀模，制作实物拼图样品测试咬合度。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">4</div>
-                <div class="step-icon"><i class="fas fa-layer-group"></i></div>
-                <h3>批量模切与印刷</h3>
-                <p>精准模切，高品质印刷保证色彩。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">5</div>
-                <div class="step-icon"><i class="fas fa-arrows-alt"></i></div>
-                <h3>拼块分拣与质检</h3>
-                <p>确保无缺片、边缘光滑，装入内袋。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">6</div>
-                <div class="step-icon"><i class="fas fa-gift"></i></div>
-                <h3>包装发货</h3>
-                <p>精美包装盒，安全送达。</p>
+        <!-- 书籍流程面板 -->
+        <div id="process-books" class="process-panel">
+            <div class="process-timeline">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-comments"></i></div>
+                    <h3 data-i18n="books_step1_title">Inquiry & Consultation</h3>
+                    <p data-i18n="books_step1_desc">Define book type, size, page count, binding method, and budget.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3 data-i18n="books_step2_title">Layout & Cover Design</h3>
+                    <p data-i18n="books_step2_desc">Professional typesetting and cover design with digital proofs.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-book-open"></i></div>
+                    <h3 data-i18n="books_step3_title">Sample Approval</h3>
+                    <p data-i18n="books_step3_desc">Hardcover or paperback sample to verify binding and print quality.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-print"></i></div>
+                    <h3 data-i18n="books_step4_title">Printing & Binding</h3>
+                    <p data-i18n="books_step4_desc">High-quality printing with perfect binding, saddle stitching, or case binding.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <div class="step-icon"><i class="fas fa-gem"></i></div>
+                    <h3 data-i18n="books_step5_title">Cover Finishing</h3>
+                    <p data-i18n="books_step5_desc">Foil stamping, embossing, spot UV, and other premium cover treatments.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <div class="step-icon"><i class="fas fa-box-open"></i></div>
+                    <h3 data-i18n="books_step6_title">QC, Packaging & Shipping</h3>
+                    <p data-i18n="books_step6_desc">Quality inspection, reinforced packaging, and worldwide shipping.</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="note">
-        <i class="fas fa-info-circle"></i> 
-        <strong>RTL适配说明：</strong>点击上方按钮可切换页面文字方向。实际项目中通过 <code>html[dir="rtl"]</code> 选择器自动适应阿拉伯语等RTL语言，无需额外代码。
-    </div>
-</div>
+        <!-- 桌游流程面板 -->
+        <div id="process-boardgames" class="process-panel">
+            <div class="process-timeline">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
+                    <h3 data-i18n="boardgames_step1_title">Consultation & Component Planning</h3>
+                    <p data-i18n="boardgames_step1_desc">List all components: cards, boards, rulebooks, tokens, and packaging.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-cubes"></i></div>
+                    <h3 data-i18n="boardgames_step2_title">Structural Design & Testing</h3>
+                    <p data-i18n="boardgames_step2_desc">Game balance testing and component structure optimization.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-puzzle-piece"></i></div>
+                    <h3 data-i18n="boardgames_step3_title">Full Sample Approval</h3>
+                    <p data-i18n="boardgames_step3_desc">Complete sample with all components for final confirmation.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-industry"></i></div>
+                    <h3 data-i18n="boardgames_step4_title">Parallel Production</h3>
+                    <p data-i18n="boardgames_step4_desc">Simultaneous manufacturing of cards, boards, accessories, and boxes.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <div class="step-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3 data-i18n="boardgames_step5_title">Assembly & QC</h3>
+                    <p data-i18n="boardgames_step5_desc">Manual or automated assembly with 100% quality check.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <div class="step-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <h3 data-i18n="boardgames_step6_title">Packaging & Shipping</h3>
+                    <p data-i18n="boardgames_step6_desc">Secure packaging and global logistics support.</p>
+                </div>
+            </div>
+        </div>
 
-<script>
-    (function() {
-        // 标签切换逻辑
-        const tabs = document.querySelectorAll('.tab-btn');
-        const panels = {
-            cards: document.getElementById('process-cards'),
-            books: document.getElementById('process-books'),
-            boardgames: document.getElementById('process-boardgames'),
-            puzzles: document.getElementById('process-puzzles')
-        };
+        <!-- 拼图流程面板 -->
+        <div id="process-puzzles" class="process-panel">
+            <div class="process-timeline">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-comments"></i></div>
+                    <h3 data-i18n="puzzles_step1_title">Inquiry & Consultation</h3>
+                    <p data-i18n="puzzles_step1_desc">Determine piece count, size, image, and packaging type.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-draw-polygon"></i></div>
+                    <h3 data-i18n="puzzles_step2_title">Image Design</h3>
+                    <p data-i18n="puzzles_step2_desc">High-resolution artwork adaptation for precise cutting.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-cut"></i></div>
+                    <h3 data-i18n="puzzles_step3_title">Die Creation & Sampling</h3>
+                    <p data-i18n="puzzles_step3_desc">Custom cutting die and physical sample to test fit.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3 data-i18n="puzzles_step4_title">Mass Die-Cutting & Printing</h3>
+                    <p data-i18n="puzzles_step4_desc">Precision cutting and high-quality color printing.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <div class="step-icon"><i class="fas fa-arrows-alt"></i></div>
+                    <h3 data-i18n="puzzles_step5_title">Piece Sorting & QC</h3>
+                    <p data-i18n="puzzles_step5_desc">Ensure no missing pieces, smooth edges, and inner bag sealing.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <div class="step-icon"><i class="fas fa-gift"></i></div>
+                    <h3 data-i18n="puzzles_step6_title">Packaging & Shipping</h3>
+                    <p data-i18n="puzzles_step6_desc">Attractive box packaging and safe delivery.</p>
+                </div>
+            </div>
+        </div>
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const processKey = tab.dataset.process;
+        <!-- 留言表单区域 -->
+        <section class="process-contact-section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="process_contact_title">Request a Quote</h2>
+                <p style="text-align: center; font-weight: bold; margin-bottom: 5px; color: #1a2a4f;" data-i18n="direct_email">Direct Email: cnyrys@163.com</p>
+                <p class="section-subtitle" style="text-align: center; margin-bottom: 25px;" data-i18n="process_reply">We'll reply within 12 hours</p>
                 
-                // 切换标签激活状态
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                // 切换面板显示
-                Object.keys(panels).forEach(key => {
-                    panels[key].classList.remove('active');
+                <form id="processMessageForm" class="process-contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="process_name" data-i18n-placeholder="form_name" placeholder="Your Name *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="process_phone" data-i18n-placeholder="form_phone" placeholder="Phone Number">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="email" id="process_email" data-i18n-placeholder="form_email" placeholder="Email Address">
+                        </div>
+                        <div class="form-group">
+                            <select id="process_product" data-i18n-placeholder="form_product">
+                                <option value="" disabled selected>Type</option>
+                                <option value="playingcards">Playing Cards</option>
+                                <option value="boardgames">Board Game Cards</option>
+                                <option value="tarot">Tarot Cards</option>
+                                <option value="laser">Holographic Cards</option>
+                                <option value="flashcards">Flashcards</option>
+                                <option value="books">Paperback/Hardcover Books</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <select id="process_quantity" data-i18n-placeholder="form_quantity">
+                                <option value="" disabled selected>Qty</option>
+                                <option value="500-1000">500 - 1,000 sets</option>
+                                <option value="1000-5000">1,000 - 5,000 sets</option>
+                                <option value="5000-10000">5,000 - 10,000 sets</option>
+                                <option value="10000+">10,000+ sets</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="process_deadline" data-i18n-placeholder="form_deadline" placeholder="Expected Delivery Date (e.g., 30 days)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="process_message" rows="4" data-i18n-placeholder="form_message" placeholder="Tell us about your project (size, material, special requirements...)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="process_file_link" data-i18n="process_file_link">File Sharing Link (Google Drive / Dropbox / WeTransfer)</label>
+                        <input type="url" id="process_file_link" placeholder="https://drive.google.com/...">
+                        <small data-i18n="process_file_link_small">Please upload your design files (AI/PDF) to Google Drive, Dropbox or WeTransfer, then paste the sharing link here.</small>
+                    </div>
+                    <div class="form-group">
+                        <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+                            <p style="margin: 0; font-size: 13px; color: #666;" data-i18n="process_contact_hint">
+                                <strong>Contact Info Required:</strong> Please provide either <strong>Phone</strong> or <strong>Email</strong> so we can reach you.
+                            </p>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-i18n="form_submit">Submit Message</button>
+                    <div id="processFormStatus" class="form-status" style="margin-top: 15px;"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        (function() {
+            // 标签切换逻辑
+            const tabs = document.querySelectorAll('.tab-btn');
+            const panels = {
+                cards: document.getElementById('process-cards'),
+                books: document.getElementById('process-books'),
+                boardgames: document.getElementById('process-boardgames'),
+                puzzles: document.getElementById('process-puzzles')
+            };
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const processKey = tab.dataset.process;
+                    
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    Object.keys(panels).forEach(key => {
+                        panels[key].classList.remove('active');
+                    });
+                    panels[processKey].classList.add('active');
                 });
-                panels[processKey].classList.add('active');
             });
-        });
 
-        // RTL 演示开关
-        const rtlToggle = document.getElementById('rtlToggle');
-        let isRTL = false;
-        rtlToggle.addEventListener('click', () => {
-            isRTL = !isRTL;
-            document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
-            document.documentElement.setAttribute('lang', isRTL ? 'ar' : 'en');
-            rtlToggle.innerHTML = isRTL ? 
-                '<i class="fas fa-language"></i> 切换回正常模式 (LTR)' : 
-                '<i class="fas fa-language"></i> 切换到阿拉伯语模式 (RTL)';
-            rtlToggle.classList.toggle('active', isRTL);
-        });
-    })();
-</script>
+            // 表单提交逻辑（与之前相同）
+            const processForm = document.getElementById('processMessageForm');
+            if (processForm) {
+                processForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('process_name').value.trim();
+                    const phone = document.getElementById('process_phone').value.trim();
+                    const email = document.getElementById('process_email').value.trim();
+                    const product = document.getElementById('process_product').value;
+                    const quantity = document.getElementById('process_quantity').value;
+                    const deadline = document.getElementById('process_deadline').value.trim();
+                    const message = document.getElementById('process_message').value.trim();
+                    const fileLink = document.getElementById('process_file_link').value.trim();
+                    const statusDiv = document.getElementById('processFormStatus');
 
+                    if (!name) {
+                        statusDiv.innerHTML = '<span style="color: #e74c3c;">Please enter your name</span>';
+                        return;
+                    }
+                    if (!phone && !email) {
+                        statusDiv.innerHTML = '<span style="color: #e74c3c;">Please provide either phone number or email address</span>';
+                        return;
+                    }
+                    if (email && (!email.includes('@') || !email.includes('.'))) {
+                        statusDiv.innerHTML = '<span style="color: #e74c3c;">Please enter a valid email address</span>';
+                        return;
+                    }
+
+                    statusDiv.innerHTML = '<span style="color: #3498db;">Submitting...</span>';
+                    
+                    try {
+                        let fullMessage = `Product: ${product}\nQuantity: ${quantity}\nExpected Delivery: ${deadline || 'Not specified'}\nFile Link: ${fileLink || 'Not provided'}\n\nDetails:\n${message || 'Not specified'}`;
+                        
+                        const { error } = await window.supabaseClient
+                            .from('messages')
+                            .insert([{ 
+                                name: name, 
+                                email: email || 'Not provided', 
+                                message: fullMessage,
+                                phone: phone || 'Not provided'
+                            }]);
+
+                        if (error) throw error;
+                        
+                        statusDiv.innerHTML = '<span style="color: #27ae60;">Message sent! We will contact you soon.</span>';
+                        processForm.reset();
+                        setTimeout(() => statusDiv.innerHTML = '', 5000);
+                    } catch (err) {
+                        console.error('提交失败:', err);
+                        statusDiv.innerHTML = '<span style="color: #e74c3c;">Submission failed, please try again later.</span>';
+                    }
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
