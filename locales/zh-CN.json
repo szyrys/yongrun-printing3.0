@@ -196,5 +196,15 @@
   "process6_desc": "每张卡片印制唯一编码、二维码或文字。",
   "craft_cta_title": "需要帮助选择工艺？",
   "craft_cta_subtitle": "我们的专家将为您提供专业建议。",
-  "craft_cta_btn": "联系我们的团队 →"
+  "craft_cta_btn": "联系我们的团队 →",
+  
+  "material5_title": "丽芙纹理纸",
+  "material5_desc": "优雅十字纹，高端质感，适合奢华卡牌。",
+  "material6_title": "牛皮纸",
+  "material6_desc": "天然棕色，环保，适合复古或自然风格设计。",
+  "finish5_title": "触感膜",
+  "finish5_desc": "丝绒般柔滑触感，奢华且防指纹。",
+  "finish6_title": "局部UV",
+  "finish6_desc": "选定区域高光处理，增加对比与层次感。"
 }
+
