@@ -221,18 +221,16 @@
                     <div class="form-group">
                         <input type="email" id="home_email" data-i18n-placeholder="form_email" placeholder="Email Address">
                     </div>
-                    <div class="form-group">
-                        <select id="home_product" data-i18n-placeholder="form_product">
-                            <option value="" disabled selected>Type</option>
-                            <option value="playingcards">Playing Cards</option>
-                            <option value="boardgames">Board Game Cards</option>
-                            <option value="tarot">Tarot Cards</option>
-                            <option value="laser">Holographic Cards</option>
-                            <option value="flashcards">Flashcards</option>
-                            <option value="books">Paperback/Hardcover Books</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <select id="home_product" data-i18n-placeholder="form_product">
+                                <option value="" disabled selected data-i18n="product_type_placeholder">Type</option>
+                                <option value="cards" data-i18n="product_option_cards">Cards</option>
+                                <option value="books" data-i18n="product_option_books">Books</option>
+                                <option value="board-games" data-i18n="product_option_boardgames">Board Games</option>
+                                <option value="puzzles" data-i18n="product_option_puzzles">Puzzles</option>
+                                <option value="other" data-i18n="product_option_other">Other</option>
+                            </select>
+                        </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
