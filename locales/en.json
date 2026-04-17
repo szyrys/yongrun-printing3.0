@@ -256,7 +256,9 @@
     "404_home": "← Back to Home",
     "404_contact": "Contact Us",
     "404_email_text": "You can also reach us directly at",
-    
-  "click_to_view": "Click to view samples"
 
+  "click_to_view": "Click to view samples",
+
+    "logo_yongrun": "YONGRUN",
+    "logo_printing": " Printing"
 }
