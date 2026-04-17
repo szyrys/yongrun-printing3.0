@@ -95,6 +95,12 @@
         @media (max-width: 480px) {
             .product-grid { grid-template-columns: 1fr; }
         }
+        /* 修复导航置顶 */
+.navbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+}
     </style>
 </head>
 <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
