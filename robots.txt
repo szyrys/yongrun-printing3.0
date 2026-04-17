@@ -1,11 +1,28 @@
 User-agent: *
 Allow: /
 
+# === 禁止抓取后台管理、临时工具和测试页 ===
 Disallow: /admin.html
 Disallow: /upload-craft.html
+Disallow: /测试.html
+
+# === 禁止抓取开发与版本控制文件夹 ===
+Disallow: /.vs/
+Disallow: /.vscode/
+Disallow: /VCSS/
+Disallow: /*.slnx
+Disallow: /*.sqlite
+
+# === 禁止抓取 Supabase 函数目录 ===
+Disallow: /supabase/
+
+# === 禁止抓取静态资源文件夹（节省爬虫配额）===
 Disallow: /js/
 Disallow: /css/
 Disallow: /locales/
 
-# Sitemap 暂时注释，待产品稳定后取消注释并替换为实际域名
+# === 允许抓取所有产品详情页（确保不被误拦）===
+Allow: /products/*.html
+
+# === Sitemap 位置（上线后取消注释并替换为实际域名）===
 # Sitemap: https://你的域名/sitemap.xml
