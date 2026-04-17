@@ -220,20 +220,22 @@
 
         // 处理锚点链接（如页面内跳转），避免被固定栏遮挡标题
         // 这个逻辑放在这里可以改善用户体验
-if (location.hash) {
-            setTimeout(() => {
+        if (location.hash) {
+            setTimeout(function() {
                 const target = document.querySelector(location.hash);
                 if (target) {
                     const offset = languageBar.offsetHeight + navbar.offsetHeight;
                     const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-                    window.scrollTo({ top: elementPosition - offset });
+                    window.scrollTo({
+                        top: elementPosition - offset,
+                        behavior: 'smooth'
+                    });
                 }
-            }, 120);
+            }, 100);
         }
-
-        document.addEventListener('click', handleAnchorClick);
     }
 
+    // 确保导航组件已完全注入
     setTimeout(fixDualBars, 80);
 })();
 })();
