@@ -1131,26 +1131,22 @@ html[dir="rtl"] .language-selector button {
 
 
 
-/* 卡片悬停显示文字提示 */
+/* 极简悬停文字提示（纯文本，半透明深蓝） */
 .craft-card {
     position: relative;
-    cursor: pointer;
 }
 
 .craft-card:hover::after {
     content: attr(data-hint);
     position: absolute;
-    bottom: 12px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(26, 42, 79, 0.75);
-    color: white;
-    padding: 6px 16px;
-    border-radius: 30px;
+    color: rgba(26, 42, 79, 0.65);  /* 深蓝半透明 */
     font-size: 0.85rem;
+    font-weight: 400;
     white-space: nowrap;
-    opacity: 1;
     pointer-events: none;
     z-index: 10;
-    backdrop-filter: blur(4px);
+    /* 无背景、无内边距、无边框、无模糊 */
 }
