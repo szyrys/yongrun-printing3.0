@@ -483,9 +483,12 @@ items.forEach(item => {
 });
 container.innerHTML = html;
             }
-            
+            // 渲染材质卡片
             renderCards('materialGrid', materials, 'material');
+            // 渲染表面处理卡片
             renderCards('finishGrid', finishes, 'finish');
+            // 在这里添加印刷工艺的渲染调用
+            renderCards('processGrid', processes, 'process');
             
             // 弹窗逻辑
             const modal = document.getElementById('galleryModal');
