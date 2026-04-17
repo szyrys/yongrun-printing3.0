@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banner 动画测试 - 塔罗牌风格</title>
+    <title>塔罗牌 Banner 效果测试 - 24张卡牌反向匀速移动</title>
     <style>
         * {
             margin: 0;
@@ -12,262 +12,207 @@
         }
 
         body {
+            background: #000;
             font-family: 'Segoe UI', sans-serif;
-            background: #f5f5f5;
         }
 
-        /* ===== Hero 轮播容器 ===== */
-        .hero-carousel {
+        /* Banner 容器 */
+        .tarot-banner {
             position: relative;
+            width: 100%;
             height: 600px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
+            background: #000;
             overflow: hidden;
         }
 
-        /* 背景图层包装器 */
-        .hero-bg-wrapper {
+        /* 上下两排卡牌共用样式 */
+        .card-row {
             position: absolute;
-            top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
+            width: max-content;
+            display: flex;
+            gap: 0;
+            will-change: transform;
         }
 
-        /* 每张背景图 */
-        .hero-bg-slide {
+        .card-row img {
+            display: block;
+            width: 120px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* 上排：向左移动 */
+        .row-top {
+            top: 15%;
+            animation: scrollLeft 30s linear infinite;
+        }
+
+        /* 下排：向右移动 */
+        .row-bottom {
+            bottom: 15%;
+            animation: scrollRight 30s linear infinite;
+        }
+
+        /* 向左移动动画 */
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* 向右移动动画 */
+        @keyframes scrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* 文字层 - 无遮罩，直接浮在顶部 */
+        .banner-text {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
             width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            animation: kenBurns 20s ease-in-out infinite alternate;
-        }
-
-        .hero-bg-slide.active {
-            opacity: 1;
-        }
-
-        /* 不同延迟制造视差感 */
-        .hero-bg-slide:nth-child(1) { animation-delay: 0s; }
-        .hero-bg-slide:nth-child(2) { animation-delay: 5s; }
-        .hero-bg-slide:nth-child(3) { animation-delay: 10s; }
-
-        /* Ken Burns 动画：缓慢缩放 + 轻微位移 */
-        @keyframes kenBurns {
-            0% {
-                transform: scale(1) translate(0, 0);
-            }
-            50% {
-                transform: scale(1.1) translate(-2%, -1%);
-            }
-            100% {
-                transform: scale(1.15) translate(2%, 1%);
-            }
-        }
-
-        /* 前景内容区 */
-        .hero-carousel .container {
-            position: relative;
-            z-index: 2;
-            max-width: 1200px;
-            margin: 0 auto;
             padding: 0 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
-        .hero-content {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 30px 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(3px);
+        .banner-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
         }
 
-        .hero-content h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
+        .banner-text p {
+            font-size: 1.3rem;
             margin-bottom: 30px;
+            opacity: 0.9;
         }
 
-        .btn {
+        .banner-text .btn {
             display: inline-block;
             padding: 12px 30px;
             border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-primary {
             background: #c9a03d;
             color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
-        .btn-primary:hover {
+        .banner-text .btn:hover {
             background: #b08a2c;
             transform: translateY(-2px);
         }
 
-        /* 导航按钮（轮播箭头） */
-        .hero-prev, .hero-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            z-index: 10;
-        }
-        .hero-prev { left: 20px; }
-        .hero-next { right: 20px; }
-        .hero-prev:hover, .hero-next:hover { background: rgba(0,0,0,0.8); }
-
-        /* 圆点指示器 */
-        .hero-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-        .hero-dot {
-            width: 12px;
-            height: 12px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        .hero-dot.active { background: white; }
-
         /* 移动端适配 */
         @media (max-width: 768px) {
-            .hero-carousel { height: 400px; }
-            .hero-content { padding: 20px; }
-            .hero-content h1 { font-size: 1.8rem; }
+            .tarot-banner { height: 400px; }
+            .banner-text h1 { font-size: 2rem; }
+            .banner-text p { font-size: 1rem; }
+            .card-row img { width: 80px; }
         }
 
-        /* 说明文字 */
-        .info-note {
+        /* 说明区域 */
+        .info {
             max-width: 900px;
             margin: 30px auto;
             padding: 20px;
-            background: white;
+            background: #1a1a1a;
+            color: #ddd;
             border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        .info-note h3 { color: #1a2a4f; margin-bottom: 10px; }
-        .info-note p { color: #666; line-height: 1.6; }
-        .info-note code { background: #eee; padding: 2px 6px; border-radius: 4px; }
+        .info h3 { color: #c9a03d; margin-bottom: 10px; }
+        .info p { line-height: 1.6; }
+        .info code { background: #333; padding: 2px 6px; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <!-- Hero Banner 测试区 -->
-    <section class="hero-carousel">
-        <div class="hero-bg-wrapper">
-            <!-- 三张塔罗牌风格背景图（来自 tarotai.art 实际图片链接） -->
-            <div class="hero-bg-slide active" style="background-image: url('https://tarotai.art/images/hero/hero-bg-1.webp');"></div>
-            <div class="hero-bg-slide" style="background-image: url('https://tarotai.art/images/hero/hero-bg-2.webp');"></div>
-            <div class="hero-bg-slide" style="background-image: url('https://tarotai.art/images/hero/hero-bg-3.webp');"></div>
+    <div class="tarot-banner">
+        <!-- 上排卡牌（向左移动） -->
+        <div class="card-row row-top" id="rowTop">
+            <!-- 为了无缝循环，将同一组图片复制两份 -->
         </div>
 
-        <div class="container">
-            <div class="hero-content">
-                <h1>专业印刷 · 定制方案 · 全球交付</h1>
-                <p>20+ 年经验 | ISO9001 | FSC 认证 | 全球配送</p>
-                <a href="#" class="btn btn-primary">获取免费报价 →</a>
-            </div>
+        <!-- 下排卡牌（向右移动） -->
+        <div class="card-row row-bottom" id="rowBottom">
+            <!-- 同上 -->
         </div>
 
-        <!-- 轮播控制按钮（手动切换用） -->
-        <button class="hero-prev">❮</button>
-        <button class="hero-next">❯</button>
-        <div class="hero-dots"></div>
-    </section>
+        <!-- 文字层 -->
+        <div class="banner-text">
+            <h1>专业印刷 · 定制方案 · 全球交付</h1>
+            <p>20+ 年经验 | ISO9001 | FSC 认证 | 全球配送</p>
+            <a href="#" class="btn">获取免费报价 →</a>
+        </div>
+    </div>
 
-    <!-- 说明区域 -->
-    <div class="info-note">
-        <h3>🎴 动画效果说明</h3>
-        <p>背景图使用 <code>kenBurns</code> 动画：20 秒内缓慢放大（scale 1 → 1.15），并伴随轻微位移（translate）。三张图片延迟不同（0s / 5s / 10s），产生层叠视差感。</p>
-        <p>图片直接引用自 <code>tarotai.art</code> 官网，仅用于本地测试预览。商业上线请替换为自有版权图片。</p>
-        <p>底部圆点和左右箭头可手动切换背景图（JavaScript 逻辑已内嵌）。</p>
+    <div class="info">
+        <h3>🎴 效果说明</h3>
+        <p>✅ 24 张塔罗牌图片：上排 12 张匀速向左移动，下排 12 张匀速向右移动。<br>
+           ✅ 背景纯黑色 <code>#000</code>。<br>
+           ✅ 文字直接浮在最上层，无任何背景遮罩。<br>
+           ✅ 轮播自动无限循环，不可手动干预（无箭头、无圆点）。<br>
+           ✅ 图片使用了 tarotai.art 官网的实际塔罗牌图片链接（仅作演示）。</p>
+        <p>📌 您可以将此效果直接移植到正式首页，替换图片链接即可。</p>
     </div>
 
     <script>
-        // 简易轮播逻辑（与动画并行，可手动切换）
         (function() {
-            const slides = document.querySelectorAll('.hero-bg-slide');
-            const prevBtn = document.querySelector('.hero-prev');
-            const nextBtn = document.querySelector('.hero-next');
-            const dotsContainer = document.querySelector('.hero-dots');
-            let currentIndex = 0;
-            let autoTimer = null;
+            // 从 tarotai.art 获取的塔罗牌图片列表（24张不同卡牌）
+            const cardImages = [
+                'https://tarotai.art/images/tarot/major/m00.webp',
+                'https://tarotai.art/images/tarot/major/m01.webp',
+                'https://tarotai.art/images/tarot/major/m02.webp',
+                'https://tarotai.art/images/tarot/major/m03.webp',
+                'https://tarotai.art/images/tarot/major/m04.webp',
+                'https://tarotai.art/images/tarot/major/m05.webp',
+                'https://tarotai.art/images/tarot/major/m06.webp',
+                'https://tarotai.art/images/tarot/major/m07.webp',
+                'https://tarotai.art/images/tarot/major/m08.webp',
+                'https://tarotai.art/images/tarot/major/m09.webp',
+                'https://tarotai.art/images/tarot/major/m10.webp',
+                'https://tarotai.art/images/tarot/major/m11.webp',
+                'https://tarotai.art/images/tarot/major/m12.webp',
+                'https://tarotai.art/images/tarot/major/m13.webp',
+                'https://tarotai.art/images/tarot/major/m14.webp',
+                'https://tarotai.art/images/tarot/major/m15.webp',
+                'https://tarotai.art/images/tarot/major/m16.webp',
+                'https://tarotai.art/images/tarot/major/m17.webp',
+                'https://tarotai.art/images/tarot/major/m18.webp',
+                'https://tarotai.art/images/tarot/major/m19.webp',
+                'https://tarotai.art/images/tarot/major/m20.webp',
+                'https://tarotai.art/images/tarot/major/m21.webp',
+                'https://tarotai.art/images/tarot/cups/cup01.webp',
+                'https://tarotai.art/images/tarot/swords/sword01.webp'
+            ];
 
-            if (slides.length === 0) return;
+            // 取前12张给上排，后12张给下排（可混用，这里简单分开）
+            const topImages = cardImages.slice(0, 12);
+            const bottomImages = cardImages.slice(12, 24);
 
-            // 创建圆点
-            slides.forEach((_, i) => {
-                const dot = document.createElement('span');
-                dot.classList.add('hero-dot');
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => goToSlide(i));
-                dotsContainer.appendChild(dot);
-            });
+            const rowTop = document.getElementById('rowTop');
+            const rowBottom = document.getElementById('rowBottom');
 
-            function goToSlide(index) {
-                slides[currentIndex].classList.remove('active');
-                dotsContainer.children[currentIndex].classList.remove('active');
-                currentIndex = (index + slides.length) % slides.length;
-                slides[currentIndex].classList.add('active');
-                dotsContainer.children[currentIndex].classList.add('active');
+            // 生成图片HTML，为了无缝循环，复制两份
+            function generateImages(imageArray) {
+                const items = imageArray.map(src => `<img src="${src}" alt="tarot">`).join('');
+                // 两份保证无缝
+                return items + items;
             }
 
-            function nextSlide() { goToSlide(currentIndex + 1); }
-            function prevSlide() { goToSlide(currentIndex - 1); }
+            rowTop.innerHTML = generateImages(topImages);
+            rowBottom.innerHTML = generateImages(bottomImages);
 
-            prevBtn.addEventListener('click', () => {
-                prevSlide();
-                resetTimer();
-            });
-            nextBtn.addEventListener('click', () => {
-                nextSlide();
-                resetTimer();
-            });
-
-            function startTimer() {
-                autoTimer = setInterval(nextSlide, 6000);
-            }
-            function resetTimer() {
-                clearInterval(autoTimer);
-                startTimer();
-            }
-
-            // 鼠标悬停暂停自动播放
-            const carousel = document.querySelector('.hero-carousel');
-            carousel.addEventListener('mouseenter', () => clearInterval(autoTimer));
-            carousel.addEventListener('mouseleave', startTimer);
-
-            startTimer();
+            // 轮播自动播放，不可手动干预 —— 已经通过 CSS 无限动画实现，无需额外 JS
+            // 如需更换图片组，可动态替换 innerHTML，但动画会重置，这里保持静态。
         })();
     </script>
 
