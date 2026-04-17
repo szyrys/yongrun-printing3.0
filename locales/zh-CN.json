@@ -325,7 +325,14 @@
     "read_more": "... 查看更多 →",
     "about_slide1_caption": "现代化印刷工厂",
     "about_slide2_caption": "先进生产设备",
-    "about_slide3_caption": "专业团队"
+    "about_slide3_caption": "专业团队",
+    
+    "404_title": "404 - 页面未找到",
+    "404_message": "抱歉，您访问的页面不存在或已被移动。",
+    "404_home": "← 返回首页",
+    "404_contact": "联系我们",
+    "404_email_text": "您也可以直接邮件联系我们"
 }
+
 
 

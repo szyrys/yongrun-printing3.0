@@ -303,5 +303,10 @@
   "puzzles_step5_title": "Piece Sorting & QC",
   "puzzles_step5_desc": "Ensure no missing pieces, smooth edges, and inner bag sealing.",
   "puzzles_step6_title": "Packaging & Shipping",
-  "puzzles_step6_desc": "Strict quality control, professional packaging, and global delivery via air or sea freight."
+  "puzzles_step6_desc": "Strict quality control, professional packaging, and global delivery via air or sea freight.",
+    "404_title": "404 - Page Not Found",
+    "404_message": "Sorry, the page you are looking for does not exist or has been moved.",
+    "404_home": "← Back to Home",
+    "404_contact": "Contact Us",
+    "404_email_text": "You can also reach us directly at"
 }
