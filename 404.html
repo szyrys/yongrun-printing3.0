@@ -16,21 +16,24 @@
             padding: 40px 20px;
         }
         .error-content {
-            max-width: 600px;
+            max-width: 750px;           /* 从 600px 加宽 */
+            width: 100%;
             background: white;
             border-radius: 20px;
-            padding: 50px 40px;
+            padding: 50px 50px;         /* 左右内边距增加 */
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin: 0 auto;
         }
         .error-icon {
-            font-size: 5rem;
+            font-size: 4rem;            /* 稍微缩小图标 */
             color: #c9a03d;
             margin-bottom: 20px;
         }
         .error-content h1 {
-            font-size: 4.5rem;
+            font-size: 3rem;            /* 从 4.5rem 缩小 */
             color: #1a2a4f;
             margin-bottom: 15px;
+            white-space: nowrap;        /* 强制单行显示 */
         }
         .error-content p {
             color: #666;
@@ -61,12 +64,13 @@
         .error-email a:hover {
             text-decoration: underline;
         }
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             .error-content {
-                padding: 30px 20px;
+                padding: 40px 25px;
             }
             .error-content h1 {
-                font-size: 2.8rem;
+                font-size: 2.2rem;      /* 移动端适当缩小 */
+                white-space: normal;     /* 移动端允许换行 */
             }
             .error-actions .btn {
                 width: 100%;
