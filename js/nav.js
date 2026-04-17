@@ -17,7 +17,10 @@
         <nav class="navbar">
             <div class="container">
                 <div class="logo">
-                    <a href="index.html">YONGRUN<span> Printing</span></a>
+                    <a href="index.html" style="display: flex; align-items: center; gap: 8px;">
+                        <img src="/slogo.png" alt="Yongrun" style="height: 36px; width: auto;">
+                        <span>YONGRUN<span> Printing</span></span>
+                    </a>
                 </div>
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="index.html" data-i18n="nav_home">Home</a></li>
