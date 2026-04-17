@@ -217,25 +217,45 @@
                 lastHeight = currentHeight;
             }
         }, 150);
+        // ===== 锚点平滑滚动补偿（消除抽搐）=====
+        function handleAnchorClick(e) {
+            const link = e.target.closest('a[href^="#"]');
+            if (!link) return;
+            
+            const href = link.getAttribute('href');
+            if (href === '#' || href === '#top') {
+                // 回到顶部
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+            
+            const targetId = href.substring(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+                e.preventDefault();
+                const offset = languageBar.offsetHeight + navbar.offsetHeight;
+                const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({
+                    top: elementPosition - offset,
+                    behavior: 'smooth'
+                });
+                // 同步更新地址栏（可选）
+                history.pushState(null, null, href);
+            }
+        }
 
-        // 处理锚点链接（如页面内跳转），避免被固定栏遮挡标题
-        // 这个逻辑放在这里可以改善用户体验
+        // 页面初始加载时处理 hash
         if (location.hash) {
-            setTimeout(function() {
+            setTimeout(() => {
                 const target = document.querySelector(location.hash);
                 if (target) {
                     const offset = languageBar.offsetHeight + navbar.offsetHeight;
                     const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-                    window.scrollTo({
-                        top: elementPosition - offset,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: elementPosition - offset });
                 }
-            }, 100);
+            }, 120);
         }
-    }
 
-    // 确保导航组件已完全注入
-    setTimeout(fixDualBars, 80);
-})();
-})();
+        // 监听所有锚点点击
+        document.addEventListener('click', handleAnchorClick);
