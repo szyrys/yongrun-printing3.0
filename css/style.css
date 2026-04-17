@@ -1024,10 +1024,11 @@ html[dir="rtl"] .language-selector button {
     line-clamp: 7;
 }
 /* ===== 当前页面导航高亮
-/* 方案 C：增强对比度背景块 */
+
+/* 方案 C：浅金柔和版 */
 .nav-menu li a.active-page-bg {
-    background: #c9a03d;        /* 金色背景 */
-    color: #1a2a4f !important;  /* 深蓝色文字 */
+    background: #f0dbb0;         /* 浅金色 */
+    color: #1a2a4f !important;
     border-radius: 20px;
     padding: 8px 18px;
     font-weight: 600;
