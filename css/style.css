@@ -1131,34 +1131,26 @@ html[dir="rtl"] .language-selector button {
 
 
 
-/* 卡片悬停提示条（底部滑出） */
+/* 卡片悬停显示文字提示 */
 .craft-card {
     position: relative;
-    overflow: hidden;  /* 确保提示条默认隐藏在卡片外 */
+    cursor: pointer;
 }
 
-.card-hover-hint {
+.craft-card:hover::after {
+    content: attr(data-hint);
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    
-    color: #1a2a4f;
-    padding: 8px 0;
-    text-align: center;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26, 42, 79, 0.75);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 30px;
     font-size: 0.85rem;
-    font-weight: 500;
+    white-space: nowrap;
+    opacity: 1;
+    pointer-events: none;
+    z-index: 10;
     backdrop-filter: blur(4px);
-    transform: translateY(100%);          /* 默认移出卡片底部 */
-    transition: transform 0.25s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    border-radius: 0 0 12px 12px;
-    pointer-events: none;                 /* 让点击穿透，不影响卡片点击 */
-}
-
-.craft-card:hover .card-hover-hint {
-    transform: translateY(0);             /* 悬停时滑入 */
 }
