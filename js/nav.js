@@ -19,10 +19,10 @@
                     <li class="dropdown">
                         <a href="javascript:void(0)" data-i18n="nav_products">Products</a>
                         <ul class="dropdown-menu">
-                            <li><a href="cards.html">Cards</a></li>
-                            <li><a href="books.html">Books</a></li>
-                            <li><a href="board-games.html">Board Games</a></li>
-                            <li><a href="puzzles.html">Puzzles</a></li>
+                            <li><a href="cards.html" data-i18n="nav_cards">Cards</a></li>
+                            <li><a href="books.html" data-i18n="nav_books">Books</a></li>
+                            <li><a href="board-games.html" data-i18n="nav_boardgames">Board Games</a></li>
+                            <li><a href="puzzles.html" data-i18n="nav_puzzles">Puzzles</a></li>
                         </ul>
                     </li>
                     <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
