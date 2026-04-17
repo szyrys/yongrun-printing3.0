@@ -25,4 +25,4 @@ Disallow: /locales/
 Allow: /products/*.html
 
 # === Sitemap 位置（上线后取消注释并替换为实际域名）===
-# Sitemap: https://你的域名/sitemap.xml
+# Sitemap: https://szyrys.github.io/yongrun-printing3.0/sitemap.xml
