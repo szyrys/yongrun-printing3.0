@@ -2,7 +2,7 @@
 // 使用方法：在页面中放置 <div id="globalNav"></div>，并引入本脚本和 common.js
 
 (function() {
-    // 统一模板：包含蓝条 + 导航栏
+    // 统一模板：蓝条 + 导航栏
     const navHTML = `
         <div class="language-bar">
             <div class="container">
@@ -69,9 +69,6 @@
                 loadLanguage(e.target.value);
             });
         }
-
-        // 语言栏内的按钮（如果 common.js 中未渲染，此处留空，由 common.js 的 renderLanguageButtons 处理）
-        // 但 common.js 中 renderLanguageButtons 是空函数，可忽略。
     }
 
     // 移动端菜单逻辑
