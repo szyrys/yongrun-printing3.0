@@ -490,6 +490,52 @@
         }
         startHeroInterval();
     }
+    // 首页公司简介轮播图
+const homeSlides = document.querySelectorAll('#homeAboutSlider .slide');
+const homePrev = document.getElementById('homeSliderPrev');
+const homeNext = document.getElementById('homeSliderNext');
+const homeDots = document.getElementById('homeSliderDots');
+let homeCurrent = 0;
+let homeInterval;
+
+if (homeSlides.length > 0) {
+    homeSlides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToHomeSlide(i));
+        homeDots.appendChild(dot);
+    });
+
+    function goToHomeSlide(index) {
+        homeSlides[homeCurrent].classList.remove('active');
+        homeDots.children[homeCurrent].classList.remove('active');
+        homeCurrent = (index + homeSlides.length) % homeSlides.length;
+        homeSlides[homeCurrent].classList.add('active');
+        homeDots.children[homeCurrent].classList.add('active');
+    }
+
+    function nextHomeSlide() { goToHomeSlide(homeCurrent + 1); }
+    function prevHomeSlide() { goToHomeSlide(homeCurrent - 1); }
+
+    homeNext.addEventListener('click', () => {
+        nextHomeSlide();
+        resetHomeInterval();
+    });
+    homePrev.addEventListener('click', () => {
+        prevHomeSlide();
+        resetHomeInterval();
+    });
+
+    function startHomeInterval() {
+        homeInterval = setInterval(nextHomeSlide, 4000);
+    }
+    function resetHomeInterval() {
+        clearInterval(homeInterval);
+        startHomeInterval();
+    }
+    startHomeInterval();
+}
 </script>
 </body>
 </html>
