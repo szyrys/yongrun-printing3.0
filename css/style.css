@@ -1028,7 +1028,7 @@ html[dir="rtl"] .language-selector button {
 /* 柔和金背景 + 白色文字 */
 .nav-menu li a.active-page-bg {
     background: #d4a94a;
-    color: white !important;
+    color: white !important;    
     border-radius: 20px;
     padding: 8px 18px;
     font-weight: 600;
