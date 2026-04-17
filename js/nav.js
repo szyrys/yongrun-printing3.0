@@ -66,7 +66,7 @@
         }
 
         // 初始化导航固定效果
-        setTimeout(initObserverSticky, 50);
+        setTimeout(initStickyNavbar, 50);
     }
 
     // 移动端菜单逻辑
