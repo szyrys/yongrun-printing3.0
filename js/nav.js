@@ -114,7 +114,7 @@
         if (langSelect) langSelect.value = savedLang;
     });
 })();
-    // ===== 滚动时导航栏固定逻辑 =====
+    // ===== 滚动时导航栏固定 + 蓝条隐藏逻辑 =====
     function initStickyNavbar() {
         const navbar = document.querySelector('.navbar');
         const languageBar = document.querySelector('.language-bar');
@@ -126,8 +126,16 @@
 
         function handleScroll() {
             const scrollY = window.scrollY;
+            
+            // 控制蓝条隐藏：向下滚动超过蓝条高度时隐藏，回到顶部显示
+            if (scrollY > languageBarHeight) {
+                languageBar.classList.add('hidden');
+            } else {
+                languageBar.classList.remove('hidden');
+            }
+            
+            // 控制导航栏固定
             if (scrollY > languageBarHeight && !isFixed) {
-                // 添加固定样式
                 navbar.style.position = 'fixed';
                 navbar.style.top = '0';
                 navbar.style.left = '0';
@@ -136,7 +144,6 @@
                 document.body.style.paddingTop = navbarHeight + 'px';
                 isFixed = true;
             } else if (scrollY <= languageBarHeight && isFixed) {
-                // 恢复原状
                 navbar.style.position = '';
                 navbar.style.top = '';
                 navbar.style.left = '';
@@ -157,9 +164,7 @@
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', updateHeights);
-        // 初始执行一次
-        handleScroll();
+        handleScroll(); // 初始执行
     }
 
-    // 等待导航注入完成后再初始化
     setTimeout(initStickyNavbar, 50);
