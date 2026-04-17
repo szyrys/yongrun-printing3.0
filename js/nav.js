@@ -169,4 +169,35 @@
     }
 
     setTimeout(initNavbarFixed, 100);
+    // ===== 固定双栏 + 自动计算高度 =====
+(function() {
+    function fixBars() {
+        const languageBar = document.querySelector('.language-bar');
+        const navbar = document.querySelector('.navbar');
+        if (!languageBar || !navbar) return;
+
+        function updatePositions() {
+            const langBarHeight = languageBar.offsetHeight;
+            // 导航栏紧贴蓝条下方
+            navbar.style.top = langBarHeight + 'px';
+            // 防止内容被遮挡
+            document.body.style.paddingTop = (langBarHeight + navbar.offsetHeight) + 'px';
+        }
+
+        updatePositions();
+        window.addEventListener('resize', updatePositions);
+
+        // 监听字体或内容变化导致的高度变化（简单轮询，可靠）
+        let lastHeight = languageBar.offsetHeight + navbar.offsetHeight;
+        setInterval(() => {
+            const newHeight = languageBar.offsetHeight + navbar.offsetHeight;
+            if (newHeight !== lastHeight) {
+                updatePositions();
+                lastHeight = newHeight;
+            }
+        }, 200);
+    }
+
+    setTimeout(fixBars, 100);
+})();
 })();
