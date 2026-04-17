@@ -187,10 +187,10 @@
   "finish6_title": "Spot UV",
   "finish6_desc": "High-gloss varnish on selected areas for contrast and depth.",
   
-    "process_tab_cards": "Card Products",
-    "process_tab_books": "Book Printing",
-    "process_tab_boardgames": "Board Game Sets",
-    "process_tab_puzzles": "Custom Puzzles",
+  "process_tab_cards": "Card Products",
+  "process_tab_books": "Book Printing",
+  "process_tab_boardgames": "Board Game Sets",
+  "process_tab_puzzles": "Custom Puzzles",
   
   "cards_step1_title": "Inquiry & Consultation",
   "cards_step1_desc": "Share your ideas, artwork, or reference samples. We'll discuss requirements, quantity, budget, and timeline.",
