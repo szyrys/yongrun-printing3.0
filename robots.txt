@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /upload-craft.html
+Disallow: /js/
+Disallow: /css/
+Disallow: /locales/
+
+# Sitemap 暂时注释，待产品稳定后取消注释并替换为实际域名
+# Sitemap: https://你的域名/sitemap.xml
