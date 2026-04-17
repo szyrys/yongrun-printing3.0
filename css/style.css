@@ -1025,10 +1025,10 @@ html[dir="rtl"] .language-selector button {
 }
 /* ===== 当前页面导航高亮
 
-/* 方案 C：浅金柔和版 */
+/* 柔和金背景 + 白色文字 */
 .nav-menu li a.active-page-bg {
-    background: #f0dbb0;         /* 浅金色 */
-    color: #1a2a4f !important;
+    background: #d4a94a;
+    color: white !important;
     border-radius: 20px;
     padding: 8px 18px;
     font-weight: 600;
