@@ -55,26 +55,26 @@
         // 重新绑定移动端菜单事件（因为 DOM 已刷新）
         initMobileMenu();
 
-        // 绑定语言下拉框事件（如果 common.js 中已有全局绑定，可省略，此处做兼容）
+        // 绑定语言下拉框事件
         const langSelect = document.getElementById('navLanguageSelect');
         if (langSelect && typeof loadLanguage === 'function') {
-            // 同步当前语言选中状态
             const savedLang = localStorage.getItem('preferredLanguage') || 'en';
             langSelect.value = savedLang;
-
             langSelect.addEventListener('change', (e) => {
                 loadLanguage(e.target.value);
             });
         }
+
+        // 初始化导航固定效果
+        setTimeout(initObserverSticky, 50);
     }
 
-    // 移动端菜单逻辑（从 common.js 移植，确保组件独立工作）
+    // 移动端菜单逻辑
     function initMobileMenu() {
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('navMenu');
 
         if (hamburger && navMenu) {
-            // 移除之前绑定的监听器，避免重复
             hamburger.removeEventListener('click', toggleMenu);
             hamburger.addEventListener('click', toggleMenu);
         }
@@ -99,6 +99,49 @@
         }
     }
 
+    // ===== 使用 Intersection Observer 实现导航固定（蓝条自然消失）=====
+    function initObserverSticky() {
+        const navbar = document.querySelector('.navbar');
+        const languageBar = document.querySelector('.language-bar');
+        if (!navbar || !languageBar) return;
+
+        let navbarHeight = navbar.offsetHeight;
+
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            if (!entry.isIntersecting) {
+                // 蓝条已滚出视口，固定导航栏
+                navbar.style.position = 'fixed';
+                navbar.style.top = '0';
+                navbar.style.left = '0';
+                navbar.style.width = '100%';
+                navbar.style.zIndex = '999';
+                document.body.style.paddingTop = navbarHeight + 'px';
+            } else {
+                // 蓝条重新进入视口，恢复导航栏
+                navbar.style.position = '';
+                navbar.style.top = '';
+                navbar.style.left = '';
+                navbar.style.width = '';
+                navbar.style.zIndex = '';
+                document.body.style.paddingTop = '';
+            }
+        }, {
+            threshold: 0  // 只要蓝条有任何部分不可见就触发
+        });
+
+        observer.observe(languageBar);
+
+        // 窗口大小变化时更新导航栏高度
+        window.addEventListener('resize', () => {
+            navbarHeight = navbar.offsetHeight;
+            // 如果当前蓝条不可见，需要更新 padding
+            if (navbar.style.position === 'fixed') {
+                document.body.style.paddingTop = navbarHeight + 'px';
+            }
+        });
+    }
+
     // 等待 DOM 加载完成后注入
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', injectNav);
@@ -106,58 +149,10 @@
         injectNav();
     }
 
-    // 如果 common.js 稍后加载，确保语言下拉框能被正确设置
-    // 监听语言加载完成事件（如果有的话）
+    // 监听语言加载完成事件
     window.addEventListener('languageLoaded', () => {
         const langSelect = document.getElementById('navLanguageSelect');
         const savedLang = localStorage.getItem('preferredLanguage') || 'en';
         if (langSelect) langSelect.value = savedLang;
     });
 })();
-    // ===== 滚动时导航栏固定逻辑（蓝条自然滚动消失）=====
-    function initStickyNavbar() {
-        const navbar = document.querySelector('.navbar');
-        const languageBar = document.querySelector('.language-bar');
-        if (!navbar || !languageBar) return;
-
-        let navbarHeight = navbar.offsetHeight;
-        let languageBarHeight = languageBar.offsetHeight;
-        let isFixed = false;
-
-        function handleScroll() {
-            const scrollY = window.scrollY;
-            
-            // 控制导航栏固定：当滚动距离超过蓝条高度时固定，否则恢复
-            if (scrollY > languageBarHeight && !isFixed) {
-                navbar.style.position = 'fixed';
-                navbar.style.top = '0';
-                navbar.style.left = '0';
-                navbar.style.width = '100%';
-                navbar.style.zIndex = '999';
-                document.body.style.paddingTop = navbarHeight + 'px';
-                isFixed = true;
-            } else if (scrollY <= languageBarHeight && isFixed) {
-                navbar.style.position = '';
-                navbar.style.top = '';
-                navbar.style.left = '';
-                navbar.style.width = '';
-                navbar.style.zIndex = '';
-                document.body.style.paddingTop = '';
-                isFixed = false;
-            }
-        }
-
-        function updateHeights() {
-            navbarHeight = navbar.offsetHeight;
-            languageBarHeight = languageBar.offsetHeight;
-            if (isFixed) {
-                document.body.style.paddingTop = navbarHeight + 'px';
-            }
-        }
-
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', updateHeights);
-        handleScroll();
-    }
-
-    setTimeout(initStickyNavbar, 50);
