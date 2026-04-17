@@ -25,21 +25,22 @@
                             <li><a href="puzzles.html" data-i18n="nav_puzzles">Custom Puzzles</a></li>
                         </ul>
                     </li>
-                    <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
                     <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
+                    <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
+                    
                     <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
                     <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
                     <li class="lang-item">
                         <select id="navLanguageSelect" class="nav-language-select">
                             <option value="en">English</option>
                             <option value="zh-CN">简体中文</option>
-                            <option value="zh-TW">繁體中文</option>
                             <option value="de">Deutsch</option>
                             <option value="es">Español</option>
                             <option value="pt">Português</option>
                             <option value="ar">العربية</option>
                             <option value="ja">日本語</option>
                             <option value="ko">한국어</option>
+                            <option value="zh-TW">繁體中文</option>
                         </select>
                     </li>
                 </ul>
