@@ -291,4 +291,13 @@ if (langBar && navBar) {
             }
         });
     }
+    // 微小延迟校准（确保字体/图标加载后高度准确-可删）
+setTimeout(() => {
+    const langBar = document.querySelector('.language-bar');
+    const navBar = document.querySelector('.navbar');
+    if (langBar && navBar) {
+        const totalHeight = langBar.offsetHeight + navBar.offsetHeight;
+        document.body.style.paddingTop = totalHeight + 'px';
+    }
+}, 50);
 })();
