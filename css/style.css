@@ -1129,15 +1129,7 @@ html[dir="rtl"] .language-selector button {
     .card-wrapper { width: 120px; }
 }
 
-/* 材质与工艺卡片 - 点击提示（右下角放大镜图标） */
-.craft-card {
-    position: relative;
-    cursor: pointer;
-}
 
-.craft-card:hover::after {
-    color: #c9a03d;  /* 悬停时变为金色 */
-}
 
 /* 卡片悬停提示条（底部滑出） */
 .craft-card {
