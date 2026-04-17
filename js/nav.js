@@ -56,6 +56,13 @@
         if (!container) return;
 
         container.innerHTML = navHTML;
+        // 立即计算并设置 body 的 padding-top，减少页面跳转时的布局抖动--新加 可删
+const langBar = document.querySelector('.language-bar');
+const navBar = document.querySelector('.navbar');
+if (langBar && navBar) {
+    const totalHeight = langBar.offsetHeight + navBar.offsetHeight;
+    document.body.style.paddingTop = totalHeight + 'px';
+}
 
         // 绑定移动端菜单
         initMobileMenu();
