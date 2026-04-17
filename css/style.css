@@ -982,13 +982,3 @@ html[dir="rtl"] .language-selector button {
     background: white !important;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
 }
-/* 删除这部分 */
-.language-bar {
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.language-bar.hidden {
-    transform: translateY(-100%);
-    opacity: 0;
-    pointer-events: none;
-}
