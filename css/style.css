@@ -1023,22 +1023,12 @@ html[dir="rtl"] .language-selector button {
     -webkit-line-clamp: 7;  /* 默认显示7行，中英文兼顾 */
     line-clamp: 7;
 }
-/* ===== 当前页面导航高亮（三种方案）===== */
-/* 方案 A：底部横线 */
-.nav-menu li a.active-page-underline {
-    border-bottom: 2px solid #c9a03d;
-    padding-bottom: 6px;
-}
-
-/* 方案 B：文字颜色变化 */
-.nav-menu li a.active-page-color {
-    color: #c9a03d !important;
-    font-weight: 600;
-}
-
-/* 方案 C：浅色背景块 */
+/* ===== 当前页面导航高亮
+/* 方案 C：增强对比度背景块 */
 .nav-menu li a.active-page-bg {
-    background: #f0f0f0;
+    background: #c9a03d;        /* 金色背景 */
+    color: #1a2a4f !important;  /* 深蓝色文字 */
     border-radius: 20px;
     padding: 8px 18px;
+    font-weight: 600;
 }
