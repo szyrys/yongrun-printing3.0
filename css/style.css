@@ -1011,3 +1011,42 @@ html, body, main, #globalNav, .navbar .container, .language-bar .container {
 body {
     padding-top: 0 !important;
 }
+/* 最终修复：将蓝条和导航栏完全脱离文档流 */
+#global-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #1a2a4f;
+}
+
+.navbar {
+    position: fixed;
+    top: 40px; /* 蓝条高度，根据实际情况微调（常用35-45px） */
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* 蓝条随滚动隐藏：利用滚动驱动透明度，效果自然 */
+.language-bar {
+    transition: opacity 0.2s ease;
+}
+
+/* 页面内容下移，避免被固定栏遮挡 */
+body {
+    padding-top: 110px !important; /* 蓝条高度+导航栏高度，按需调整 */
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .navbar {
+        top: 35px;
+    }
+    body {
+        padding-top: 105px !important;
+    }
+}
