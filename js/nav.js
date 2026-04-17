@@ -239,3 +239,49 @@
     setTimeout(fixDualBars, 80);
 })();
 })();
+// ===== 独立锚点补偿（消除抽搐）=====
+(function() {
+    function getFixedHeight() {
+        const langBar = document.querySelector('.language-bar');
+        const navBar = document.querySelector('.navbar');
+        if (!langBar || !navBar) return 0;
+        return langBar.offsetHeight + navBar.offsetHeight;
+    }
+
+    // 接管所有锚点链接点击
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href^="#"]');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        // 忽略空锚点或仅 "#" 的链接（由浏览器默认处理回到顶部）
+        if (href === '#' || href === '' || href === '#top') return;
+        
+        const targetId = href.substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+            e.preventDefault();
+            const offset = getFixedHeight();
+            const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+                top: elementPosition - offset,
+                behavior: 'smooth'
+            });
+            // 更新地址栏，但不触发默认跳转
+            history.pushState(null, null, href);
+        }
+    });
+
+    // 处理页面初始加载时的 hash（例如从其他页面带锚点跳转过来）
+    if (location.hash) {
+        window.addEventListener('load', function() {
+            const target = document.querySelector(location.hash);
+            if (target) {
+                const offset = getFixedHeight();
+                const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+                // 注意：这里使用瞬时跳转，避免与浏览器默认行为叠加导致抽搐
+                window.scrollTo(0, elementPosition - offset);
+            }
+        });
+    }
+})();
