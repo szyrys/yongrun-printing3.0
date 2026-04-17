@@ -169,35 +169,73 @@
     }
 
     setTimeout(initNavbarFixed, 100);
-    // ===== 固定双栏 + 自动计算高度 =====
+// ===== 双栏固定 + 自适应校准（加强版）=====
 (function() {
-    function fixBars() {
+    function fixDualBars() {
         const languageBar = document.querySelector('.language-bar');
         const navbar = document.querySelector('.navbar');
         if (!languageBar || !navbar) return;
 
-        function updatePositions() {
+        // 核心校准函数
+        function calibrate() {
+            // 获取实时高度
             const langBarHeight = languageBar.offsetHeight;
-            // 导航栏紧贴蓝条下方
+            const navbarHeight = navbar.offsetHeight;
+            
+            // 设置导航栏紧贴蓝条下方
             navbar.style.top = langBarHeight + 'px';
-            // 防止内容被遮挡
-            document.body.style.paddingTop = (langBarHeight + navbar.offsetHeight) + 'px';
+            
+            // 设置 body 顶部内边距 = 蓝条高度 + 导航栏高度
+            const totalHeight = langBarHeight + navbarHeight;
+            document.body.style.paddingTop = totalHeight + 'px';
+            
+            // 如果当前滚动位置为0，确保不被固定栏遮挡（强制滚动到顶部？不需要，但需处理锚点）
+            // 解决刷新时可能出现的偏移
+            if (window.scrollY < totalHeight) {
+                // 不强制滚动，仅校准
+            }
         }
 
-        updatePositions();
-        window.addEventListener('resize', updatePositions);
+        // 立即校准
+        calibrate();
 
-        // 监听字体或内容变化导致的高度变化（简单轮询，可靠）
-        let lastHeight = languageBar.offsetHeight + navbar.offsetHeight;
-        setInterval(() => {
-            const newHeight = languageBar.offsetHeight + navbar.offsetHeight;
-            if (newHeight !== lastHeight) {
-                updatePositions();
-                lastHeight = newHeight;
+        // 监听窗口大小变化
+        window.addEventListener('resize', calibrate);
+
+        // 监听页面滚动（解决刷新后滚动位置导致的计算偏差）
+        window.addEventListener('scroll', function() {
+            // 滚动时也实时校准（确保 fixed 元素位置绝对正确）
+            calibrate();
+        });
+
+        // 监听字体加载、内容变化等导致的高度变化（后备轮询）
+        let lastHeight = 0;
+        setInterval(function() {
+            const currentHeight = languageBar.offsetHeight + navbar.offsetHeight;
+            if (currentHeight !== lastHeight) {
+                calibrate();
+                lastHeight = currentHeight;
             }
-        }, 200);
+        }, 150);
+
+        // 处理锚点链接（如页面内跳转），避免被固定栏遮挡标题
+        // 这个逻辑放在这里可以改善用户体验
+        if (location.hash) {
+            setTimeout(function() {
+                const target = document.querySelector(location.hash);
+                if (target) {
+                    const offset = languageBar.offsetHeight + navbar.offsetHeight;
+                    const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+                    window.scrollTo({
+                        top: elementPosition - offset,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 100);
+        }
     }
 
-    setTimeout(fixBars, 100);
+    // 确保导航组件已完全注入
+    setTimeout(fixDualBars, 80);
 })();
 })();
