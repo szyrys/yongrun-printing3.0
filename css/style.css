@@ -976,20 +976,3 @@ html[dir="rtl"] .language-selector button {
 .about-text p {
     white-space: pre-line;
 }
-/* 修复导航栏滚动消失问题 */
-body, main, #globalNav, .navbar, .navbar .container {
-    overflow: visible !important;
-}
-
-.navbar {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 999 !important;
-    background: white !important;
-}
-
-.language-bar {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 1000 !important;
-}
