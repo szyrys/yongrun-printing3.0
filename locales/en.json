@@ -308,5 +308,8 @@
     "404_message": "Sorry, the page you are looking for does not exist or has been moved.",
     "404_home": "← Back to Home",
     "404_contact": "Contact Us",
-    "404_email_text": "You can also reach us directly at"
+    "404_email_text": "You can also reach us directly at",
+    
+    "click_to_view": "Click to view samples"
+
 }
