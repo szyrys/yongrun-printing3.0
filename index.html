@@ -16,7 +16,7 @@
     <div id="globalNav"></div>
         <!-- Hero Banner 轮播区域--轮播图在这里换链接 -->
     <!-- ========== 传统Banner（暂时注释，需要时取消注释即可回退） ========== -->
-    <!--
+    
         <section class="hero-carousel">
         <div class="hero-bg-wrapper">
             <div class="hero-bg-slide active" style="background-image: url('https://jeiyolxdsznnojezmfbl.supabase.co/storage/v1/object/public/product-images/banner/banner-1.webp');"></div>
@@ -41,90 +41,7 @@
         <button class="hero-next">❯</button>
         <div class="hero-dots"></div>
     </section>
---这里截止>
-<!-- ========== 新版Banner：卡牌滚动（上下各12张，自动播放，无手动干预） ========== -->
-<div class="hero-banner-new" id="newHeroBanner">
-    <!-- 上层向左 -->
-    <div class="scroll-track track-top" id="trackTopNew"></div>
-    <!-- 下层向右 -->
-    <div class="scroll-track track-bottom" id="trackBottomNew"></div>
 
-    <!-- 文字覆盖层（无遮罩，多语言支持） -->
-    <div class="hero-overlay-new">
-        <h1 data-i18n="hero_title">Professional Printing · Custom Solutions · Global Delivery</h1>
-        <p data-i18n="hero_subtitle">20+ Years Experience | ISO9001 | FSC Certified | Global Shipping</p>
-        <a href="#homeMessageForm" class="btn btn-primary" data-i18n="hero_btn" 
-           onclick="event.preventDefault(); 
-                  var element = document.getElementById('homeMessageForm'); 
-                  var offset = 210; 
-                  var elementPosition = element.getBoundingClientRect().top; 
-                  var offsetPosition = elementPosition + window.pageYOffset - offset; 
-                  window.scrollTo({ top: offsetPosition, behavior: 'smooth' });">
-            Get Free Quote →
-        </a>
-    </div>
-</div>
-
-<!-- 加载新Banner所需的图片渲染脚本（直接内嵌，无需外部文件） -->
-<script>
-    (function() {
-        // 24张塔罗/扑克风格图片（Base64 SVG，可商用）
-        const CARD_IMAGES = [
-            // 上层12张（塔罗/神秘风格）
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%2322244b'/%3E%3Ccircle cx='100' cy='100' r='40' fill='%23c9a03d'/%3E%3Ctext x='100' y='220' font-size='50' font-family='Arial' fill='%23f0dbb0' text-anchor='middle' font-weight='bold'%3E★%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23332e4d'/%3E%3Cpath d='M100 70 L130 150 L70 150 Z' fill='%23b8860b'/%3E%3Ccircle cx='100' cy='200' r='30' fill='%23f0dbb0'/%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%231a1a2e'/%3E%3Ctext x='100' y='180' font-size='90' font-family='Arial' fill='%23c9a03d' text-anchor='middle'%3E☽%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%232c1e3f'/%3E%3Cpath d='M100 60 L140 180 L60 180 Z' fill='%23b87333'/%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%233d2b3d'/%3E%3Ccircle cx='100' cy='150' r='50' fill='%23d4af37'/%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%231e2a4a'/%3E%3Ctext x='100' y='190' font-size='70' font-family='Arial' fill='%23f0dbb0' text-anchor='middle'%3E⚡%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23443322'/%3E%3Cpath d='M100 80 L160 200 L40 200 Z' fill='%23c9a03d'/%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%232a1e3c'/%3E%3Ctext x='100' y='200' font-size='60' font-family='Arial' fill='%23e6c27a' text-anchor='middle'%3E♆%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%233b2b4d'/%3E%3Ccircle cx='100' cy='130' r='35' fill='%23d4af37'/%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%231f3a3f'/%3E%3Ctext x='100' y='190' font-size='70' font-family='Arial' fill='%23c9a03d' text-anchor='middle'%3E☀%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23332d1e'/%3E%3Cpath d='M100 70 L150 170 L50 170 Z' fill='%23b8860b'/%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23442e3a'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23f0dbb0' text-anchor='middle'%3E♄%3C/text%3E%3C/svg%3E",
-            // 下层12张（扑克牌风格）
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23ffffff'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23c0392b' text-anchor='middle'%3E♥%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fef9e7'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%232c3e50' text-anchor='middle'%3E♠%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fdf2e9'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23c0392b' text-anchor='middle'%3E♦%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23e8f8f5'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%232c3e50' text-anchor='middle'%3E♣%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fadbd8'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23922b21' text-anchor='middle'%3E♥%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23d5dbdb'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%231b4f72' text-anchor='middle'%3E♠%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fcf3cf'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23927a42' text-anchor='middle'%3E♦%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23d4efdf'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%231e8449' text-anchor='middle'%3E♣%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fdedec'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23cb4335' text-anchor='middle'%3E♥%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23eaecee'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%232e4053' text-anchor='middle'%3E♠%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fef5e7'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%239c640c' text-anchor='middle'%3E♦%3C/text%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23d1f2eb'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%230e6655' text-anchor='middle'%3E♣%3C/text%3E%3C/svg%3E"
-        ];
-
-        const topImages = CARD_IMAGES.slice(0, 12);
-        const bottomImages = CARD_IMAGES.slice(12, 24);
-
-        function renderTrack(container, imageArray) {
-            // 渲染两组以实现无缝循环
-            for (let i = 0; i < 2; i++) {
-                imageArray.forEach(src => {
-                    const wrap = document.createElement('div');
-                    wrap.className = 'card-wrapper';
-                    const img = document.createElement('img');
-                    img.src = src;
-                    img.alt = 'card';
-                    img.className = 'card-img';
-                    img.loading = 'lazy';
-                    wrap.appendChild(img);
-                    container.appendChild(wrap);
-                });
-            }
-        }
-
-        const trackTop = document.getElementById('trackTopNew');
-        const trackBottom = document.getElementById('trackBottomNew');
-        if (trackTop) renderTrack(trackTop, topImages);
-        if (trackBottom) renderTrack(trackBottom, bottomImages);
-    })();
-</script>
- <!-- 以上是新24图，停用的时候截止位置在这里-->
 
      <!-- 产品展示区域 - 分类轮播 -->
      <section class="products-section">
