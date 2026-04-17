@@ -18,7 +18,7 @@
             <div class="container">
                 <div class="logo">
                     <a href="index.html" style="display: flex; align-items: center; gap: 8px;">
-                        <img src="/slogo.png" alt="Yongrun" style="height: 36px; width: auto;">
+                        <img src="/slogo.png" alt="Yongrun" style="height: 60px; width: auto;">
                         <span>YONGRUN<span> Printing</span></span>
                     </a>
                 </div>

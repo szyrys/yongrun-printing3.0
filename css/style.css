@@ -1150,6 +1150,3 @@ html[dir="rtl"] .language-selector button {
     z-index: 10;
     /* 无背景、无内边距、无边框、无模糊 */
 }
-.slogo img {
-    display: block;
-}
