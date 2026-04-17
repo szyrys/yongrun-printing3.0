@@ -1135,19 +1135,6 @@ html[dir="rtl"] .language-selector button {
     cursor: pointer;
 }
 
-.craft-card::after {
-    content: '\f002';  /* Font Awesome 放大镜图标 */
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    bottom: 12px;
-    right: 15px;
-    font-size: 1.3rem;
-    color: rgba(0, 0, 0, 0.2);
-    transition: color 0.2s;
-    pointer-events: none;  /* 让点击穿透，不影响卡片点击 */
-}
-
 .craft-card:hover::after {
     color: #c9a03d;  /* 悬停时变为金色 */
 }
