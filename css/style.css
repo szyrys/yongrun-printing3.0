@@ -14,6 +14,8 @@ body {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 main {
@@ -32,6 +34,10 @@ main {
     color: white;
     padding: 8px 0;
     text-align: right;
+    /* 确保 sticky 正常工作 */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .language-selector button {
@@ -53,15 +59,9 @@ main {
 .navbar {
     background: white;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    .navbar {
     position: sticky;
     top: 0;
-    z-index: 1000;
-    /* 保留原有背景、内边距等属性 */
-}
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    z-index: 999;  /* 略低于语言栏，确保语言栏在导航上方 */
 }
 
 .navbar .container {
@@ -69,7 +69,7 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    flex-wrap: wrap;        /* 允许小屏幕换行，但大屏幕保持一行 */
+    flex-wrap: wrap;
 }
 
 /* 大屏幕下强制不换行 */
@@ -922,10 +922,10 @@ html[dir="rtl"] .language-selector button {
 }
 .hero-carousel .hero-content {
     background: rgba(0,0,0,0.4);
-    padding: 30px 40px;  /* 上下 80px，左右 40px */
+    padding: 30px 40px;
     border-radius: 20px;
     backdrop-filter: blur(3px);
-    margin-top: 100px;  /*悬浮板块高度调整 */
+    margin-top: 100px;
 }
 .hero-prev, .hero-next {
     position: absolute;
@@ -970,12 +970,8 @@ html[dir="rtl"] .language-selector button {
     .hero-carousel .hero-content { padding: 20px; }
     .hero-carousel h1 { font-size: 1.5rem; }
 }
-body {
-    overflow-x: hidden;
-    max-width: 100%;
-}
 .hero-carousel .btn {
-    margin-top: 30px;  /* 调整首页banner悬浮图标-数值越大，按钮越往下 */
+    margin-top: 30px;
 }
 .about-text p {
     white-space: pre-line;
