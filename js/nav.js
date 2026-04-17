@@ -2,8 +2,13 @@
 // 使用方法：在页面中放置 <div id="globalNav"></div>，并引入本脚本和 common.js
 
 (function() {
-    // 导航 HTML 模板（支持多语言 data-i18n）
+    // 统一模板：包含蓝条 + 导航栏
     const navHTML = `
+        <div class="language-bar">
+            <div class="container">
+                <div class="language-selector" id="languageSelector"></div>
+            </div>
+        </div>
         <nav class="navbar">
             <div class="container">
                 <div class="logo">
@@ -45,17 +50,17 @@
         </nav>
     `;
 
-    // 注入导航到容器
+    // 注入到容器
     function injectNav() {
         const container = document.getElementById('globalNav');
         if (!container) return;
 
         container.innerHTML = navHTML;
 
-        // 重新绑定移动端菜单事件
+        // 绑定移动端菜单
         initMobileMenu();
 
-        // 绑定语言下拉框事件
+        // 绑定语言下拉框
         const langSelect = document.getElementById('navLanguageSelect');
         if (langSelect && typeof loadLanguage === 'function') {
             const savedLang = localStorage.getItem('preferredLanguage') || 'en';
@@ -65,53 +70,9 @@
             });
         }
 
-        // 初始化导航固定效果
-        setTimeout(initStickyNavbar, 50);
+        // 语言栏内的按钮（如果 common.js 中未渲染，此处留空，由 common.js 的 renderLanguageButtons 处理）
+        // 但 common.js 中 renderLanguageButtons 是空函数，可忽略。
     }
-    // ===== 滚动时导航栏固定逻辑（终极稳定版）=====
-function initStickyNavbar() {
-    const navbar = document.querySelector('.navbar');
-    const languageBar = document.querySelector('.language-bar');
-    if (!navbar || !languageBar) return;
-
-    let navbarHeight = navbar.offsetHeight;
-    let isFixed = false;
-
-    function handleScroll() {
-        const rect = languageBar.getBoundingClientRect();
-        // 蓝条底部滚出视口顶部（完全不可见）时固定导航栏
-        if (rect.bottom <= 0 && !isFixed) {
-            navbar.style.position = 'fixed';
-            navbar.style.top = '0';
-            navbar.style.left = '0';
-            navbar.style.width = '100%';
-            navbar.style.zIndex = '999';
-            document.body.style.paddingTop = navbarHeight + 'px';
-            isFixed = true;
-        } 
-        // 蓝条顶部重新进入视口时恢复导航栏
-        else if (rect.top >= 0 && isFixed) {
-            navbar.style.position = '';
-            navbar.style.top = '';
-            navbar.style.left = '';
-            navbar.style.width = '';
-            navbar.style.zIndex = '';
-            document.body.style.paddingTop = '';
-            isFixed = false;
-        }
-    }
-
-    function updateNavbarHeight() {
-        navbarHeight = navbar.offsetHeight;
-        if (isFixed) {
-            document.body.style.paddingTop = navbarHeight + 'px';
-        }
-    }
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', updateNavbarHeight);
-    handleScroll(); // 初始校准
-}
 
     // 移动端菜单逻辑
     function initMobileMenu() {
@@ -127,7 +88,6 @@ function initStickyNavbar() {
             navMenu.classList.toggle('active');
         }
 
-        // 移动端下拉菜单点击处理
         const dropdowns = document.querySelectorAll('.dropdown > a');
         dropdowns.forEach(trigger => {
             trigger.removeEventListener('click', dropdownHandler);
@@ -143,56 +103,14 @@ function initStickyNavbar() {
         }
     }
 
-    // ===== 使用 Intersection Observer 实现导航固定（蓝条自然消失）=====
-    function initObserverSticky() {
-        const navbar = document.querySelector('.navbar');
-        const languageBar = document.querySelector('.language-bar');
-        if (!navbar || !languageBar) return;
-
-        let navbarHeight = navbar.offsetHeight;
-
-        const observer = new IntersectionObserver((entries) => {
-            const entry = entries[0];
-            if (!entry.isIntersecting) {
-                // 蓝条已滚出视口，固定导航栏
-                navbar.style.position = 'fixed';
-                navbar.style.top = '0';
-                navbar.style.left = '0';
-                navbar.style.width = '100%';
-                navbar.style.zIndex = '999';
-                document.body.style.paddingTop = navbarHeight + 'px';
-            } else {
-                // 蓝条重新进入视口，恢复导航栏
-                navbar.style.position = '';
-                navbar.style.top = '';
-                navbar.style.left = '';
-                navbar.style.width = '';
-                navbar.style.zIndex = '';
-                document.body.style.paddingTop = '';
-            }
-        }, {
-            threshold: 0  // 只要蓝条有任何部分不可见就触发
-        });
-
-        observer.observe(languageBar);
-
-        // 窗口大小变化时更新导航栏高度
-        window.addEventListener('resize', () => {
-            navbarHeight = navbar.offsetHeight;
-            if (navbar.style.position === 'fixed') {
-                document.body.style.paddingTop = navbarHeight + 'px';
-            }
-        });
-    }
-
-    // 等待 DOM 加载完成后注入
+    // 启动注入
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', injectNav);
     } else {
         injectNav();
     }
 
-    // 监听语言加载完成事件
+    // 语言加载后同步下拉框选中值
     window.addEventListener('languageLoaded', () => {
         const langSelect = document.getElementById('navLanguageSelect');
         const savedLang = localStorage.getItem('preferredLanguage') || 'en';
