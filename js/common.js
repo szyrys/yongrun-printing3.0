@@ -61,6 +61,13 @@ function updatePageText() {
             el.innerHTML = translations[key];
         }
     });
+    // 更新 data-hint 属性（用于悬停提示）
+document.querySelectorAll('[data-hint]').forEach(el => {
+    const hintKey = 'click_to_view';
+    if (translations[hintKey]) {
+        el.setAttribute('data-hint', translations[hintKey]);
+    }
+});
 }
 
 function updatePlaceholders() {
