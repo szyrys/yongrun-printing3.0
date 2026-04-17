@@ -246,6 +246,15 @@
             </div>
         </section>
 
+        <!-- 流程标签栏 -->
+        <div class="container">
+            <div class="process-tabs">
+                <button class="tab-btn active" data-process="cards"><i class="fas fa-dice-d6"></i> <span data-i18n="process_tab_cards">Card Products</span></button>
+                <button class="tab-btn" data-process="boardgames"><i class="fas fa-gamepad"></i> <span data-i18n="process_tab_boardgames">Board Game Sets</span></button>
+                <button class="tab-btn" data-process="books"><i class="fas fa-book"></i> <span data-i18n="process_tab_books">Book Printing</span></button>
+                <button class="tab-btn" data-process="puzzles"><i class="fas fa-puzzle-piece"></i> <span data-i18n="process_tab_puzzles">Custom Puzzles</span></button>
+            </div>
+        </div>
 
         <!-- 卡牌流程面板 -->
         <div id="process-cards" class="process-panel active">
@@ -288,49 +297,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- 书籍流程面板 -->
-        <div id="process-books" class="process-panel">
-            <div class="process-timeline">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <div class="step-icon"><i class="fas fa-comments"></i></div>
-                    <h3 data-i18n="books_step1_title">Inquiry & Consultation</h3>
-                    <p data-i18n="books_step1_desc">Define book type, size, page count, binding method, and budget.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <div class="step-icon"><i class="fas fa-file-alt"></i></div>
-                    <h3 data-i18n="books_step2_title">Layout & Cover Design</h3>
-                    <p data-i18n="books_step2_desc">Professional typesetting and cover design with digital proofs.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <div class="step-icon"><i class="fas fa-book-open"></i></div>
-                    <h3 data-i18n="books_step3_title">Sample Approval</h3>
-                    <p data-i18n="books_step3_desc">Hardcover or paperback sample to verify binding and print quality.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <div class="step-icon"><i class="fas fa-print"></i></div>
-                    <h3 data-i18n="books_step4_title">Printing & Binding</h3>
-                    <p data-i18n="books_step4_desc">High-quality printing with perfect binding, saddle stitching, or case binding.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">5</div>
-                    <div class="step-icon"><i class="fas fa-gem"></i></div>
-                    <h3 data-i18n="books_step5_title">Cover Finishing</h3>
-                    <p data-i18n="books_step5_desc">Foil stamping, embossing, spot UV, and other premium cover treatments.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">6</div>
-                    <div class="step-icon"><i class="fas fa-box-open"></i></div>
-                    <h3 data-i18n="books_step6_title">QC, Packaging & Shipping</h3>
-                    <p data-i18n="books_step6_desc">Strict quality control, professional packaging, and global delivery via air or sea freight.</p>
-                </div>
-            </div>
-        </div>
-
+        
         <!-- 桌游流程面板 -->
         <div id="process-boardgames" class="process-panel">
             <div class="process-timeline">
@@ -369,6 +336,48 @@
                     <div class="step-icon"><i class="fas fa-shipping-fast"></i></div>
                     <h3 data-i18n="boardgames_step6_title">Packaging & Shipping</h3>
                     <p data-i18n="boardgames_step6_desc">Strict quality control, professional packaging, and global delivery via air or sea freight.</p>
+                </div>
+            </div>
+        </div>
+
+<!-- 书籍流程面板 -->
+        <div id="process-books" class="process-panel">
+            <div class="process-timeline">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-comments"></i></div>
+                    <h3 data-i18n="books_step1_title">Inquiry & Consultation</h3>
+                    <p data-i18n="books_step1_desc">Define book type, size, page count, binding method, and budget.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3 data-i18n="books_step2_title">Layout & Cover Design</h3>
+                    <p data-i18n="books_step2_desc">Professional typesetting and cover design with digital proofs.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-book-open"></i></div>
+                    <h3 data-i18n="books_step3_title">Sample Approval</h3>
+                    <p data-i18n="books_step3_desc">Hardcover or paperback sample to verify binding and print quality.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-print"></i></div>
+                    <h3 data-i18n="books_step4_title">Printing & Binding</h3>
+                    <p data-i18n="books_step4_desc">High-quality printing with perfect binding, saddle stitching, or case binding.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <div class="step-icon"><i class="fas fa-gem"></i></div>
+                    <h3 data-i18n="books_step5_title">Cover Finishing</h3>
+                    <p data-i18n="books_step5_desc">Foil stamping, embossing, spot UV, and other premium cover treatments.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <div class="step-icon"><i class="fas fa-box-open"></i></div>
+                    <h3 data-i18n="books_step6_title">QC, Packaging & Shipping</h3>
+                    <p data-i18n="books_step6_desc">Strict quality control, professional packaging, and global delivery via air or sea freight.</p>
                 </div>
             </div>
         </div>
