@@ -70,34 +70,23 @@
             });
         }
 
-        // ===== 高亮当前页面导航项（按页面分配方案）=====
+        // ===== 高亮当前页面导航项（统一方案 C：浅金背景 + 白色文字）=====
         const currentPath = window.location.pathname.split('/').pop() || 'index.html';
         const allNavLinks = document.querySelectorAll('.nav-menu a');
-        
-        let activeClass = '';
-        if (currentPath.includes('cards') || currentPath.includes('books') || 
-            currentPath.includes('board-games') || currentPath.includes('puzzles')) {
-            activeClass = 'active-page-underline';   // 产品中心下属页面 → 方案 A
-        } else if (currentPath.includes('craft-options')) {
-            activeClass = 'active-page-color';       // 材质工艺 → 方案 B
-        } else if (currentPath.includes('custom-process')) {
-            activeClass = 'active-page-bg';          // 定制流程 → 方案 C
-        }
-        
-        if (activeClass) {
-            allNavLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href === currentPath || (currentPath === '' && href === 'index.html')) {
-                    link.classList.add(activeClass);
-                }
-                // 如果匹配的是下拉子项，也高亮父级 Products
-                const parentDropdown = link.closest('.dropdown');
-                if (parentDropdown && (href === currentPath)) {
-                    const dropdownToggle = parentDropdown.querySelector(':scope > a');
-                    if (dropdownToggle) dropdownToggle.classList.add(activeClass);
-                }
-            });
-        }
+        const activeClass = 'active-page-bg';
+
+        allNavLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPath || (currentPath === '' && href === 'index.html')) {
+                link.classList.add(activeClass);
+            }
+            // 如果匹配的是下拉子项，也高亮父级 Products
+            const parentDropdown = link.closest('.dropdown');
+            if (parentDropdown && (href === currentPath)) {
+                const dropdownToggle = parentDropdown.querySelector(':scope > a');
+                if (dropdownToggle) dropdownToggle.classList.add(activeClass);
+            }
+        });
     }
 
     // 移动端菜单逻辑
