@@ -114,3 +114,54 @@
         if (langSelect) langSelect.value = savedLang;
     });
 })();
+
+
+// ===== 滚动时导航栏固定（纯 JS 兜底方案）=====
+(function() {
+    function initNavbarFixed() {
+        const navbar = document.querySelector('.navbar');
+        const languageBar = document.querySelector('.language-bar');
+        if (!navbar || !languageBar) return;
+
+        let navbarHeight = navbar.offsetHeight;
+        let isFixed = false;
+
+        function handleScroll() {
+            const rect = languageBar.getBoundingClientRect();
+            // 蓝条底部滚出视口顶部时固定导航栏
+            if (rect.bottom <= 0 && !isFixed) {
+                navbar.style.position = 'fixed';
+                navbar.style.top = '0';
+                navbar.style.left = '0';
+                navbar.style.width = '100%';
+                navbar.style.zIndex = '999';
+                document.body.style.paddingTop = navbarHeight + 'px';
+                isFixed = true;
+            } 
+            // 蓝条顶部重新进入视口时恢复导航栏
+            else if (rect.top >= 0 && isFixed) {
+                navbar.style.position = '';
+                navbar.style.top = '';
+                navbar.style.left = '';
+                navbar.style.width = '';
+                navbar.style.zIndex = '';
+                document.body.style.paddingTop = '';
+                isFixed = false;
+            }
+        }
+
+        function updateNavbarHeight() {
+            navbarHeight = navbar.offsetHeight;
+            if (isFixed) {
+                document.body.style.paddingTop = navbarHeight + 'px';
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', updateNavbarHeight);
+        handleScroll(); // 初始校准
+    }
+
+    // 等待导航注入完成后再执行
+    setTimeout(initNavbarFixed, 100);
+})();
