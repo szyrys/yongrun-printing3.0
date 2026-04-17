@@ -49,6 +49,8 @@ async function loadLanguage(langCode) {
     } catch (error) {
         console.error('加载语言失败:', error);
     }
+            // 刷新 FAQ 内容（切换语言后重新加载）
+        await loadFaqs();
 }
 
 function updatePageText() {
