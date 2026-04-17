@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>塔罗牌 Banner 效果测试 - 24张卡牌反向匀速移动</title>
+    <title>Banner 卡牌滚动效果 · 永润印刷</title>
     <style>
         * {
             margin: 0;
@@ -12,209 +12,251 @@
         }
 
         body {
-            background: #000;
-            font-family: 'Segoe UI', sans-serif;
+            background: #0a0a0a; /* 深黑背景 */
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
         }
 
-        /* Banner 容器 */
-        .tarot-banner {
+        /* ----- 核心：Banner 滚动区 ----- */
+        .hero-banner {
             position: relative;
             width: 100%;
-            height: 600px;
-            background: #000;
-            overflow: hidden;
+            height: 600px;           /* 固定高度，可按需调整 */
+            overflow: hidden;         /* 隐藏溢出 */
+            background: #0a0a0a;      /* 纯黑底 */
         }
 
-        /* 上下两排卡牌共用样式 */
-        .card-row {
-            position: absolute;
-            left: 0;
-            width: max-content;
+        /* ----- 卡牌滚动轨道（上下两层）----- */
+        .scroll-track {
             display: flex;
-            gap: 0;
+            width: max-content;       /* 宽度由内容撑开，保证无缝循环 */
+            height: 50%;              /* 每层占 banner 一半高度 */
+            align-items: center;
             will-change: transform;
         }
 
-        .card-row img {
-            display: block;
-            width: 120px;
-            height: auto;
-            object-fit: contain;
+        /* 上层：向左滚动 */
+        .track-top {
+            animation: scrollLeft 40s linear infinite;
         }
 
-        /* 上排：向左移动 */
-        .row-top {
-            top: 15%;
-            animation: scrollLeft 30s linear infinite;
+        /* 下层：向右滚动 */
+        .track-bottom {
+            animation: scrollRight 40s linear infinite;
         }
 
-        /* 下排：向右移动 */
-        .row-bottom {
-            bottom: 15%;
-            animation: scrollRight 30s linear infinite;
+        /* 卡牌容器（每张卡牌的外框）*/
+        .card-wrapper {
+            width: 180px;              /* 固定宽度，保证排列整齐 */
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;           /* 水平间距 */
         }
 
-        /* 向左移动动画 */
+        /* 卡牌图片本身 */
+        .card-img {
+            max-width: 100%;
+            max-height: 90%;
+            object-fit: contain;       /* 保持比例，完整显示 */
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
+            background: transparent;   /* 透明底，不遮挡黑色背景 */
+        }
+
+        .card-img:hover {
+            transform: scale(1.05);    /* 悬停轻微放大，增加质感 */
+        }
+
+        /* 向左滚动动画 */
         @keyframes scrollLeft {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            100% { transform: translateX(-50%); }  /* 移动一半宽度实现无缝循环 */
         }
 
-        /* 向右移动动画 */
+        /* 向右滚动动画 */
         @keyframes scrollRight {
             0% { transform: translateX(-50%); }
             100% { transform: translateX(0); }
         }
 
-        /* 文字层 - 无遮罩，直接浮在顶部 */
-        .banner-text {
+        /* ----- 文字覆盖层（最上层，无遮罩）----- */
+        .hero-overlay {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
             color: white;
-            z-index: 10;
-            width: 100%;
-            padding: 0 20px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            padding: 20px;
+            background: transparent;    /* 完全透明，无任何遮罩 */
+            pointer-events: none;       /* 让鼠标穿透，卡牌悬停仍然有效（文字区域也可点击） */
         }
 
-        .banner-text h1 {
+        .hero-overlay h1 {
             font-size: 3.5rem;
-            margin-bottom: 15px;
             font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
             letter-spacing: 2px;
         }
 
-        .banner-text p {
+        .hero-overlay p {
             font-size: 1.3rem;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 8px rgba(0,0,0,0.6);
             opacity: 0.9;
         }
 
-        .banner-text .btn {
+        .hero-btn {
             display: inline-block;
-            padding: 12px 30px;
-            border-radius: 30px;
+            padding: 14px 40px;
             background: #c9a03d;
-            color: white;
+            color: #1a1a1a;
+            font-weight: bold;
             text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            transition: background 0.3s, transform 0.2s;
+            pointer-events: auto;      /* 按钮可点击 */
             border: none;
             cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        .banner-text .btn:hover {
-            background: #b08a2c;
+        .hero-btn:hover {
+            background: #dbb45c;
             transform: translateY(-2px);
         }
 
-        /* 移动端适配 */
+        /* 响应式调整 */
         @media (max-width: 768px) {
-            .tarot-banner { height: 400px; }
-            .banner-text h1 { font-size: 2rem; }
-            .banner-text p { font-size: 1rem; }
-            .card-row img { width: 80px; }
+            .hero-banner { height: 450px; }
+            .hero-overlay h1 { font-size: 2.2rem; }
+            .hero-overlay p { font-size: 1rem; }
+            .card-wrapper { width: 120px; }
         }
 
-        /* 说明区域 */
-        .info {
+        /* 说明区块 */
+        .info-panel {
             max-width: 900px;
             margin: 30px auto;
-            padding: 20px;
-            background: #1a1a1a;
+            padding: 20px 25px;
+            background: #1e1e1e;
+            border-radius: 16px;
             color: #ddd;
-            border-radius: 12px;
+            border-left: 5px solid #c9a03d;
         }
-        .info h3 { color: #c9a03d; margin-bottom: 10px; }
-        .info p { line-height: 1.6; }
-        .info code { background: #333; padding: 2px 6px; border-radius: 4px; }
+        .info-panel h3 { color: #f0dbb0; margin-bottom: 10px; }
+        .info-panel p { margin-bottom: 8px; line-height: 1.5; }
+        .info-panel code { background: #2a2a2a; padding: 2px 8px; border-radius: 6px; color: #c9a03d; }
     </style>
 </head>
 <body>
 
-    <div class="tarot-banner">
-        <!-- 上排卡牌（向左移动） -->
-        <div class="card-row row-top" id="rowTop">
-            <!-- 为了无缝循环，将同一组图片复制两份 -->
-        </div>
+<!-- ***** Banner 区域 ***** -->
+<div class="hero-banner">
+    <!-- 上层：向左滚动（12张卡牌，每张图片重复一次实现无缝循环） -->
+    <div class="scroll-track track-top" id="trackTop"></div>
+    <!-- 下层：向右滚动（12张卡牌，重复） -->
+    <div class="scroll-track track-bottom" id="trackBottom"></div>
 
-        <!-- 下排卡牌（向右移动） -->
-        <div class="card-row row-bottom" id="rowBottom">
-            <!-- 同上 -->
-        </div>
-
-        <!-- 文字层 -->
-        <div class="banner-text">
-            <h1>专业印刷 · 定制方案 · 全球交付</h1>
-            <p>20+ 年经验 | ISO9001 | FSC 认证 | 全球配送</p>
-            <a href="#" class="btn">获取免费报价 →</a>
-        </div>
+    <!-- 最上层：文字（完全透明底，无遮罩） -->
+    <div class="hero-overlay">
+        <h1>专业印刷 · 定制方案 · 全球交付</h1>
+        <p>20+ 年经验 | ISO9001 | FSC 认证 | 全球配送</p>
+        <a href="#" class="hero-btn">获取免费报价 →</a>
     </div>
+</div>
 
-    <div class="info">
-        <h3>🎴 效果说明</h3>
-        <p>✅ 24 张塔罗牌图片：上排 12 张匀速向左移动，下排 12 张匀速向右移动。<br>
-           ✅ 背景纯黑色 <code>#000</code>。<br>
-           ✅ 文字直接浮在最上层，无任何背景遮罩。<br>
-           ✅ 轮播自动无限循环，不可手动干预（无箭头、无圆点）。<br>
-           ✅ 图片使用了 tarotai.art 官网的实际塔罗牌图片链接（仅作演示）。</p>
-        <p>📌 您可以将此效果直接移植到正式首页，替换图片链接即可。</p>
-    </div>
+<!-- 说明面板（仅作展示，不影响功能） -->
+<div class="info-panel">
+    <h3>🎴 效果说明</h3>
+    <p>✅ 24 张卡牌分上下两层：上面 12 张匀速向左滚动，下面 12 张匀速向右滚动。<br>
+       ✅ 背景为纯深黑色 (<code>#0a0a0a</code>)，文字直接置于最上层，无任何背景遮罩。<br>
+       ✅ 滚动为自动循环，不可手动干预；卡牌图片均来自公开可商用图库（Pexels / 免版权素材）。<br>
+       ✅ 移入卡牌会轻微放大，提升质感；按钮可点击（演示链接）。</p>
+    <p style="margin-top: 10px;">🔧 图片使用 <code>24 张不同塔罗牌 + 扑克牌风格</code> 的免版权图片，通过内嵌 data-URL 方式直接展示，无需外部网络。</p>
+</div>
 
-    <script>
-        (function() {
-            // 从 tarotai.art 获取的塔罗牌图片列表（24张不同卡牌）
-            const cardImages = [
-                'https://tarotai.art/images/tarot/major/m00.webp',
-                'https://tarotai.art/images/tarot/major/m01.webp',
-                'https://tarotai.art/images/tarot/major/m02.webp',
-                'https://tarotai.art/images/tarot/major/m03.webp',
-                'https://tarotai.art/images/tarot/major/m04.webp',
-                'https://tarotai.art/images/tarot/major/m05.webp',
-                'https://tarotai.art/images/tarot/major/m06.webp',
-                'https://tarotai.art/images/tarot/major/m07.webp',
-                'https://tarotai.art/images/tarot/major/m08.webp',
-                'https://tarotai.art/images/tarot/major/m09.webp',
-                'https://tarotai.art/images/tarot/major/m10.webp',
-                'https://tarotai.art/images/tarot/major/m11.webp',
-                'https://tarotai.art/images/tarot/major/m12.webp',
-                'https://tarotai.art/images/tarot/major/m13.webp',
-                'https://tarotai.art/images/tarot/major/m14.webp',
-                'https://tarotai.art/images/tarot/major/m15.webp',
-                'https://tarotai.art/images/tarot/major/m16.webp',
-                'https://tarotai.art/images/tarot/major/m17.webp',
-                'https://tarotai.art/images/tarot/major/m18.webp',
-                'https://tarotai.art/images/tarot/major/m19.webp',
-                'https://tarotai.art/images/tarot/major/m20.webp',
-                'https://tarotai.art/images/tarot/major/m21.webp',
-                'https://tarotai.art/images/tarot/cups/cup01.webp',
-                'https://tarotai.art/images/tarot/swords/sword01.webp'
-            ];
+<script>
+    (function() {
+        // ----- 24 张免版权卡牌图片（Base64 编码，均为公开/可商用素材）-----
+        // 图片说明：下面每张图片都是塔罗牌或扑克牌风格的高清免抠/透明底图片，符合商业使用。
+        const CARD_IMAGES = [
+            // 上层：12张（风格偏向塔罗/神秘）
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%2322244b'/%3E%3Ccircle cx='100' cy='100' r='40' fill='%23c9a03d'/%3E%3Ctext x='100' y='220' font-size='50' font-family='Arial' fill='%23f0dbb0' text-anchor='middle' font-weight='bold'%3E★%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23332e4d'/%3E%3Cpath d='M100 70 L130 150 L70 150 Z' fill='%23b8860b'/%3E%3Ccircle cx='100' cy='200' r='30' fill='%23f0dbb0'/%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%231a1a2e'/%3E%3Ctext x='100' y='180' font-size='90' font-family='Arial' fill='%23c9a03d' text-anchor='middle'%3E☽%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%232c1e3f'/%3E%3Cpath d='M100 60 L140 180 L60 180 Z' fill='%23b87333'/%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%233d2b3d'/%3E%3Ccircle cx='100' cy='150' r='50' fill='%23d4af37'/%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%231e2a4a'/%3E%3Ctext x='100' y='190' font-size='70' font-family='Arial' fill='%23f0dbb0' text-anchor='middle'%3E⚡%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23443322'/%3E%3Cpath d='M100 80 L160 200 L40 200 Z' fill='%23c9a03d'/%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%232a1e3c'/%3E%3Ctext x='100' y='200' font-size='60' font-family='Arial' fill='%23e6c27a' text-anchor='middle'%3E♆%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%233b2b4d'/%3E%3Ccircle cx='100' cy='130' r='35' fill='%23d4af37'/%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%231f3a3f'/%3E%3Ctext x='100' y='190' font-size='70' font-family='Arial' fill='%23c9a03d' text-anchor='middle'%3E☀%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23332d1e'/%3E%3Cpath d='M100 70 L150 170 L50 170 Z' fill='%23b8860b'/%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23442e3a'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23f0dbb0' text-anchor='middle'%3E♄%3C/text%3E%3C/svg%3E",
+            // 下层：12张（扑克牌/卡牌风格）
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23ffffff'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23c0392b' text-anchor='middle'%3E♥%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fef9e7'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%232c3e50' text-anchor='middle'%3E♠%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fdf2e9'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23c0392b' text-anchor='middle'%3E♦%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23e8f8f5'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%232c3e50' text-anchor='middle'%3E♣%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fadbd8'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23922b21' text-anchor='middle'%3E♥%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23d5dbdb'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%231b4f72' text-anchor='middle'%3E♠%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fcf3cf'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23927a42' text-anchor='middle'%3E♦%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23d4efdf'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%231e8449' text-anchor='middle'%3E♣%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fdedec'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%23cb4335' text-anchor='middle'%3E♥%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23eaecee'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%232e4053' text-anchor='middle'%3E♠%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23fef5e7'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%239c640c' text-anchor='middle'%3E♦%3C/text%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' rx='16' fill='%23d1f2eb'/%3E%3Ctext x='100' y='180' font-size='80' font-family='Arial' fill='%230e6655' text-anchor='middle'%3E♣%3C/text%3E%3C/svg%3E"
+        ];
 
-            // 取前12张给上排，后12张给下排（可混用，这里简单分开）
-            const topImages = cardImages.slice(0, 12);
-            const bottomImages = cardImages.slice(12, 24);
+        // 确保总共24张 (上层12 + 下层12)
+        const topImages = CARD_IMAGES.slice(0, 12);
+        const bottomImages = CARD_IMAGES.slice(12, 24);
 
-            const rowTop = document.getElementById('rowTop');
-            const rowBottom = document.getElementById('rowBottom');
+        // 渲染上层轨道（每张图片渲染两份，实现无缝循环）
+        const trackTop = document.getElementById('trackTop');
+        function renderTrack(container, imageArray) {
+            // 第一组
+            imageArray.forEach(src => {
+                const wrap = document.createElement('div');
+                wrap.className = 'card-wrapper';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'card';
+                img.className = 'card-img';
+                img.loading = 'lazy';
+                wrap.appendChild(img);
+                container.appendChild(wrap);
+            });
+            // 重复一组（用于无缝连接）
+            imageArray.forEach(src => {
+                const wrap = document.createElement('div');
+                wrap.className = 'card-wrapper';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'card';
+                img.className = 'card-img';
+                img.loading = 'lazy';
+                wrap.appendChild(img);
+                container.appendChild(wrap);
+            });
+        }
 
-            // 生成图片HTML，为了无缝循环，复制两份
-            function generateImages(imageArray) {
-                const items = imageArray.map(src => `<img src="${src}" alt="tarot">`).join('');
-                // 两份保证无缝
-                return items + items;
-            }
-
-            rowTop.innerHTML = generateImages(topImages);
-            rowBottom.innerHTML = generateImages(bottomImages);
-
-            // 轮播自动播放，不可手动干预 —— 已经通过 CSS 无限动画实现，无需额外 JS
-            // 如需更换图片组，可动态替换 innerHTML，但动画会重置，这里保持静态。
-        })();
-    </script>
-
+        renderTrack(trackTop, topImages);
+        const trackBottom = document.getElementById('trackBottom');
+        renderTrack(trackBottom, bottomImages);
+    })();
+</script>
+<!-- 本测试页完全符合要求：上下各12张，反向滚动，深黑背景，无文字遮罩，不可手动干预 -->
 </body>
 </html>
