@@ -18,10 +18,10 @@
             <div class="container">
                 <div class="logo">
                     <a href="index.html" style="display: flex; align-items: center; gap: 8px;">
-                        <img src="/slogo.png" alt="Yongrun" style="height: 50px; width: auto;">
+                        <img src="/slogo.png" alt="Yongrun" style="height: 30px; width: auto;">
                         <span>
-                            <span data-i18n="logo_yongrun">YONGRUN</span>
-                            <span data-i18n="logo_printing"> Printing</span>
+                            <span data-i18n="logo_yongrun"style="color: #1a2a4f;">YONGRUN</span>
+                            <span data-i18n="logo_printing" style="color: #c9a03d;"> Printing</span>
                         </span>
                     </a>
                 </div>
