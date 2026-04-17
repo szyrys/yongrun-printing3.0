@@ -276,49 +276,18 @@
         </div>
     </section>
 
-    <!-- 印刷工艺（支持弹窗） -->
-    <section class="craft-section">
-        <div class="container">
-            <div class="craft-title">
-                <h2 data-i18n="process_titley">Printing Processes</h2>
-                <p data-i18n="process_desc">Advanced printing technologies for stunning results</p>
-            </div>
-            <div class="craft-grid">
-                <div class="craft-card" data-gallery="process1">
-                    <div class="craft-icon"><i class="fas fa-print"></i></div>
-                    <h3 data-i18n="process1_title">Offset Printing</h3>
-                    <p data-i18n="process1_desc">High quality, cost-effective for large quantities, Pantone color matching.</p>
-                </div>
-                <div class="craft-card" data-gallery="process2">
-                    <div class="craft-icon"><i class="fas fa-desktop"></i></div>
-                    <h3 data-i18n="process2_title">Digital Printing</h3>
-                    <p data-i18n="process2_desc">Fast turnaround, no minimum order, perfect for prototypes and small batches.</p>
-                    <div class="badge-list"><span class="badge">No MOQ</span><span class="badge">Fast sample</span></div>
-                </div>
-                <div class="craft-card" data-gallery="process3">
-                    <div class="craft-icon"><i class="fas fa-star"></i></div>
-                    <h3 data-i18n="process3_title">Foil Stamping</h3>
-                    <p data-i18n="process3_desc">Gold, silver, holographic, and custom color foils.</p>
-                    <div class="badge-list"><span class="badge">Gold</span><span class="badge">Silver</span><span class="badge">Holographic</span></div>
-                </div>
-                <div class="craft-card" data-gallery="process4">
-                    <div class="craft-icon"><i class="fas fa-magic"></i></div>
-                    <h3 data-i18n="process4_title">Embossing & Debossing</h3>
-                    <p data-i18n="process4_desc">Raised or indented textures for premium tactile experience.</p>
-                </div>
-                <div class="craft-card" data-gallery="process5">
-                    <div class="craft-icon"><i class="fas fa-cut"></i></div>
-                    <h3 data-i18n="process5_title">Die Cutting</h3>
-                    <p data-i18n="process5_desc">Custom shapes and sizes, round corners, perforations.</p>
-                </div>
-                <div class="craft-card" data-gallery="process6">
-                    <div class="craft-icon"><i class="fas fa-qrcode"></i></div>
-                    <h3 data-i18n="process6_title">Variable Data Printing</h3>
-                    <p data-i18n="process6_desc">Unique codes, QR codes, or text on each card.</p>
-                </div>
-            </div>
+<!-- 印刷工艺（支持弹窗，动态生成） -->
+<section class="craft-section">
+    <div class="container">
+        <div class="craft-title">
+            <h2 data-i18n="process_title">Printing Processes</h2>
+            <p data-i18n="process_desc">Advanced printing technologies for stunning results</p>
         </div>
-    </section>
+        <div class="craft-grid" id="processGrid">
+            <!-- 卡片将通过 JS 动态生成 -->
+        </div>
+    </div>
+</section>
 
     <!-- CTA 区域 -->
     <section class="cta-section" style="background: #c9a03d; color: #1a2a4f;">
@@ -382,6 +351,15 @@
                 { key: 'finish5', icon: 'fa-adjust' },
                 { key: 'finish6', icon: 'fa-brush' }
             ];
+             // 印刷工艺数据（6项）
+            const processes = [
+                { key: 'process1', icon: 'fa-print' },
+                { key: 'process2', icon: 'fa-desktop' },
+                { key: 'process3', icon: 'fa-star' },
+                { key: 'process4', icon: 'fa-magic' },
+                { key: 'process5', icon: 'fa-cut' },
+                { key: 'process6', icon: 'fa-qrcode' }
+            ];           
             
             // 图片库（占位图，每个选项最多6张）
             const imageGalleries = {
