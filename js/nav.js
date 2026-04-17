@@ -114,3 +114,52 @@
         if (langSelect) langSelect.value = savedLang;
     });
 })();
+    // ===== 滚动时导航栏固定逻辑 =====
+    function initStickyNavbar() {
+        const navbar = document.querySelector('.navbar');
+        const languageBar = document.querySelector('.language-bar');
+        if (!navbar || !languageBar) return;
+
+        let navbarHeight = navbar.offsetHeight;
+        let languageBarHeight = languageBar.offsetHeight;
+        let isFixed = false;
+
+        function handleScroll() {
+            const scrollY = window.scrollY;
+            if (scrollY > languageBarHeight && !isFixed) {
+                // 添加固定样式
+                navbar.style.position = 'fixed';
+                navbar.style.top = '0';
+                navbar.style.left = '0';
+                navbar.style.width = '100%';
+                navbar.style.zIndex = '999';
+                document.body.style.paddingTop = navbarHeight + 'px';
+                isFixed = true;
+            } else if (scrollY <= languageBarHeight && isFixed) {
+                // 恢复原状
+                navbar.style.position = '';
+                navbar.style.top = '';
+                navbar.style.left = '';
+                navbar.style.width = '';
+                navbar.style.zIndex = '';
+                document.body.style.paddingTop = '';
+                isFixed = false;
+            }
+        }
+
+        function updateHeights() {
+            navbarHeight = navbar.offsetHeight;
+            languageBarHeight = languageBar.offsetHeight;
+            if (isFixed) {
+                document.body.style.paddingTop = navbarHeight + 'px';
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', updateHeights);
+        // 初始执行一次
+        handleScroll();
+    }
+
+    // 等待导航注入完成后再初始化
+    setTimeout(initStickyNavbar, 50);

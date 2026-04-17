@@ -976,3 +976,9 @@ html[dir="rtl"] .language-selector button {
 .about-text p {
     white-space: pre-line;
 }
+/* 导航栏固定时的样式保障 */
+.navbar {
+    transition: none; /* 避免切换时动画闪烁 */
+    background: white !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+}
