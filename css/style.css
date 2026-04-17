@@ -1163,7 +1163,7 @@ html[dir="rtl"] .language-selector button {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(201, 160, 61, 0.9);  /* 半透明金色 */
+    
     color: #1a2a4f;
     padding: 8px 0;
     text-align: center;
