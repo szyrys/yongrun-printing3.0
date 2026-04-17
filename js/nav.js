@@ -143,47 +143,35 @@ function initStickyNavbar() {
         }
     }
 
-    // ===== 使用 Intersection Observer 实现导航固定（蓝条自然消失）=====
-    function initObserverSticky() {
-        const navbar = document.querySelector('.navbar');
-        const languageBar = document.querySelector('.language-bar');
-        if (!navbar || !languageBar) return;
+// ===== 蓝条自然隐藏控制（无动画闪动）=====
+function initLanguageBarFade() {
+    const languageBar = document.querySelector('.language-bar');
+    if (!languageBar) return;
 
-        let navbarHeight = navbar.offsetHeight;
+    let lastScrollY = window.scrollY;
+    let ticking = false;
 
-        const observer = new IntersectionObserver((entries) => {
-            const entry = entries[0];
-            if (!entry.isIntersecting) {
-                // 蓝条已滚出视口，固定导航栏
-                navbar.style.position = 'fixed';
-                navbar.style.top = '0';
-                navbar.style.left = '0';
-                navbar.style.width = '100%';
-                navbar.style.zIndex = '999';
-                document.body.style.paddingTop = navbarHeight + 'px';
-            } else {
-                // 蓝条重新进入视口，恢复导航栏
-                navbar.style.position = '';
-                navbar.style.top = '';
-                navbar.style.left = '';
-                navbar.style.width = '';
-                navbar.style.zIndex = '';
-                document.body.style.paddingTop = '';
-            }
-        }, {
-            threshold: 0  // 只要蓝条有任何部分不可见就触发
-        });
-
-        observer.observe(languageBar);
-
-        // 窗口大小变化时更新导航栏高度
-        window.addEventListener('resize', () => {
-            navbarHeight = navbar.offsetHeight;
-            if (navbar.style.position === 'fixed') {
-                document.body.style.paddingTop = navbarHeight + 'px';
-            }
-        });
+    function update() {
+        const currentScrollY = window.scrollY;
+        // 向下滚动超过50px后开始降低透明度，到底部完全透明
+        const opacity = Math.max(0, 1 - currentScrollY / 150);
+        languageBar.style.opacity = opacity;
+        // 完全透明时禁止点击
+        languageBar.style.pointerEvents = opacity < 0.1 ? 'none' : 'auto';
+        lastScrollY = currentScrollY;
+        ticking = false;
     }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(update);
+            ticking = true;
+        }
+    });
+}
+
+// 在导航注入后调用
+setTimeout(initLanguageBarFade, 100);
 
     // 等待 DOM 加载完成后注入
     if (document.readyState === 'loading') {
