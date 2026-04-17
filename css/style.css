@@ -1015,3 +1015,10 @@ html[dir="rtl"] .language-selector button {
 .home-about-text .read-more:hover {
     text-decoration: underline;
 }
+/* 首页公司简介文字截断（精确控制） */
+.home-about-text-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 8;  /* 显示8行，根据实际微调 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
