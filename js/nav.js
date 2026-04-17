@@ -116,7 +116,7 @@
 })();
 
 
-// ===== 滚动时导航栏固定（纯 JS 兜底方案）=====
+// ===== 滚动时导航栏固定 + 蓝条平滑隐藏 =====
 (function() {
     function initNavbarFixed() {
         const navbar = document.querySelector('.navbar');
@@ -128,7 +128,15 @@
 
         function handleScroll() {
             const rect = languageBar.getBoundingClientRect();
-            // 蓝条底部滚出视口顶部时固定导航栏
+            
+            // 控制蓝条隐藏类（实现平滑过渡）
+            if (rect.bottom <= 0) {
+                languageBar.classList.add('hidden');
+            } else {
+                languageBar.classList.remove('hidden');
+            }
+            
+            // 控制导航栏固定
             if (rect.bottom <= 0 && !isFixed) {
                 navbar.style.position = 'fixed';
                 navbar.style.top = '0';
@@ -137,9 +145,7 @@
                 navbar.style.zIndex = '999';
                 document.body.style.paddingTop = navbarHeight + 'px';
                 isFixed = true;
-            } 
-            // 蓝条顶部重新进入视口时恢复导航栏
-            else if (rect.top >= 0 && isFixed) {
+            } else if (rect.top >= 0 && isFixed) {
                 navbar.style.position = '';
                 navbar.style.top = '';
                 navbar.style.left = '';
@@ -159,9 +165,8 @@
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', updateNavbarHeight);
-        handleScroll(); // 初始校准
+        handleScroll();
     }
 
-    // 等待导航注入完成后再执行
     setTimeout(initNavbarFixed, 100);
 })();
