@@ -994,3 +994,24 @@ html[dir="rtl"] .language-selector button {
     background: white !important;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
 }
+/* 首页公司简介文字截断 */
+.home-about-text {
+    position: relative;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.home-about-text .read-more {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(to right, transparent, #f5f5f5 30%, #f5f5f5);
+    padding-left: 20px;
+    color: #c9a03d;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.home-about-text .read-more:hover {
+    text-decoration: underline;
+}
