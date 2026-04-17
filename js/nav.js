@@ -27,7 +27,6 @@
                     </li>
                     <li><a href="craft-options.html" data-i18n="nav_craft">Materials & Finishes</a></li>
                     <li><a href="custom-process.html" data-i18n="nav_process">Custom Process</a></li>
-                    
                     <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
                     <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
                     <li class="lang-item">
@@ -68,6 +67,35 @@
             langSelect.value = savedLang;
             langSelect.addEventListener('change', (e) => {
                 loadLanguage(e.target.value);
+            });
+        }
+
+        // ===== 高亮当前页面导航项（按页面分配方案）=====
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const allNavLinks = document.querySelectorAll('.nav-menu a');
+        
+        let activeClass = '';
+        if (currentPath.includes('cards') || currentPath.includes('books') || 
+            currentPath.includes('board-games') || currentPath.includes('puzzles')) {
+            activeClass = 'active-page-underline';   // 产品中心下属页面 → 方案 A
+        } else if (currentPath.includes('craft-options')) {
+            activeClass = 'active-page-color';       // 材质工艺 → 方案 B
+        } else if (currentPath.includes('custom-process')) {
+            activeClass = 'active-page-bg';          // 定制流程 → 方案 C
+        }
+        
+        if (activeClass) {
+            allNavLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPath || (currentPath === '' && href === 'index.html')) {
+                    link.classList.add(activeClass);
+                }
+                // 如果匹配的是下拉子项，也高亮父级 Products
+                const parentDropdown = link.closest('.dropdown');
+                if (parentDropdown && (href === currentPath)) {
+                    const dropdownToggle = parentDropdown.querySelector(':scope > a');
+                    if (dropdownToggle) dropdownToggle.classList.add(activeClass);
+                }
             });
         }
     }
@@ -116,100 +144,24 @@
     });
 })();
 
-
-// ===== 滚动时导航栏固定 + 蓝条平滑隐藏 =====
-(function() {
-    function initNavbarFixed() {
-        const navbar = document.querySelector('.navbar');
-        const languageBar = document.querySelector('.language-bar');
-        if (!navbar || !languageBar) return;
-
-        let navbarHeight = navbar.offsetHeight;
-        let isFixed = false;
-
-        function handleScroll() {
-            const rect = languageBar.getBoundingClientRect();
-            
-            // 控制蓝条隐藏类（实现平滑过渡）
-            if (rect.bottom <= 0) {
-                languageBar.classList.add('hidden');
-            } else {
-                languageBar.classList.remove('hidden');
-            }
-            
-            // 控制导航栏固定
-            if (rect.bottom <= 0 && !isFixed) {
-                navbar.style.position = 'fixed';
-                navbar.style.top = '0';
-                navbar.style.left = '0';
-                navbar.style.width = '100%';
-                navbar.style.zIndex = '999';
-                document.body.style.paddingTop = navbarHeight + 'px';
-                isFixed = true;
-            } else if (rect.top >= 0 && isFixed) {
-                navbar.style.position = '';
-                navbar.style.top = '';
-                navbar.style.left = '';
-                navbar.style.width = '';
-                navbar.style.zIndex = '';
-                document.body.style.paddingTop = '';
-                isFixed = false;
-            }
-        }
-
-        function updateNavbarHeight() {
-            navbarHeight = navbar.offsetHeight;
-            if (isFixed) {
-                document.body.style.paddingTop = navbarHeight + 'px';
-            }
-        }
-
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', updateNavbarHeight);
-        handleScroll();
-    }
-
-    setTimeout(initNavbarFixed, 100);
-// ===== 双栏固定 + 自适应校准（加强版）=====
+// ===== 双栏固定 + 自适应校准 =====
 (function() {
     function fixDualBars() {
         const languageBar = document.querySelector('.language-bar');
         const navbar = document.querySelector('.navbar');
         if (!languageBar || !navbar) return;
 
-        // 核心校准函数
         function calibrate() {
-            // 获取实时高度
             const langBarHeight = languageBar.offsetHeight;
             const navbarHeight = navbar.offsetHeight;
-            
-            // 设置导航栏紧贴蓝条下方
             navbar.style.top = langBarHeight + 'px';
-            
-            // 设置 body 顶部内边距 = 蓝条高度 + 导航栏高度
-            const totalHeight = langBarHeight + navbarHeight;
-            document.body.style.paddingTop = totalHeight + 'px';
-            
-            // 如果当前滚动位置为0，确保不被固定栏遮挡（强制滚动到顶部？不需要，但需处理锚点）
-            // 解决刷新时可能出现的偏移
-            if (window.scrollY < totalHeight) {
-                // 不强制滚动，仅校准
-            }
+            document.body.style.paddingTop = (langBarHeight + navbarHeight) + 'px';
         }
 
-        // 立即校准
         calibrate();
-
-        // 监听窗口大小变化
         window.addEventListener('resize', calibrate);
+        window.addEventListener('scroll', calibrate);
 
-        // 监听页面滚动（解决刷新后滚动位置导致的计算偏差）
-        window.addEventListener('scroll', function() {
-            // 滚动时也实时校准（确保 fixed 元素位置绝对正确）
-            calibrate();
-        });
-
-        // 监听字体加载、内容变化等导致的高度变化（后备轮询）
         let lastHeight = 0;
         setInterval(function() {
             const currentHeight = languageBar.offsetHeight + navbar.offsetHeight;
@@ -218,28 +170,11 @@
                 lastHeight = currentHeight;
             }
         }, 150);
-
-        // 处理锚点链接（如页面内跳转），避免被固定栏遮挡标题
-        // 这个逻辑放在这里可以改善用户体验
-        if (location.hash) {
-            setTimeout(function() {
-                const target = document.querySelector(location.hash);
-                if (target) {
-                    const offset = languageBar.offsetHeight + navbar.offsetHeight;
-                    const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-                    window.scrollTo({
-                        top: elementPosition - offset,
-                        behavior: 'smooth'
-                    });
-                }
-            }, 100);
-        }
     }
 
-    // 确保导航组件已完全注入
     setTimeout(fixDualBars, 80);
 })();
-})();
+
 // ===== 独立锚点补偿（消除抽搐）=====
 (function() {
     function getFixedHeight() {
@@ -249,38 +184,28 @@
         return langBar.offsetHeight + navBar.offsetHeight;
     }
 
-    // 接管所有锚点链接点击
     document.addEventListener('click', function(e) {
         const link = e.target.closest('a[href^="#"]');
         if (!link) return;
-        
         const href = link.getAttribute('href');
-        // 忽略空锚点或仅 "#" 的链接（由浏览器默认处理回到顶部）
         if (href === '#' || href === '' || href === '#top') return;
-        
         const targetId = href.substring(1);
         const target = document.getElementById(targetId);
         if (target) {
             e.preventDefault();
             const offset = getFixedHeight();
             const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-            window.scrollTo({
-                top: elementPosition - offset,
-                behavior: 'smooth'
-            });
-            // 更新地址栏，但不触发默认跳转
+            window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
             history.pushState(null, null, href);
         }
     });
 
-    // 处理页面初始加载时的 hash（例如从其他页面带锚点跳转过来）
     if (location.hash) {
         window.addEventListener('load', function() {
             const target = document.querySelector(location.hash);
             if (target) {
                 const offset = getFixedHeight();
                 const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-                // 注意：这里使用瞬时跳转，避免与浏览器默认行为叠加导致抽搐
                 window.scrollTo(0, elementPosition - offset);
             }
         });
