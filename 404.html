@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Yongrun Printing</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .error-page {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .error-content {
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .error-icon {
+            font-size: 5rem;
+            color: #c9a03d;
+            margin-bottom: 20px;
+        }
+        .error-content h1 {
+            font-size: 3rem;
+            color: #1a2a4f;
+            margin-bottom: 15px;
+        }
+        .error-content p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .error-actions .btn {
+            min-width: 140px;
+        }
+        .error-email {
+            color: #888;
+            font-size: 0.95rem;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .error-email a {
+            color: #c9a03d;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .error-email a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .error-content {
+                padding: 30px 20px;
+            }
+            .error-content h1 {
+                font-size: 2.2rem;
+            }
+            .error-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
+    <div id="globalNav"></div>
+    
+    <main style="flex: 1;">
+        <div class="error-page">
+            <div class="container">
+                <div class="error-content">
+                    <div class="error-icon">
+                        <i class="fas fa-map-signs"></i>
+                    </div>
+                    <h1 data-i18n="404_title">404 - Page Not Found</h1>
+                    <p data-i18n="404_message">Sorry, the page you are looking for does not exist or has been moved.</p>
+                    <div class="error-actions">
+                        <a href="index.html" class="btn btn-primary" data-i18n="404_home">← Back to Home</a>
+                        <a href="cards.html" class="btn btn-outline" data-i18n="404_products">View Products</a>
+                        <a href="contact.html" class="btn btn-outline" data-i18n="404_contact">Contact Us</a>
+                    </div>
+                    <div class="error-email">
+                        <span data-i18n="404_email_text">You can also reach us directly at</span> 
+                        <a href="mailto:cnyrys@163.com">cnyrys@163.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Shenzhen Yongrun Printing Co., Ltd. <span data-i18n="footer_rights">All Rights Reserved</span></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/nav.js"></script>
+</body>
+</html>
