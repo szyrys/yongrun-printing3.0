@@ -494,11 +494,15 @@
                 items.forEach(item => {
                     const key = item.key;
                     html += `
-                        <div class="craft-card" data-gallery="${key}" title="${window.translations?.['click_to_view'] || 'Click to view samples'}">
+                        <div class="craft-card" data-gallery="${key}">
                             <div class="craft-icon"><i class="fas ${item.icon}"></i></div>
                             <h3 data-i18n="${key}_title">Loading...</h3>
                             <p data-i18n="${key}_desc">Loading...</p>
                             <div class="badge-list" data-i18n-badge="${key}_badge"></div>
+                            <div class="card-footer-hint">
+                                <i class="fas fa-eye"></i>
+                                <span data-i18n="click_to_view">Click to view samples</span>
+                            </div>
                         </div>
                     `;
                 });
