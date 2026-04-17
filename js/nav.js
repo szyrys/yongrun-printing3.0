@@ -52,7 +52,7 @@
 
         container.innerHTML = navHTML;
 
-        // 重新绑定移动端菜单事件（因为 DOM 已刷新）
+        // 重新绑定移动端菜单事件
         initMobileMenu();
 
         // 绑定语言下拉框事件
@@ -135,7 +135,6 @@
         // 窗口大小变化时更新导航栏高度
         window.addEventListener('resize', () => {
             navbarHeight = navbar.offsetHeight;
-            // 如果当前蓝条不可见，需要更新 padding
             if (navbar.style.position === 'fixed') {
                 document.body.style.paddingTop = navbarHeight + 'px';
             }
