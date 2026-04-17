@@ -19,7 +19,10 @@
                 <div class="logo">
                     <a href="index.html" style="display: flex; align-items: center; gap: 8px;">
                         <img src="/slogo.png" alt="Yongrun" style="height: 50px; width: auto;">
-                        <span>YONGRUN<span> Printing</span></span>
+                        <span>
+                            <span data-i18n="logo_yongrun">YONGRUN</span>
+                            <span data-i18n="logo_printing"> Printing</span>
+                        </span>
                     </a>
                 </div>
                 <ul class="nav-menu" id="navMenu">
