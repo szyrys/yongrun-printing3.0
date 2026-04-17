@@ -886,7 +886,7 @@ html[dir="rtl"] .language-selector button {
 /* Hero 轮播样式-高度在这里改 */
 .hero-carousel {
     position: relative;
-    height: 750px;
+    height: 700px;
     display: flex;
     align-items: center;
     justify-content: center;
