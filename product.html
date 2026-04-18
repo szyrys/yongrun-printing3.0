@@ -214,6 +214,12 @@
                             <div>
                                 <h1 style="color: #1a2a4f; margin-bottom: 20px;">${productName}</h1>
                                 <p class="product-description">${productDesc}</p>
+                                                                ${getLocalizedField(data, 'note') ? `
+                                <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #c9a03d;">
+                                    <strong style="color: #1a2a4f;" data-i18n="product_note_label">Special Notes</strong>
+                                    <p style="margin-top: 8px; color: #555; white-space: pre-line;">${getLocalizedField(data, 'note').replace(/\n/g, '<br>')}</p>
+                                </div>
+                                ` : ''}
                                 <a href="contact.html" class="btn btn-primary" style="margin-top: 30px;">Request a Quote →</a>
                             </div>
                         </div>
