@@ -1150,3 +1150,21 @@ html[dir="rtl"] .language-selector button {
     z-index: 10;
     /* 无背景、无内边距、无边框、无模糊 */
 }
+/* 导航栏防止换行 */
+.nav-menu {
+    flex-wrap: nowrap;
+}
+
+.nav-menu li a {
+    white-space: nowrap;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+}
+
+/* 小屏幕进一步缩小 */
+@media (max-width: 1200px) {
+    .nav-menu li a {
+        padding: 10px 8px;
+        font-size: 0.9rem;
+    }
+}
