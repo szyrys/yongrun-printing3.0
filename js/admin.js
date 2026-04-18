@@ -598,55 +598,55 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         is_featured,
         name_en: document.getElementById('productName_en').value.trim(),
         desc_en: quillEditors['en'] ? DOMPurify.sanitize(quillEditors['en'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'**],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_en: document.getElementById('productNote_en').value.trim() || null,
         name_zh: document.getElementById('productName_zh').value.trim(),
         desc_zh: quillEditors['zh'] ? DOMPurify.sanitize(quillEditors['zh'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'**],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_zh: document.getElementById('productNote_zh').value.trim() || null,
         name_zh_tw: document.getElementById('productName_zh_TW').value.trim(),
         desc_zh_tw: quillEditors['zh_TW'] ? DOMPurify.sanitize(quillEditors['zh_TW'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'**],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_zh_tw: document.getElementById('productNote_zh_TW').value.trim() || null,
         name_es: document.getElementById('productName_es').value.trim(),
         desc_es: quillEditors['es'] ? DOMPurify.sanitize(quillEditors['es'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'**],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_es: document.getElementById('productNote_es').value.trim() || null,
         name_de: document.getElementById('productName_de').value.trim(),
         desc_de: quillEditors['de'] ? DOMPurify.sanitize(quillEditors['de'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'**],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_de: document.getElementById('productNote_de').value.trim() || null,
         name_pt: document.getElementById('productName_pt').value.trim(),
         desc_pt: quillEditors['pt'] ? DOMPurify.sanitize(quillEditors['pt'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'**],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_pt: document.getElementById('productNote_pt').value.trim() || null,
         name_ar: document.getElementById('productName_ar').value.trim(),
         desc_ar: quillEditors['ar'] ? DOMPurify.sanitize(quillEditors['ar'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'**],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_ar: document.getElementById('productNote_ar').value.trim() || null,
         name_ja: document.getElementById('productName_ja').value.trim(),
         desc_ja: quillEditors['ja'] ? DOMPurify.sanitize(quillEditors['ja'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'**],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_ja: document.getElementById('productNote_ja').value.trim() || null,
         name_ko: document.getElementById('productName_ko').value.trim(),
         desc_ko: quillEditors['ko'] ? DOMPurify.sanitize(quillEditors['ko'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'**],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_ko: document.getElementById('productNote_ko').value.trim() || null
