@@ -4,22 +4,12 @@ const quillEditors = {};
 const langs = ['en', 'zh', 'es', 'de', 'pt', 'ar', 'ja', 'ko', 'zh_TW'];
 
 function initQuillEditors() {
-    // 先销毁所有已存在的 Quill 实例，防止重复初始化
-    langs.forEach(lang => {
-        if (quillEditors[lang]) {
-            quillEditors[lang].enable(false);
-            quillEditors[lang] = null;
-        }
-        const container = document.getElementById(`productDesc_${lang}`);
-        if (container) {
-            container.innerHTML = '';
-        }
-    });
-    
-    // 重新初始化编辑器
     langs.forEach(lang => {
         const container = document.getElementById(`productDesc_${lang}`);
         if (container) {
+            if (quillEditors[lang]) {
+                quillEditors[lang] = null;
+            }
             quillEditors[lang] = new Quill(`#productDesc_${lang}`, {
                 theme: 'snow',
                 modules: {
@@ -656,7 +646,7 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         note_ja: document.getElementById('productNote_ja').value.trim() || null,
         name_ko: document.getElementById('productName_ko').value.trim(),
         desc_ko: quillEditors['ko'] ? DOMPurify.sanitize(quillEditors['ko'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_ko: document.getElementById('productNote_ko').value.trim() || null
