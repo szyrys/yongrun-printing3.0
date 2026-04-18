@@ -535,6 +535,7 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
     }
     
         const productData = {
+            console.log('category:', category, 'slug:', slug, 'image_url:', image_url, 'is_featured:', is_featured);
         category,
         slug,
         image_url,
