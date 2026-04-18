@@ -1,47 +1,4 @@
 // 管理后台脚本 - 登录和留言/FAQ/产品管理
-// ===== Quill 富文本编辑器配置 =====
-const quillEditors = {};
-const langs = ['en', 'zh', 'es', 'de', 'pt', 'ar', 'ja', 'ko', 'zh_TW'];
-
-function initQuillEditors() {
-    langs.forEach(lang => {
-        const container = document.getElementById(`productDesc_${lang}`);
-        if (container) {
-            if (quillEditors[lang]) {
-                quillEditors[lang] = null;
-            }
-            quillEditors[lang] = new Quill(`#productDesc_${lang}`, {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        ['bold', 'italic', 'underline'],
-                        [{ 'color': [] }],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        ['clean']
-                    ]
-                }
-            });
-            
-            quillEditors[lang].clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
-                delta.ops = delta.ops.map(op => {
-                    if (typeof op.insert === 'string') {
-                        op.insert = op.insert.replace(/[\u200B-\u200D\uFEFF]/g, '');
-                    }
-                    return op;
-                });
-                return delta;
-            });
-            
-            quillEditors[lang].on('text-change', () => {
-                const content = quillEditors[lang].root.innerHTML;
-                if (content.includes('\u200B') || content.includes('\uFEFF')) {
-                    const cleaned = content.replace(/[\u200B-\u200D\uFEFF]/g, '');
-                    quillEditors[lang].root.innerHTML = cleaned;
-                }
-            });
-        }
-    });
-}
 
 let currentUser = null;
 
