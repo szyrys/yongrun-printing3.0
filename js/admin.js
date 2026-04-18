@@ -164,7 +164,8 @@ function updateActionButton(tabId) {
             document.getElementById('productDesc_ja').value = '';
             document.getElementById('productName_ko').value = '';
             document.getElementById('productDesc_ko').value = '';
-                        document.getElementById('productNote_en').value = '';
+            
+            document.getElementById('productNote_en').value = '';
             document.getElementById('productNote_zh').value = '';
             document.getElementById('productNote_zh_TW').value = '';
             document.getElementById('productNote_es').value = '';
@@ -173,11 +174,11 @@ function updateActionButton(tabId) {
             document.getElementById('productNote_ar').value = '';
             document.getElementById('productNote_ja').value = '';
             document.getElementById('productNote_ko').value = '';
+            
             document.getElementById('productModalTitle').innerText = '添加产品';
             document.getElementById('productModal').style.display = 'flex';
             currentProductId = null;
             initLangTabs(document.getElementById('productModal'));
-            initQuillEditors();
         };
     }
 }
@@ -210,7 +211,6 @@ function truncateText(text, maxLength) {
     return text.substring(0, maxLength) + '...';
 }
 
-// ===== 统一三个表格宽度 =====
 function unifyTableWidth() {
     setTimeout(() => {
         const msgTable = document.querySelector('#messagesContainer .data-table');
@@ -232,7 +232,6 @@ function unifyTableWidth() {
     }, 200);
 }
 
-// ===== 留言管理 =====
 async function loadMessages() {
     const container = document.getElementById('messagesContainer');
     if (!container) return;
@@ -310,7 +309,6 @@ document.getElementById('messageDetailModal')?.addEventListener('click', (e) => 
     }
 });
 
-// ===== FAQ 管理 =====
 let currentFaqId = null;
 
 async function loadFaqs() {
@@ -427,7 +425,6 @@ document.getElementById('cancelFaqBtn')?.addEventListener('click', () => {
     document.getElementById('faqModal').style.display = 'none';
 });
 
-// ===== 产品管理 =====
 let currentProductId = null;
 
 async function loadProducts() {
@@ -501,7 +498,7 @@ async function editProduct(id) {
     document.getElementById('productDesc_ja').value = data.desc_ja || '';
     document.getElementById('productName_ko').value = data.name_ko || '';
     document.getElementById('productDesc_ko').value = data.desc_ko || '';
-        // 回填注释字段
+    
     document.getElementById('productNote_en').value = data.note_en || '';
     document.getElementById('productNote_zh').value = data.note_zh || '';
     document.getElementById('productNote_zh_TW').value = data.note_zh_TW || '';
@@ -511,24 +508,11 @@ async function editProduct(id) {
     document.getElementById('productNote_ar').value = data.note_ar || '';
     document.getElementById('productNote_ja').value = data.note_ja || '';
     document.getElementById('productNote_ko').value = data.note_ko || '';
+    
     document.getElementById('productModalTitle').innerText = '编辑产品';
     document.getElementById('productModal').style.display = 'flex';
     currentProductId = id;
     initLangTabs(document.getElementById('productModal'));
-        initQuillEditors();
-    
-    // 填充富文本编辑器内容
-    setTimeout(() => {
-        if (data.desc_en && quillEditors['en']) quillEditors['en'].root.innerHTML = data.desc_en;
-        if (data.desc_zh && quillEditors['zh']) quillEditors['zh'].root.innerHTML = data.desc_zh;
-        if (data.desc_es && quillEditors['es']) quillEditors['es'].root.innerHTML = data.desc_es;
-        if (data.desc_de && quillEditors['de']) quillEditors['de'].root.innerHTML = data.desc_de;
-        if (data.desc_pt && quillEditors['pt']) quillEditors['pt'].root.innerHTML = data.desc_pt;
-        if (data.desc_ar && quillEditors['ar']) quillEditors['ar'].root.innerHTML = data.desc_ar;
-        if (data.desc_ja && quillEditors['ja']) quillEditors['ja'].root.innerHTML = data.desc_ja;
-        if (data.desc_ko && quillEditors['ko']) quillEditors['ko'].root.innerHTML = data.desc_ko;
-        if (data.desc_zh_tw && quillEditors['zh_TW']) quillEditors['zh_TW'].root.innerHTML = data.desc_zh_tw;
-    }, 100);
 }
 
 async function deleteProduct(id) {
@@ -548,64 +532,38 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         alert('请填写 URL 标识(slug)');
         return;
     }
-        const productData = {
+    
+    const productData = {
         category,
         slug,
         image_url,
         is_featured,
         name_en: document.getElementById('productName_en').value.trim(),
-        desc_en: quillEditors['en'] ? DOMPurify.sanitize(quillEditors['en'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
-    ALLOWED_ATTRS: ['style']
-}) : '',
+        desc_en: document.getElementById('productDesc_en').value.trim(),
         note_en: document.getElementById('productNote_en').value.trim() || null,
         name_zh: document.getElementById('productName_zh').value.trim(),
-        desc_zh: quillEditors['zh'] ? DOMPurify.sanitize(quillEditors['zh'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
-    ALLOWED_ATTRS: ['style']
-}) : '',
+        desc_zh: document.getElementById('productDesc_zh').value.trim(),
         note_zh: document.getElementById('productNote_zh').value.trim() || null,
         name_zh_tw: document.getElementById('productName_zh_TW').value.trim(),
-        desc_zh_tw: quillEditors['zh_TW'] ? DOMPurify.sanitize(quillEditors['zh_TW'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
-    ALLOWED_ATTRS: ['style']
-}) : '',
+        desc_zh_tw: document.getElementById('productDesc_zh_TW').value.trim(),
         note_zh_tw: document.getElementById('productNote_zh_TW').value.trim() || null,
         name_es: document.getElementById('productName_es').value.trim(),
-        desc_es: quillEditors['es'] ? DOMPurify.sanitize(quillEditors['es'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
-    ALLOWED_ATTRS: ['style']
-}) : '',
+        desc_es: document.getElementById('productDesc_es').value.trim(),
         note_es: document.getElementById('productNote_es').value.trim() || null,
         name_de: document.getElementById('productName_de').value.trim(),
-        desc_de: quillEditors['de'] ? DOMPurify.sanitize(quillEditors['de'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
-    ALLOWED_ATTRS: ['style']
-}) : '',
+        desc_de: document.getElementById('productDesc_de').value.trim(),
         note_de: document.getElementById('productNote_de').value.trim() || null,
         name_pt: document.getElementById('productName_pt').value.trim(),
-        desc_pt: quillEditors['pt'] ? DOMPurify.sanitize(quillEditors['pt'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
-    ALLOWED_ATTRS: ['style']
-}) : '',
+        desc_pt: document.getElementById('productDesc_pt').value.trim(),
         note_pt: document.getElementById('productNote_pt').value.trim() || null,
         name_ar: document.getElementById('productName_ar').value.trim(),
-        desc_ar: quillEditors['ar'] ? DOMPurify.sanitize(quillEditors['ar'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
-    ALLOWED_ATTRS: ['style']
-}) : '',
+        desc_ar: document.getElementById('productDesc_ar').value.trim(),
         note_ar: document.getElementById('productNote_ar').value.trim() || null,
         name_ja: document.getElementById('productName_ja').value.trim(),
-        desc_ja: quillEditors['ja'] ? DOMPurify.sanitize(quillEditors['ja'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
-    ALLOWED_ATTRS: ['style']
-}) : '',
+        desc_ja: document.getElementById('productDesc_ja').value.trim(),
         note_ja: document.getElementById('productNote_ja').value.trim() || null,
         name_ko: document.getElementById('productName_ko').value.trim(),
-        desc_ko: quillEditors['ko'] ? DOMPurify.sanitize(quillEditors['ko'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
-    ALLOWED_ATTRS: ['style']
-}) : '',
+        desc_ko: document.getElementById('productDesc_ko').value.trim(),
         note_ko: document.getElementById('productNote_ko').value.trim() || null
     };
     
@@ -613,6 +571,7 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         alert('请填写英文名称');
         return;
     }
+    
     if (currentProductId) {
         await window.supabaseClient.from('products').update(productData).eq('id', currentProductId);
     } else {
@@ -626,7 +585,6 @@ document.getElementById('cancelProductBtn')?.addEventListener('click', () => {
     document.getElementById('productModal').style.display = 'none';
 });
 
-// ===== 图片上传功能 =====
 const uploadBtn = document.getElementById('uploadImagesBtn');
 const fileInput = document.getElementById('productImageUpload');
 const uploadStatus = document.getElementById('uploadStatus');
@@ -737,7 +695,6 @@ if (logoutBtn) logoutBtn.addEventListener('click', logout);
 if (adminPassword) adminPassword.addEventListener('keypress', e => e.key === 'Enter' && login());
 if (adminEmail) adminEmail.addEventListener('keypress', e => e.key === 'Enter' && login());
 
-// 初始化
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     checkSession();
