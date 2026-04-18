@@ -539,6 +539,20 @@ async function editProduct(id) {
     document.getElementById('productModal').style.display = 'flex';
     currentProductId = id;
     initLangTabs(document.getElementById('productModal'));
+        initQuillEditors();
+    
+    // 填充富文本编辑器内容
+    setTimeout(() => {
+        if (data.desc_en && quillEditors['en']) quillEditors['en'].root.innerHTML = data.desc_en;
+        if (data.desc_zh && quillEditors['zh']) quillEditors['zh'].root.innerHTML = data.desc_zh;
+        if (data.desc_es && quillEditors['es']) quillEditors['es'].root.innerHTML = data.desc_es;
+        if (data.desc_de && quillEditors['de']) quillEditors['de'].root.innerHTML = data.desc_de;
+        if (data.desc_pt && quillEditors['pt']) quillEditors['pt'].root.innerHTML = data.desc_pt;
+        if (data.desc_ar && quillEditors['ar']) quillEditors['ar'].root.innerHTML = data.desc_ar;
+        if (data.desc_ja && quillEditors['ja']) quillEditors['ja'].root.innerHTML = data.desc_ja;
+        if (data.desc_ko && quillEditors['ko']) quillEditors['ko'].root.innerHTML = data.desc_ko;
+        if (data.desc_zh_tw && quillEditors['zh_TW']) quillEditors['zh_TW'].root.innerHTML = data.desc_zh_tw;
+    }, 100);
 }
 
 async function deleteProduct(id) {
