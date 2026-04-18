@@ -201,6 +201,7 @@ function updateActionButton(tabId) {
             document.getElementById('productModal').style.display = 'flex';
             currentProductId = null;
             initLangTabs(document.getElementById('productModal'));
+            initQuillEditors();
         };
     }
 }
