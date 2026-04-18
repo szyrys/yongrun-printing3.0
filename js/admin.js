@@ -547,7 +547,7 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         note_zh: document.getElementById('productNote_zh').value.trim() || null,
         name_zh_tw: document.getElementById('productName_zh_TW').value.trim(),
         desc_zh_tw: document.getElementById('productDesc_zh_TW').value.trim(),
-        note_zh_TW: document.getElementById('productNote_zh_TW').value.trim() || null,
+        note_zh_tw: document.getElementById('productNote_zh_tw').value.trim() || null,
         name_es: document.getElementById('productName_es').value.trim(),
         desc_es: document.getElementById('productDesc_es').value.trim(),
         note_es: document.getElementById('productNote_es').value.trim() || null,
