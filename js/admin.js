@@ -2,6 +2,9 @@
 // ===== Quill 富文本编辑器配置 =====
 const quillEditors = {};
 const langs = ['en', 'zh', 'es', 'de', 'pt', 'ar', 'ja', 'ko', 'zh_TW'];
+
+function initQuillEditors() {
+    langs.forEach(lang => {
         const container = document.getElementById(`productDesc_${lang}`);
         if (container) {
             if (quillEditors[lang]) {
@@ -19,7 +22,6 @@ const langs = ['en', 'zh', 'es', 'de', 'pt', 'ar', 'ja', 'ko', 'zh_TW'];
                 }
             });
             
-            // 👇 新增的清理逻辑
             quillEditors[lang].clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
                 delta.ops = delta.ops.map(op => {
                     if (typeof op.insert === 'string') {
@@ -40,6 +42,7 @@ const langs = ['en', 'zh', 'es', 'de', 'pt', 'ar', 'ja', 'ko', 'zh_TW'];
         }
     });
 }
+
 let currentUser = null;
 
 const loginPanel = document.getElementById('loginPanel');
