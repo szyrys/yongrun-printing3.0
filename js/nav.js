@@ -3,7 +3,15 @@
 
 (function() {
     // 统一模板：蓝条 + 导航栏
-    const navHTML = `
+    const navHTML = `<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-356CL711M5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-356CL711M5');
+</script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/x-icon" sizes="16x16" href="/favicon-16x16.ico">
     <link rel="icon" type="image/x-icon" sizes="32x32" href="/favicon-32x32.ico">
