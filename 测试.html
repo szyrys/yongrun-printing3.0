@@ -82,3 +82,25 @@
     })();
 </script>
  <!-- 以上是新24图，停用的时候截止位置在这里-->
+
+
+
+         <div class="container">
+            <div class="hero-content">
+                <h1 data-i18n="hero_title">Professional Printing · Custom Solutions · Global Delivery</h1>
+                <p data-i18n="hero_subtitle">20+ Years Experience | ISO9001 | FSC Certified | Global Shipping</p>
+                <a href="#homeMessageForm" class="btn btn-primary" data-i18n="hero_btn" 
+                     onclick="event.preventDefault(); 
+                        var element = document.getElementById('homeMessageForm'); 
+                        var offset = 210; 
+                        var elementPosition = element.getBoundingClientRect().top; 
+                        var offsetPosition = elementPosition + window.pageYOffset - offset; 
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });">
+    Get Free Quote →
+</a>            </div>
+        </div>
+        <button class="hero-prev">❮</button>
+        <button class="hero-next">❯</button>
+        <div class="hero-dots"></div>
+    </section>
+
