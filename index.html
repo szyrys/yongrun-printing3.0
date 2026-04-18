@@ -16,13 +16,36 @@
     <div id="globalNav"></div>
         <!-- Hero Banner 轮播区域--轮播图在这里换链接 -->
     <!-- ========== 传统Banner（暂时注释，需要时取消注释即可回退） ========== -->
-    
-        <section class="hero-carousel">
-        <div class="hero-bg-wrapper">
-            <div class="hero-bg-slide active" style="background-image: url('https://jeiyolxdsznnojezmfbl.supabase.co/storage/v1/object/public/product-images/banner/banner-1.webp');"></div>
-            <div class="hero-bg-slide" style="background-image: url('https://jeiyolxdsznnojezmfbl.supabase.co/storage/v1/object/public/product-images/banner/banner-1.webp');"></div>
-            <div class="hero-bg-slide" style="background-image: url('https://jeiyolxdsznnojezmfbl.supabase.co/storage/v1/object/public/product-images/banner/banner-1.webp');"></div>
+<!-- Hero Banner 轮播区域（5张图 + 防右键保护） -->
+<section class="hero-carousel" oncontextmenu="return false;">
+    <div class="hero-bg-wrapper">
+        <div class="hero-bg-slide active" style="background-image: url('https://jeiyolxdsznnojezmfbl.supabase.co/storage/v1/object/public/product-images/banner/banner-1.jpg');"></div>
+        <div class="hero-bg-slide" style="background-image: url('https://jeiyolxdsznnojezmfbl.supabase.co/storage/v1/object/public/product-images/banner/banner-2.jpg');"></div>
+        <div class="hero-bg-slide" style="background-image: url('https://jeiyolxdsznnojezmfbl.supabase.co/storage/v1/object/public/product-images/banner/banner-3.jpg');"></div>
+        <div class="hero-bg-slide" style="background-image: url('https://jeiyolxdsznnojezmfbl.supabase.co/storage/v1/object/public/product-images/banner/banner-4.jpg');"></div>
+        <div class="hero-bg-slide" style="background-image: url('https://jeiyolxdsznnojezmfbl.supabase.co/storage/v1/object/public/product-images/banner/banner-5.jpg');"></div>
+        <!-- 透明遮罩层，阻止右键另存为 -->
+        <div class="hero-protect-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 data-i18n="hero_title">Professional Printing · Custom Solutions · Global Delivery</h1>
+            <p data-i18n="hero_subtitle">20+ Years Experience | ISO9001 | FSC Certified | Global Shipping</p>
+            <a href="#homeMessageForm" class="btn btn-primary" data-i18n="hero_btn" 
+                 onclick="event.preventDefault(); 
+                    var element = document.getElementById('homeMessageForm'); 
+                    var offset = 210; 
+                    var elementPosition = element.getBoundingClientRect().top; 
+                    var offsetPosition = elementPosition + window.pageYOffset - offset; 
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });">
+                Get Free Quote →
+            </a>
         </div>
+    </div>
+    <button class="hero-prev">❮</button>
+    <button class="hero-next">❯</button>
+    <div class="hero-dots"></div>
+</section>
         <div class="container">
             <div class="hero-content">
                 <h1 data-i18n="hero_title">Professional Printing · Custom Solutions · Global Delivery</h1>
