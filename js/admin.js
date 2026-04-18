@@ -164,7 +164,15 @@ function updateActionButton(tabId) {
             document.getElementById('productDesc_ja').value = '';
             document.getElementById('productName_ko').value = '';
             document.getElementById('productDesc_ko').value = '';
-            
+                        document.getElementById('productNote_en').value = '';
+            document.getElementById('productNote_zh').value = '';
+            document.getElementById('productNote_zh_TW').value = '';
+            document.getElementById('productNote_es').value = '';
+            document.getElementById('productNote_de').value = '';
+            document.getElementById('productNote_pt').value = '';
+            document.getElementById('productNote_ar').value = '';
+            document.getElementById('productNote_ja').value = '';
+            document.getElementById('productNote_ko').value = '';
             document.getElementById('productModalTitle').innerText = '添加产品';
             document.getElementById('productModal').style.display = 'flex';
             currentProductId = null;
