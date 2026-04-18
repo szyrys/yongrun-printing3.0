@@ -646,7 +646,7 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         note_ja: document.getElementById('productNote_ja').value.trim() || null,
         name_ko: document.getElementById('productName_ko').value.trim(),
         desc_ko: quillEditors['ko'] ? DOMPurify.sanitize(quillEditors['ko'].root.innerHTML, {
-    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', **'p'],
+    ALLOWED_TAGS: ['strong', 'b', 'em', 'i', 'u', 'span', 'br', 'ol', 'ul', 'li', 'p'],
     ALLOWED_ATTRS: ['style']
 }) : '',
         note_ko: document.getElementById('productNote_ko').value.trim() || null
