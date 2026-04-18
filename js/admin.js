@@ -533,9 +533,8 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         alert('请填写 URL 标识(slug)');
         return;
     }
-    
+    console.log('category:', category, 'slug:', slug, 'image_url:', image_url, 'is_featured:', is_featured);
         const productData = {
-            console.log('category:', category, 'slug:', slug, 'image_url:', image_url, 'is_featured:', is_featured);
         category,
         slug,
         image_url,
