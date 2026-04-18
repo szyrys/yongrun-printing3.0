@@ -492,7 +492,16 @@ async function editProduct(id) {
     document.getElementById('productDesc_ja').value = data.desc_ja || '';
     document.getElementById('productName_ko').value = data.name_ko || '';
     document.getElementById('productDesc_ko').value = data.desc_ko || '';
-    
+        // 回填注释字段
+    document.getElementById('productNote_en').value = data.note_en || '';
+    document.getElementById('productNote_zh').value = data.note_zh || '';
+    document.getElementById('productNote_zh_TW').value = data.note_zh_TW || '';
+    document.getElementById('productNote_es').value = data.note_es || '';
+    document.getElementById('productNote_de').value = data.note_de || '';
+    document.getElementById('productNote_pt').value = data.note_pt || '';
+    document.getElementById('productNote_ar').value = data.note_ar || '';
+    document.getElementById('productNote_ja').value = data.note_ja || '';
+    document.getElementById('productNote_ko').value = data.note_ko || '';
     document.getElementById('productModalTitle').innerText = '编辑产品';
     document.getElementById('productModal').style.display = 'flex';
     currentProductId = id;
@@ -517,36 +526,44 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         return;
     }
     
-    const productData = {
+        const productData = {
         category,
         slug,
         image_url,
         is_featured,
         name_en: document.getElementById('productName_en').value.trim(),
         desc_en: document.getElementById('productDesc_en').value.trim(),
+        note_en: document.getElementById('productNote_en').value.trim() || null,
         name_zh: document.getElementById('productName_zh').value.trim(),
         desc_zh: document.getElementById('productDesc_zh').value.trim(),
+        note_zh: document.getElementById('productNote_zh').value.trim() || null,
         name_zh_tw: document.getElementById('productName_zh_TW').value.trim(),
         desc_zh_tw: document.getElementById('productDesc_zh_TW').value.trim(),
+        note_zh_TW: document.getElementById('productNote_zh_TW').value.trim() || null,
         name_es: document.getElementById('productName_es').value.trim(),
         desc_es: document.getElementById('productDesc_es').value.trim(),
+        note_es: document.getElementById('productNote_es').value.trim() || null,
         name_de: document.getElementById('productName_de').value.trim(),
         desc_de: document.getElementById('productDesc_de').value.trim(),
+        note_de: document.getElementById('productNote_de').value.trim() || null,
         name_pt: document.getElementById('productName_pt').value.trim(),
         desc_pt: document.getElementById('productDesc_pt').value.trim(),
+        note_pt: document.getElementById('productNote_pt').value.trim() || null,
         name_ar: document.getElementById('productName_ar').value.trim(),
         desc_ar: document.getElementById('productDesc_ar').value.trim(),
+        note_ar: document.getElementById('productNote_ar').value.trim() || null,
         name_ja: document.getElementById('productName_ja').value.trim(),
         desc_ja: document.getElementById('productDesc_ja').value.trim(),
+        note_ja: document.getElementById('productNote_ja').value.trim() || null,
         name_ko: document.getElementById('productName_ko').value.trim(),
-        desc_ko: document.getElementById('productDesc_ko').value.trim()
+        desc_ko: document.getElementById('productDesc_ko').value.trim(),
+        note_ko: document.getElementById('productNote_ko').value.trim() || null
     };
     
     if (!productData.name_en) {
         alert('请填写英文名称');
         return;
     }
-    
     if (currentProductId) {
         await window.supabaseClient.from('products').update(productData).eq('id', currentProductId);
     } else {
