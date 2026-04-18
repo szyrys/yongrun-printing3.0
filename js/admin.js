@@ -533,7 +533,6 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         alert('请填写 URL 标识(slug)');
         return;
     }
-    console.log('category:', category, 'slug:', slug, 'image_url:', image_url, 'is_featured:', is_featured);
         const productData = {
         category,
         slug,
@@ -545,9 +544,9 @@ document.getElementById('saveProductBtn')?.addEventListener('click', async () =>
         name_zh: document.getElementById('productName_zh').value.trim(),
         desc_zh: document.getElementById('productDesc_zh').value.trim(),
         note_zh: document.getElementById('productNote_zh').value.trim() || null,
-        name_zh_tw: document.getElementById('productName_zh_tw').value.trim(),
-        desc_zh_tw: document.getElementById('productDesc_zh_tw').value.trim(),
-        note_zh_tw: document.getElementById('productNote_zh_tw').value.trim() || null,
+        name_zh_tw: document.getElementById('productName_zh_TW').value.trim(),
+        desc_zh_tw: document.getElementById('productDesc_zh_TW').value.trim(),
+        note_zh_tw: document.getElementById('productNote_zh_TW').value.trim() || null,
         name_es: document.getElementById('productName_es').value.trim(),
         desc_es: document.getElementById('productDesc_es').value.trim(),
         note_es: document.getElementById('productNote_es').value.trim() || null,
