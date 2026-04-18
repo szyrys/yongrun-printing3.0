@@ -1,7 +1,7 @@
 // 管理后台脚本 - 登录和留言/FAQ/产品管理
 // ===== Quill 富文本编辑器配置 =====
-function initQuillEditors() {
-    langs.forEach(lang => {
+const quillEditors = {};
+const langs = ['en', 'zh', 'es', 'de', 'pt', 'ar', 'ja', 'ko', 'zh_TW'];
         const container = document.getElementById(`productDesc_${lang}`);
         if (container) {
             if (quillEditors[lang]) {
