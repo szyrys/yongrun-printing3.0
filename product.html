@@ -300,6 +300,12 @@
         }
 
         loadProduct();
+        // 监听语言切换，重新加载产品
+const originalLoadLanguage = loadLanguage;
+loadLanguage = async function(langCode) {
+    await originalLoadLanguage(langCode);
+    await loadProduct();
+};
     </script>
 </body>
 </html>
