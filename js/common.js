@@ -2,13 +2,14 @@
 const languages = [
     { code: 'en', name: 'English', dir: 'ltr' },
     { code: 'zh-CN', name: '简体中文', dir: 'ltr' },
-    { code: 'zh-TW', name: '繁體中文', dir: 'ltr' },
-    { code: 'de', name: 'Deutsch', dir: 'ltr' },
-    { code: 'es', name: 'Español', dir: 'ltr' },
-    { code: 'pt', name: 'Português', dir: 'ltr' },
-    { code: 'ar', name: 'العربية', dir: 'rtl' },
-    { code: 'ja', name: '日本語', dir: 'ltr' },
-    { code: 'ko', name: '한국어', dir: 'ltr' }
+    // 暂时隐藏，以后需要时取消注释
+    // { code: 'zh-TW', name: '繁體中文', dir: 'ltr' },
+    // { code: 'de', name: 'Deutsch', dir: 'ltr' },
+    // { code: 'es', name: 'Español', dir: 'ltr' },
+    // { code: 'pt', name: 'Português', dir: 'ltr' },
+    // { code: 'ar', name: 'العربية', dir: 'rtl' },
+    // { code: 'ja', name: '日本語', dir: 'ltr' },
+    // { code: 'ko', name: '한국어', dir: 'ltr' }
 ];
 
 let currentLang = 'en';
