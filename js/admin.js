@@ -461,10 +461,10 @@ function renderProductTable(filterCategory) {
     
     const finalProducts = [...featuredProducts.slice(0, 4), ...normalProducts];
     
-    let html = `<table class="data-table" style="width: 100%; min-width: 1100px;"><thead>
+    let html = `<table class="data-table" style="width: 100%; table-layout: fixed; min-width: 1400px;"><thead>
         <tr>
-            <th>ID</th>
-            <th>
+            <th style="width: 100px;">ID</th>
+            <th style="width: 150px;">
                 分类
                 <select id="productFilter" style="margin-left: 8px; padding: 4px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; width: 110px;">
                     <option value="all" ${filterCategory === 'all' ? 'selected' : ''}>全部产品</option>
@@ -474,10 +474,10 @@ function renderProductTable(filterCategory) {
                     <option value="puzzles" ${filterCategory === 'puzzles' ? 'selected' : ''}>拼图定制</option>
                 </select>
             </th>
-            <th>名称(EN)</th>
-            <th>标识(slug)</th>
-            <th>置顶</th>
-            <th>操作</th>
+            <th style="width: 650px;">名称(EN)</th>
+            <th style="width: 250px;">标识(slug)</th>
+            <th style="width: 100px;">置顶</th>
+            <th style="width: 150px;">操作</th>
         </tr>
     </thead><tbody>`;
     
