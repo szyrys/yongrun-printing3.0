@@ -740,9 +740,13 @@ document.addEventListener('DOMContentLoaded', () => {
     checkSession();
     unifyTableWidth();
     updateActionButton('products');
+    
+    // 强制激活产品标签
+    document.querySelector('.tab-btn[data-tab="products"]')?.click();
+    
     document.addEventListener('change', (e) => {
-    if (e.target.id === 'productFilter') {
-        renderProductTable(e.target.value);
-    }
-});
+        if (e.target.id === 'productFilter') {
+            renderProductTable(e.target.value);
+        }
+    });
 });
