@@ -1,7 +1,7 @@
 // 管理后台脚本 - 登录和留言/FAQ/产品管理
 
 let currentUser = null;
-
+let allProducts = [];
 const loginPanel = document.getElementById('loginPanel');
 const adminPanel = document.getElementById('adminPanel');
 const loginBtn = document.getElementById('loginBtn');
