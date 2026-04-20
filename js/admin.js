@@ -438,10 +438,12 @@ async function loadProducts() {
             .order('category', { ascending: true });
         if (error) throw error;
         
-        let html = `<table class="data-table"><thead><tr>
-            <th>ID</th><th>分类</th><th>名称(EN)</th><th>标识(slug)</th><th>置顶</th><th>操作</th>
-        </tr></thead><tbody>`;
-        
+        allProducts = data || [];
+        renderProductTable('all');
+    } catch (err) {
+        container.innerHTML = '<div class="empty-state">加载失败</div>';
+    }
+}
         if (!data || data.length === 0) {
             html += `<tr><td colspan="6" style="text-align: center;">暂无产品</td></tr>`;
         } else {
