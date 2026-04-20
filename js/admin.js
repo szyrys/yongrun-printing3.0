@@ -758,4 +758,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkSession();
     unifyTableWidth();
     updateActionButton('products');
+    document.getElementById('productFilter')?.addEventListener('change', (e) => {
+    renderProductTable(e.target.value);
+});
 });
