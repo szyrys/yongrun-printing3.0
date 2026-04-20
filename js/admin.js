@@ -699,5 +699,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     checkSession();
     unifyTableWidth();
-    updateActionButton('messages');
+    updateActionButton('products');
 });
