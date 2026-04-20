@@ -60,6 +60,7 @@
                         <select id="navLanguageSelect" class="nav-language-select">
                             <option value="en">English</option>
                             <option value="zh-CN">简体中文</option>
+                            <!-- 暂时隐藏，以后需要时取消注释
                             <option value="de">Deutsch</option>
                             <option value="es">Español</option>
                             <option value="pt">Português</option>
@@ -67,6 +68,7 @@
                             <option value="ja">日本語</option>
                             <option value="ko">한국어</option>
                             <option value="zh-TW">繁體中文</option>
+                            -->
                         </select>
                     </li>
                 </ul>
