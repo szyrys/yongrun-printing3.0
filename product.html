@@ -231,7 +231,7 @@
                         </div>
                     </div>
                 `;
-
+                if (typeof updatePageText === 'function') updatePageText();
                 const thumbImgs = document.querySelectorAll('.thumb-img');
                 const mainImg = document.getElementById('mainProductImage');
                 const prevBtn = document.getElementById('prevArrow');
