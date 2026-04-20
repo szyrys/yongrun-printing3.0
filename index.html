@@ -323,14 +323,14 @@
                 
                 if (error || !data) continue;
                 
-                // 收集图片URL
+                                // 收集图片URL
                 let images = [];
                 data.forEach(product => {
                     if (product.image_url) {
-                        const urls = product.image_url.split(',');
-                        urls.forEach(url => {
-                            if (url && images.length < 6) images.push(url.trim());
-                        });
+                        const firstImage = product.image_url.split(',')[0].trim();
+                        if (firstImage && images.length < 6) {
+                            images.push(firstImage);
+                        }
                     }
                 });
                 

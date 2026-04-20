@@ -104,3 +104,29 @@
         <div class="hero-dots"></div>
     </section>
 
+
+
+    function initQuillEditors() {
+    // 先销毁所有已存在的 Quill 实例
+    langs.forEach(lang => {
+        if (quillEditors[lang]) {
+            quillEditors[lang].enable(false); // 禁用编辑器
+            quillEditors[lang] = null;
+        }
+        // 清空容器 DOM，防止残留
+        const container = document.getElementById(`productDesc_${lang}`);
+        if (container) {
+            container.innerHTML = '';
+        }
+    });
+    
+    // 然后重新初始化
+    langs.forEach(lang => {
+        const container = document.getElementById(`productDesc_${lang}`);
+        if (container) {
+            quillEditors[lang] = new Quill(`#productDesc_${lang}`, {
+                // ... 原有配置保持不变
+            });
+        }
+    });
+}
