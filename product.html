@@ -219,7 +219,7 @@
                             </div>
                             <div>
                                 <h1 style="color: #1a2a4f; margin-bottom: 20px;">${productName}</h1>
-                                <p class="product-description">${productDesc}</p>
+                                <p class="product-description">${productDesc.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>
                                                                 ${getLocalizedField(data, 'note') ? `
                                 <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #c9a03d;">
                                     <strong style="color: #1a2a4f;" data-i18n="product_note_label">Special Notes</strong>
