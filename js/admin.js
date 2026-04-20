@@ -461,9 +461,25 @@ function renderProductTable(filterCategory) {
     
     const finalProducts = [...featuredProducts.slice(0, 4), ...normalProducts];
     
-    let html = `<table class="data-table"><thead><tr>
-        <th>ID</th><th>分类</th><th>名称(EN)</th><th>标识(slug)</th><th>置顶</th><th>操作</th>
-    </tr></thead><tbody>`;
+    let html = `<table class="data-table"><thead>
+        <tr>
+            <th>ID</th>
+            <th>
+                分类
+                <select id="productFilter" style="margin-left: 8px; padding: 4px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; width: 110px;">
+                    <option value="all" ${filterCategory === 'all' ? 'selected' : ''}>全部产品</option>
+                    <option value="cards" ${filterCategory === 'cards' ? 'selected' : ''}>卡牌产品</option>
+                    <option value="books" ${filterCategory === 'books' ? 'selected' : ''}>书刊印刷</option>
+                    <option value="board-games" ${filterCategory === 'board-games' ? 'selected' : ''}>桌游套装</option>
+                    <option value="puzzles" ${filterCategory === 'puzzles' ? 'selected' : ''}>拼图定制</option>
+                </select>
+            </th>
+            <th>名称(EN)</th>
+            <th>标识(slug)</th>
+            <th>置顶</th>
+            <th>操作</th>
+        </tr>
+    </thead><tbody>`;
     
     if (finalProducts.length === 0) {
         html += `<tr><td colspan="6" style="text-align: center;">暂无产品</td></tr>`;
