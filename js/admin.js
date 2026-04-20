@@ -461,7 +461,7 @@ function renderProductTable(filterCategory) {
     
     const finalProducts = [...featuredProducts.slice(0, 4), ...normalProducts];
     
-    let html = `<table class="data-table"><thead>
+    let html = `<table class="data-table" style="width: 100%; min-width: 1100px;"><thead>
         <tr>
             <th>ID</th>
             <th>
