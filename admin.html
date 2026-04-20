@@ -438,38 +438,46 @@
         </div>
     </div>
 
-    <!-- 产品模态框 -->
     <div id="productModal" class="modal">
     <div class="modal-content">
-        <h3 id="productModalTitle">添加产品</h3>
-        
-        <select id="productCategory">
-            <option value="cards">卡片类</option>
-            <option value="books">书籍类</option>
-            <option value="board-games">桌游类</option>
-            <option value="puzzles">拼图类</option>
-        </select>
-        
-        <input type="text" id="productSlug" placeholder="URL标识 (slug) （仅限内部查看，不可重复名称）* 例如: playingcards">
-        <input type="text" id="productImageUrl" placeholder="图片URL (上传自动获取)">
-        
-        <div style="margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-            <label style="display: block; margin-bottom: 10px; font-weight: 500;">📤 上传产品图片（自动命名）</label>
-            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                <input type="file" id="productImageUpload" accept="image/*" multiple style="flex: 1;">
-                <button type="button" id="uploadImagesBtn" class="btn btn-primary" style="background: #3498db; padding: 8px 20px;">上传图片</button>
+        <!-- 第一行：标题 + 分类 + 置顶 -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h3 id="productModalTitle" style="margin: 0;">添加产品</h3>
+            <div style="display: flex; align-items: center; gap: 30px;">
+                <select id="productCategory" style="width: 150px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;">
+                    <option value="cards">卡牌产品</option>
+                    <option value="books">书刊印刷</option>
+                    <option value="board-games">桌游套装</option>
+                    <option value="puzzles">拼图定制</option>
+                </select>
+                <label style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">
+                    <input type="checkbox" id="productIsFeatured"> 置顶推荐
+                </label>
             </div>
-            <div id="uploadStatus" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
         </div>
-        
-           <label style="display: inline-flex; align-items: center; gap: 20px; white-space: nowrap;">
-    置顶推荐
-    <input type="checkbox" id="productIsFeatured">
-</label>
-        
-        <hr style="margin: 15px 0;">
-        
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+
+        <!-- 第二行：URL标识 + 图片URL -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px;">
+            <div>
+                <input type="text" id="productSlug" placeholder="URL标识 (slug) *" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px;">
+            </div>
+            <div>
+                <input type="text" id="productImageUrl" placeholder="图片URL (上传自动获取)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px;">
+            </div>
+        </div>
+
+        <!-- 第三行：上传图片 -->
+        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+            <span style="font-weight: 500; white-space: nowrap;">📤 上传产品图片（自动命名）</span>
+            <input type="file" id="productImageUpload" accept="image/*" multiple style="flex: 1;">
+            <button type="button" id="uploadImagesBtn" class="btn btn-primary" style="background: #3498db; padding: 8px 20px; white-space: nowrap;">上传图片</button>
+        </div>
+        <div id="uploadStatus" style="margin-top: -10px; margin-bottom: 15px; font-size: 12px; color: #666;"></div>
+
+        <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+
+        <!-- 第四行：多语言信息 + 语言标签 -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
             <h4 style="margin: 0;">多语言信息</h4>
             <div style="display: flex; gap: 5px; flex-wrap: wrap;">
                 <button type="button" class="lang-tab active" data-lang="en">英文</button>
@@ -483,56 +491,73 @@
                 <button type="button" class="lang-tab" data-lang="ko">韩语</button>
             </div>
         </div>
-        
+
+        <hr style="margin: 15px 0; border: none; border-top: 1px solid #eee;">
+
+        <!-- 多语言面板 -->
         <div class="lang-panel active" data-lang="en">
-            <input type="text" id="productName_en" placeholder="产品名称 (英文) * 例如: Playing Cards">
-            <textarea id="productDesc_en" placeholder="产品描述 (英文) 例如: Custom poker cards..." rows="3"></textarea>
-            <textarea id="productNote_en" placeholder="Special Notes (optional)" rows="2"></textarea>
+            <input type="text" id="productName_en" placeholder="产品名称 (英文) *" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <textarea id="productDesc_en" placeholder="产品描述 (英文)" rows="4" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+            <input type="text" id="productNote_en" placeholder="特别说明 (可选)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
         </div>
+
         <div class="lang-panel" data-lang="zh">
-            <input type="text" id="productName_zh" placeholder="产品名称 (简体中文) * 例如: 扑克牌">
-            <textarea id="productDesc_zh" placeholder="产品描述 (简体中文)" rows="3"></textarea>
-            <textarea id="productNote_zh" placeholder="Special Notes (optional)" rows="2"></textarea>
+            <input type="text" id="productName_zh" placeholder="产品名称 (简体中文) *" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <textarea id="productDesc_zh" placeholder="产品描述 (简体中文)" rows="4" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+            <input type="text" id="productNote_zh" placeholder="特别说明 (可选)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
         </div>
+
         <div class="lang-panel" data-lang="zh-TW">
-            <input type="text" id="productName_zh_TW" placeholder="产品名称 (繁體中文) * 例如: 撲克牌">
-            <textarea id="productDesc_zh_TW" placeholder="产品描述 (繁體中文)" rows="3"></textarea>
-            <textarea id="productNote_zh_TW" placeholder="Special Notes (optional)" rows="2"></textarea>
+            <input type="text" id="productName_zh_TW" placeholder="产品名称 (繁體中文) *" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <textarea id="productDesc_zh_TW" placeholder="产品描述 (繁體中文)" rows="4" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+            <input type="text" id="productNote_zh_TW" placeholder="特别说明 (可选)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
         </div>
+
         <div class="lang-panel" data-lang="es">
-            <input type="text" id="productName_es" placeholder="Nombre del producto">
-            <textarea id="productDesc_es" placeholder="Descripción del producto" rows="3"></textarea>
-            <textarea id="productNote_es" placeholder="Special Notes (optional)" rows="2"></textarea>
+            <input type="text" id="productName_es" placeholder="Nombre del producto" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <textarea id="productDesc_es" placeholder="Descripción del producto" rows="4" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+            <input type="text" id="productNote_es" placeholder="Nota especial (opcional)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
         </div>
+
         <div class="lang-panel" data-lang="de">
-            <input type="text" id="productName_de" placeholder="Produktname">
-            <textarea id="productDesc_de" placeholder="Produktbeschreibung" rows="3"></textarea>
-            <textarea id="productNote_de" placeholder="Special Notes (optional)" rows="2"></textarea>
+            <input type="text" id="productName_de" placeholder="Produktname" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <textarea id="productDesc_de" placeholder="Produktbeschreibung" rows="4" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+            <input type="text" id="productNote_de" placeholder="Besondere Hinweise (optional)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
         </div>
+
         <div class="lang-panel" data-lang="pt">
-            <input type="text" id="productName_pt" placeholder="Nome do produto">
-            <textarea id="productDesc_pt" placeholder="Descrição do produto" rows="3"></textarea>
-            <textarea id="productNote_pt" placeholder="Special Notes (optional)" rows="2"></textarea>
+            <input type="text" id="productName_pt" placeholder="Nome do produto" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <textarea id="productDesc_pt" placeholder="Descrição do produto" rows="4" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+            <input type="text" id="productNote_pt" placeholder="Nota especial (opcional)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
         </div>
+
         <div class="lang-panel" data-lang="ar">
-            <input type="text" id="productName_ar" placeholder="اسم المنتج">
-            <textarea id="productDesc_ar" placeholder="وصف المنتج" rows="3"></textarea>
-            <textarea id="productNote_ar" placeholder="Special Notes (optional)" rows="2"></textarea>
+            <input type="text" id="productName_ar" placeholder="اسم المنتج" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <textarea id="productDesc_ar" placeholder="وصف المنتج" rows="4" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+            <input type="text" id="productNote_ar" placeholder="ملاحظة خاصة (اختياري)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
         </div>
+
         <div class="lang-panel" data-lang="ja">
-            <input type="text" id="productName_ja" placeholder="製品名">
-            <textarea id="productDesc_ja" placeholder="製品説明" rows="3"></textarea>
-            <textarea id="productNote_ja" placeholder="Special Notes (optional)" rows="2"></textarea>
+            <input type="text" id="productName_ja" placeholder="製品名" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <textarea id="productDesc_ja" placeholder="製品説明" rows="4" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+            <input type="text" id="productNote_ja" placeholder="特記事項 (任意)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
         </div>
+
         <div class="lang-panel" data-lang="ko">
-            <input type="text" id="productName_ko" placeholder="제품명">
-            <textarea id="productDesc_ko" placeholder="제품 설명" rows="3"></textarea>
-            <textarea id="productNote_ko" placeholder="Special Notes (optional)" rows="2"></textarea>
+            <input type="text" id="productName_ko" placeholder="제품명" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <textarea id="productDesc_ko" placeholder="제품 설명" rows="4" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+            <input type="text" id="productNote_ko" placeholder="특기사항 (선택사항)" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
         </div>
-        
+
         <input type="hidden" id="productId">
-        <button id="saveProductBtn" class="btn btn-primary">保存</button>
-        <button id="cancelProductBtn" class="btn">取消</button>
+
+        <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+
+        <!-- 底部按钮：保存在左，取消在右 -->
+        <div style="display: flex; gap: 15px;">
+            <button id="saveProductBtn" class="btn btn-primary">保存</button>
+            <button id="cancelProductBtn" class="btn">取消</button>
+        </div>
     </div>
 </div>
 
