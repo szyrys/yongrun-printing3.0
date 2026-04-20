@@ -273,7 +273,16 @@
 
     "logo_yongrun": "深圳",
     "logo_printing": " 永润印刷",
-    "product_note_label": "特别说明"
+    "product_note_label": "特别说明",
+    {
+  "about_title": "深圳市永润印刷有限公司",
+  "form_name": "您的姓名 *",
+  "form_email": "电子邮箱 *",
+  "form_message": "留言内容（卡牌类型、数量、特殊要求等）*",
+  "form_success": "留言已发送，我们会尽快联系您！",
+  "form_error_empty": "请填写所有必填项",
+  "form_error_email": "请输入有效的邮箱地址"
+}
 }
 
    
