@@ -444,29 +444,23 @@ async function loadProducts() {
         container.innerHTML = '<div class="empty-state">加载失败</div>';
     }
 }
+
 function renderProductTable(filterCategory) {
     const container = document.getElementById('productsContainer');
     
-    // 筛选数据
     let filteredProducts = allProducts;
     if (filterCategory !== 'all') {
         filteredProducts = allProducts.filter(p => p.category === filterCategory);
     }
     
-    // 分离置顶和非置顶
     const featuredProducts = filteredProducts.filter(p => p.is_featured === true);
     const normalProducts = filteredProducts.filter(p => p.is_featured !== true);
     
-    // 置顶按 sort_order 排序
     featuredProducts.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-    
-    // 非置顶按 sort_order 排序
     normalProducts.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
     
-    // 合并：只取前4个置顶
     const finalProducts = [...featuredProducts.slice(0, 4), ...normalProducts];
     
-    // 渲染表格
     let html = `<table class="data-table"><thead><tr>
         <th>ID</th><th>分类</th><th>名称(EN)</th><th>标识(slug)</th><th>置顶</th><th>操作</th>
     </tr></thead><tbody>`;
@@ -499,34 +493,6 @@ function renderProductTable(filterCategory) {
     document.querySelectorAll('.delete-product-btn').forEach(btn => 
         btn.addEventListener('click', () => deleteProduct(btn.dataset.id))
     );
-}
-        if (!data || data.length === 0) {
-            html += `<tr><td colspan="6" style="text-align: center;">暂无产品</td></tr>`;
-        } else {
-            data.forEach(p => {
-                html += `<tr>
-                    <td>${p.id}</td>
-                    <td>${p.category}</td>
-                    <td>${escapeHtml(p.name_en || '-')}</td>
-                    <td>${p.slug}</td>
-                    <td>${p.is_featured ? '⭐' : '-'}</td>
-                    <td>
-                        <button class="edit-product-btn" data-id="${p.id}">编辑</button>
-                        <button class="delete-product-btn" data-id="${p.id}">删除</button>
-                    </td>
-                </tr>`;
-            });
-        }
-        
-        html += `</tbody></table>`;
-        container.innerHTML = html;
-        setTimeout(() => { unifyTableWidth(); }, 200);
-        
-        document.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', () => editProduct(btn.dataset.id)));
-        document.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', () => deleteProduct(btn.dataset.id)));
-    } catch (err) {
-        container.innerHTML = '<div class="empty-state">加载失败</div>';
-    }
 }
 
 async function editProduct(id) {
@@ -759,6 +725,6 @@ document.addEventListener('DOMContentLoaded', () => {
     unifyTableWidth();
     updateActionButton('products');
     document.getElementById('productFilter')?.addEventListener('change', (e) => {
-    renderProductTable(e.target.value);
-});
+        renderProductTable(e.target.value);
+    });
 });
