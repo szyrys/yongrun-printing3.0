@@ -488,8 +488,8 @@ function renderProductTable(filterCategory) {
             html += `<tr>
                 <td>${p.id}</td>
                 <td>${p.category}</td>
-                <td>${escapeHtml(p.name_en || '-')}</td>
-                <td>${p.slug}</td>
+                <td style="max-width: 650px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${escapeHtml(p.name_en || '-')}">${escapeHtml(p.name_en || '-')}</td>
+                <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${p.slug}">${p.slug}</td>
                 <td>${p.is_featured ? '⭐' : '-'}</td>
                 <td>
                     <button class="edit-product-btn" data-id="${p.id}">编辑</button>
