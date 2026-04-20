@@ -75,6 +75,42 @@
                 </div>
             </div>
         </nav>
+        <!-- Cookie 隐私弹窗 -->
+<div id="cookieConsent" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #1a2a4f; color: white; padding: 15px 20px; z-index: 9999; display: none; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1);">
+    <div style="flex: 1; min-width: 200px;">
+        <span style="font-weight: 600;">🍪 We value your privacy</span><br>
+        <span style="font-size: 0.9rem; opacity: 0.9;">We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept", you consent to our use of cookies.</span>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <button id="cookieAccept" style="background: #c9a03d; color: #1a2a4f; border: none; padding: 10px 24px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.2s;">Accept</button>
+        <button id="cookieDecline" style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px; border-radius: 30px; cursor: pointer; transition: 0.2s;">Decline</button>
+    </div>
+</div>
+
+<script>
+(function() {
+    var cookieConsent = document.getElementById('cookieConsent');
+    var acceptBtn = document.getElementById('cookieAccept');
+    var declineBtn = document.getElementById('cookieDecline');
+    
+    // 检查是否已同意
+    if (!localStorage.getItem('cookieConsent')) {
+        cookieConsent.style.display = 'flex';
+    }
+    
+    function hideConsent() {
+        cookieConsent.style.display = 'none';
+        localStorage.setItem('cookieConsent', 'true');
+    }
+    
+    acceptBtn.addEventListener('click', hideConsent);
+    declineBtn.addEventListener('click', function() {
+        cookieConsent.style.display = 'none';
+        // 仅记录用户看到了弹窗，不启用追踪
+        localStorage.setItem('cookieConsent', 'declined');
+    });
+})();
+</script>
     `;
 
     // 注入到容器
