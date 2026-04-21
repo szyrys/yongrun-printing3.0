@@ -100,9 +100,9 @@
 "product_option_other": "其他",
 "faq_title": "常见问题",
 
-  "about_hero_title": "深圳市永润印刷有限公司",
+  "about_hero_title": "深圳市润成印刷有限公司",
   "about_hero_subtitle": "专注印刷 · 用心服务 · 共创辉煌",
-  "stats_title": "永润数字一览",
+  "stats_title": "润成数字一览",
   "stats_subtitle": "20余年印刷行业卓越经验",
   "stat1": "行业经验",
   "stat2": "服务国家",
@@ -128,7 +128,7 @@
   "equipment_item3": "高速印刷设备",
   "equipment_item4": "烫金与击凸设备",
   "equipment_item5": "高效打样与快速交付系统",
-  "about_cta_title": "与永润印刷携手合作",
+  "about_cta_title": "与润成印刷携手合作",
   "about_cta_subtitle": "让您的定制卡牌项目变为现实",
   "about_cta_btn": "立即联系我们 →",
 
@@ -140,7 +140,7 @@
   "contact_file_link_label": "文件云盘分享链接 (Google Drive / Dropbox / WeTransfer)",
   "contact_file_link_hint": "将设计文件上传至云盘后，将链接粘贴于此。",
   "contact_required_info_hint": "<strong>联系方式必填：</strong>请至少提供<strong>电话</strong>或<strong>邮箱</strong>以便我们与您取得联系。",
-  "contact_company_name": "深圳市永润印刷有限公司",
+  "contact_company_name": "深圳市润成印刷有限公司",
   "contact_address_label": "地址：",
   "contact_address_full": "中国深圳市宝安区新桥街道象山社区新发东路24号3栋",
   "contact_phone_label": "电话：",
@@ -254,7 +254,7 @@
   "puzzles_step5_desc": "确保无缺片、边缘光滑，装入内袋。",
   "puzzles_step6_title": "包装发货",
   "puzzles_step6_desc": "严格质检，专业包装，全球空运/海运配送。",
-  "about_title": "深圳市永润印刷有限公司。",
+  "about_title": "深圳市润成印刷有限公司。",
     "reply_text": "我们会在24小时内回复",
     "direct_email_label": "直达邮箱：",
     
@@ -272,7 +272,7 @@
     "click_to_view": "点击查看示例",
 
     "logo_RUNCHENG": "深圳",
-    "logo_printing": " 永润印刷",
+    "logo_printing": " 润成印刷",
     "product_note_label": "特别说明"
     
 }
